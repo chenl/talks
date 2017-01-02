@@ -79,6 +79,14 @@ fn main() {
 39088169
 ./fib_rs      0.35s user  0.00s system  99% cpu   0.355 total
 #+END_SRC
+** Real Example
+   [[https://blog.sentry.io/2016/10/19/fixing-python-performance-with-rust.html][Fixing Python Performance with Rust]] / [[http://lucumr.pocoo.org/projects/][Armin Ronacher]]
+
+   Sentry processes over a billion errors every month. We’ve been able to scale most of our systems, but in the last few months, one component has stood out as a computational chokepoint: Python’s source map processing.
+
+   ...
+
+   As of yesterday, we have dramatically cut down that processing time (and CPU utilization on our machines) by replacing our source map handling with a Rust module that we interface with from Python.
 * Safe
   Automatic memory management
     - but no G/C
