@@ -11,7 +11,10 @@
 
 * Unit testing is hard
   image: https://unsplash.com/?photo=daYpIvggFxA
-  legacy code image: https://unsplash.com/?photo=FX__egbD0zE
+  legacy code images:
+  - https://unsplash.com/?photo=FX__egbD0zE
+  - https://unsplash.com/photos/-yz22gsqAH0
+
 * Mock makes it easy
 
 * Mock makes it too easy
@@ -27,3 +30,10 @@
     Project Hosting at Google Code is a large, well-established system written mostly in Python. We'll share our battle-born convictions about creating tests for test-unfriendly code and the larger topic of testing.
 
   - images: https://unsplash.com/
+
+* images:
+  mock: https://unsplash.com/collections/262992/funny?photo=wOHH-NUTvVc
+  I am ok with that: https://unsplash.com/collections/262992/funny?photo=BXs8SjVelKs
+  duck typing: https://unsplash.com/?photo=5x7PmmHanG4
+  flimsy: https://unsplash.com/?photo=5DJqsjAYlmk
+  ??: https://unsplash.com/?photo=2Ts5HnA67k8
