@@ -1,0 +1,11 @@
+#+title: Talks
+#+author: Chen Rotem Levy
+#+email: chenl@rotemlevy.name
+#+option: ^:nil
+
+A talks given by me:
+
+| date             | event             | title                                     |
+|------------------+-------------------+-------------------------------------------|
+| <2017-01-02 Mon> | PyWeb-il meetup   | Why Rust                                  |
+| <2017-06-12 Mon> | PyCon Israel 2017 | Unit testing in the real world with mocks |
