@@ -1,22 +1,19 @@
 #+title: Unit-testing in the real world with mock
 #+author: Chen Rotem Levy
 #+email: chen@rotemlevy.name
-#+date: <2017-06-13 Tue> (or the 14th)
+#+date: [2017-06-12 Mon] (or the 13th)
+#+option: ^:nil
 
-* Who Am I
-
-- bio
-- contact
-- SentinelOne
-
-
+* chen@rotemlevy.name
+- A nerd since 1968, a computer geek since 1978, GNU/* fan-boy since 1998
+- Currently @ SentinelOne ([[https://sentinelone.com/jobs/][we are hiring]])
 * Unit testing is important
 
 * Unit testing is hard
   image: https://unsplash.com/?photo=daYpIvggFxA
   legacy code image: https://unsplash.com/?photo=FX__egbD0zE
 * Mock makes it easy
-za
+
 * Mock makes it too easy
 
 * One step on a long journey
