@@ -1,0 +1,32 @@
+#+title: Unit-testing in the real world with mock
+#+author: Chen Rotem Levy
+#+email: chen@rotemlevy.name
+#+date: <2017-06-13 Tue> (or the 14th)
+
+* Who Am I
+
+- bio
+- contact
+- SentinelOne
+
+
+* Unit testing is important
+
+* Unit testing is hard
+  image: https://unsplash.com/?photo=daYpIvggFxA
+  legacy code image: https://unsplash.com/?photo=FX__egbD0zE
+* Mock makes it easy
+za
+* Mock makes it too easy
+
+* One step on a long journey
+  image: https://unsplash.com/photos/1JWmFju8vVg
+
+* links
+  - [[https://www.youtube.com/watch?v=zW0f4ZRYF5M][Mocking Strategies]] ([[https://www.slideshare.net/excellaco/mocking-in-python-44973320][slides]]) / Excella's Dan Davis
+    at the Django District Meetup group on Feb 10, 2015
+
+  - [[https://www.youtube.com/watch?v=Xu5EhKVZdV8][Stop Moking, Start Testing]] / Augie Fackler, Nathaniel Manista
+    Project Hosting at Google Code is a large, well-established system written mostly in Python. We'll share our battle-born convictions about creating tests for test-unfriendly code and the larger topic of testing.
+
+  - images: https://unsplash.com/
