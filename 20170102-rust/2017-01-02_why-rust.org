@@ -1,0 +1,430 @@
+#+title: Why Rust?
+#+author: Chen Rotem Levy
+#+email: chen@rotemlevy.name
+#+date: <2017-01-02 Mon>
+#+option: ^:nil
+
+* chen@rotemlevy.name
+- Currently @ SentinelOne ([[https://sentinelone.com/jobs/][we are hiring]])
+- A nerd since 1968, a computer geek since 1978
+- GNU/Linux, KDE, GNU/Emacs, Python ... Rust
+- Rust resources
+  - [[https://doc.rust-lang.org/stable/book/][The book]]
+  - [[http://rustbyexample.com/][Rust by Example]]
+  - [[http://exercism.io/languages/rust/about][Exercism.io]]
+  - [[http://www.newrustacean.com/][The podcast]]
+* Credit
+- [[https://www.youtube.com/watch?v=bjHIOVvf208][Rust for Pythonistas]] / Robert Collinse
+  Kiwi Pycon 2016
+- [[https://www.youtube.com/watch?v=-ylbuEzkG4M][Extending Python with rust]] / Samuel Cormier-Iijima
+  Pycon Canada 2016
+* What is Rust
+  A system programming
+  C's like: speed + control
+  Python's like: safety + expressive power
+* System
+- Minimal Runtime (no G/C)
+- Low level control over H/W
+- Suitable for writing O/S and web browsers:
+** [[https://intermezzos.github.io/book/][IntermezzOS]]
+   An operating system for learning
+** [[http://www.redox-os.org/][Redux OS]]
+   Redox is a Unix-like Operating System written in Rust, aiming to
+   bring the innovations of Rust to a modern microkernel and full set
+   of applications
+** [[https://servo.org/][Servo]]
+   Servo is a modern, high-performance browser engine designed for
+   both application and embedded use.
+* Rust is
+Fast + Safe + Concurrent
+* Fast
+- Zero const abstractions* (@ compile time)
+- Static dispatching
+- Stack allocation
+- Get us to a C/C++ speed
+- No garbage collection
+** ~fibonacci.py~
+#+BEGIN_SRC python
+#!/usr/bin/env python3.4
+def fib(n: int) -> int:
+    if n < 3:
+        return 1
+    else:
+        return fib(n-1) + fib(n-2)
+
+if __name__ == '__main__':
+    print("%s" % fib(38))
+#+END_SRC
+** ~fibonacci.rs~
+#+BEGIN_SRC rust
+fn fib(n: u64) -> u64 {
+    if n < 3 {
+        1
+    } else {
+        fib(n-1) + fib(n-2)
+    }
+}
+
+fn main() {
+    println!("{}", fib(38));
+}
+#+END_SRC
+** Benchmark
+#+BEGIN_SRC sh
+➜ time ./fib_py.py
+39088169
+./fib_py.py  12.02s user  0.01s system  98% cpu  12.229 total
+
+➜ time ./fib_rs
+39088169
+./fib_rs      0.35s user  0.00s system  99% cpu   0.355 total
+#+END_SRC
+* Safe
+  Automatic memory management
+    - but no G/C
+  Formally defied
+    - *lifetime*
+    - *ownership*,
+    - *mutability*,
+  No data races
+** Automatic
+#+BEGIN_SRC rust
+{
+  let v = vec![1, 2, 3];
+} // lifetime ends
+#+END_SRC
+** Ownership
+#+BEGIN_SRC rust
+let v = vec![1, 2, 3];  // v owns the Vec<i32>
+let u = v;              // ownership *moved* to u
+let t = v;              // ERROR: used moved value: `v`
+#+END_SRC
+** Borrowing
+#+BEGIN_SRC rust
+let v = vec![1, 2, 3];  // v owns the Vec<i32>
+let w = &v;             // w borrow from v
+let t = &v;             // OK
+#+END_SRC
+** Ownership (again)
+#+BEGIN_SRC rust
+fn print(v: Vec<i32>) {
+  println!("{:?}", v);
+}
+
+fn main() {
+  let v = vec![1, 2, 3];
+  print(v);
+  print(v);      // ERROR: used moved value: `v`
+}
+#+END_SRC
+** Borrowing (again)
+#+BEGIN_SRC rust
+fn print(v: &Vec<i32>) {
+  println!("{:?}", v);
+}
+
+fn main() {
+  let v = vec![1, 2, 3];
+  print(&v);
+  print(&v);      // OK
+}
+#+END_SRC
+** Copy
+#+BEGIN_SRC rust
+#[derive(Copy, Clone)]
+struct Rectangle {
+  height: f64,
+  width: f64,
+}
+
+fn main() {
+  let r1 = Rectangle {
+     height: 42.0,
+     width: 3.14,
+  };
+  let r2 = r1; // Copy
+}
+#+END_SRC
+** Immutability
+#+BEGIN_SRC rust
+  let v = vec![1, 2, 3];
+  v.push(4); // ERROR
+#+END_SRC
+** ~mut~
+#+BEGIN_SRC rust
+  let mut v = vec![1, 2, 3];
+  v.push(4); // OK
+#+END_SRC
+** Immutability (again)
+#+BEGIN_SRC rust
+fn mutate(v: &Vec<i32>) {
+    v.push(4); // ERROR: cannot borrow immutable borrowed content `v` as mutable
+}
+
+fn main() {
+    let v = vec![1, 2, 3];
+    mutate(&v);
+}
+#+END_SRC
+** Mutation must be explicit
+#+BEGIN_SRC rust
+fn mutate(v: &mut Vec<i32>) {
+    v.push(4);
+}
+
+fn main() {
+    let mut v = vec![1, 2, 3];
+    mutate(&mut v);
+}
+#+END_SRC
+** Shared Immutable State is Evil
+#+BEGIN_SRC rust
+let mut v = vec![1, 2 ,3];
+let u = &v;
+let t = &v;
+let mut s = &v;  // ERROR: cannot borrow `v` as mutable because it is also borrowed as immutable
+#+END_SRC
+** Borrowing + lifetime
+#+BEGIN_SRC rust
+fn main() {
+    let mut u: &Vec<i32>;
+    {
+        let mut v = vec![1, 2, 3];
+        u = &v; // ERROR: `v` does not live long enough
+    }
+}
+#+END_SRC
+* Expressive
+*** *exercism.io/python/pangram*
+#+BEGIN_SRC python
+import string
+
+def is_pangram(text):
+    alphabet = set(iter(string.lowercase))
+    return alphabet.issubset(set(c.lower() for c in text))
+#+END_SRC
+*** *exercism.io/rust/pangram*
+#+BEGIN_SRC rust
+use std::collections::HashSet;
+
+pub fn is_pangram(sentence: &str) -> bool {
+    let alphabet = "abcdefghijklmnopqrstuvwxyz".chars().collect::<HashSet<_>>();
+    alphabet.is_subset(&sentence.to_lowercase().chars().collect::<HashSet<_>>())
+}
+#+END_SRC
+** pangram.py
+#+BEGIN_SRC python
+import string
+
+def is_pangram(text):
+    alphabet = set(string.lowercase)
+    return alphabet.issubset(set(text.lower()))
+#+END_SRC
+** pangram.rs
+#+BEGIN_SRC rust
+use std::collections::HashSet;
+
+pub fn is_pangram(sentence: &str) -> bool {
+    let alphabet = "abcdefghijklmnopqrstuvwxyz".chars().collect::<HashSet<_>>();
+    alphabet.is_subset(&sentence.to_lowercase().chars().collect::<HashSet<_>>())
+}
+#+END_SRC
+* More
+- The type system: struct + enum
+- Pattern matching: match
+- Static duck typing: traits + Generics
+- Concurrency: std::sync, [[https://github.com/nikomatsakis/rayon][Rayon]], [[https://github.com/tokio-rs/tokio][Tokio]], …
+- Tooling: cargo, rustdoc, rustup, …
+- Ecosystem: Community + https://craits.io
+- Rust progress: 1.0 2015/05→ 1.14 2016/12
+- Rust ❤ Python: FFI, [[https://github.com/dgrunwald/rust-cpython][rust-cpython]]
+* Did not make the cut
+  Content left out of the presentation:
+** Hello, world!
+#+BEGIN_SRC rust
+fn main() {
+    println!("Hello, world!");
+}
+#+END_SRC
+*** Hello, Cargo!
+➜  rust cargo new --bin hello
+     Created binary (application) `hello` project
+➜  rust cd hello
+*** What we get
+➜  hello git:(master) ✗ tree
+.
+├── Cargo.toml
+└── src
+    └── main.rs
+
+1 directory, 2 files
+*** TOML?
+➜  hello git:(master) ✗ cat Cargo.toml
+#+BEGIN_SRC cargo
+[package]
+name = "hello"
+version = "0.1.0"
+authors = ["Chen Rotem Levy <chen@rotemlevy.name>"]
+
+[dependencies]
+#+END_SRC
+*** Hello, world!
+➜  hello git:(master) ✗ cat src/main.rs
+#+BEGIN_SRC rust
+fn main() {
+    println!("Hello, world!");
+}
+#+END_SRC
+*** cargo run
+➜  hello git:(master) ✗ cargo run
+   Compiling hello v0.1.0 (file:///home/chen/src/rust/hello)
+    Finished debug [unoptimized + debuginfo] target(s) in 2.76 secs
+     Running `target/debug/hello`
+Hello, world!
+** more Ownership and Borrowing
+*** Ownership
+#+BEGIN_SRC rust
+#[derive(Debug)]
+struct X;
+
+fn main() {
+    let x = X;
+    let y = x;
+    let z = x; // error[E0382]: use of moved value: `x`
+}
+#+END_SRC
+*** Error messages in rust:
+#+BEGIN_SRC text
+error[E0382]: use of moved value: `x`
+ --> main.rs:7:9
+  |
+6 |     let y = x;
+  |         - value moved here
+7 |     let z = x;
+  |         ^ value used here after move
+  |
+  = note: move occurs because `x` has type `X`,
+          which does not implement the `Copy` trait
+#+END_SRC
+
+#+BEGIN_SRC sh
+$ rustc --explain E0382 | wc
+     61     287    1695
+#+END_SRC
+
+zv* So
+#+BEGIN_SRC rust
+fn print_x(x: X) -> X {
+    println!("x: is {:?}", X);
+    x
+}
+fn main() {
+    let x = X;
+    x = print_x(x);
+    let y = x;
+}
+#+END_SRC
+*** Borrowing
+#+BEGIN_SRC rust
+fn print_x(x: &X) {
+    println!("x: {:?}", x);
+}
+fn main() {
+    let x = X;
+    foo(x);
+    let y = x;
+}
+#+END_SRC
+** Concurrent
+- Well defined sharing semantics
+- Future library
+** The type system
+*** Simple types
+- bool
+- char
+- i8/i16/i32/i64/isize
+- u8/u16/u32/u64/usize
+- f32/f64
+*** More complex types
+- Tuples: (A, B, C, ...)
+- Arrays: [T; usize]
+- Slice: &[T]
+- String slice: &str
+- Function: fn(A, B, ...) -> X
+*** struct
+#+BEGIN_SRC rust
+struct Person {
+  String: name,
+}
+
+impl Person {
+   fn greet(&self) {
+      println!("Hello, {}", self.name);
+   }
+}
+#+END_SRC
+`
+*** enum
+
+#+BEGIN_SRC rust
+enum Option {
+  Some(i32),
+  None,
+}
+
+fn check_option(op: &Option) {
+   match(*op) {
+     Some(n) => println!("We got a value {}", n),
+     None => println!("Sorry, no value here"),
+   }
+}
+#+END_SRC
+
+** The Traits system
+#+BEGIN_SRC rust
+struct Rectangle {
+  widnth: f64;
+  length: f64;
+}
+
+impl Rectangle {
+  fn new(w: f64, l: f64) -> Rectangle {
+    Rectangle { widnth: w, length: l }
+  }
+  fn area(&self) -> f64 {
+    self.length * self.height
+  }
+}
+#+END_SRC
+*** Built in Traits
+#+BEGIN_SRC rust
+use std::fmt::{Display, Formatter, Result}
+
+impl Display for Rectangle {
+  fn fmt(&self, f: &mut Formatter) -> Result {
+    write!(f, "{} x {}", self.length, self.height)
+  }
+}
+#+END_SRC
+** Rust + Python
+*** Difference
+
+| Python           | Rust            |
+|------------------+-----------------|
+| dynamic typed    | static typed    |
+| dynamic dispatch | static dispatch |
+| big runtime      | small runtime   |
+
+*** Similarities
+
+| Python          | Rust      |
+|-----------------+-----------|
+| pip/setup-tools | cargo     |
+| pypi            | crates.io |
+|                 |           |
+
+*** Bits of Python in rust
+- self
+- string formatting
+- Unicode strings
+- 1_000_000
