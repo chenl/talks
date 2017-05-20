@@ -4,6 +4,7 @@
 #+date: <2017-01-02 Mon>
 #+option: ^:nil
 
+
 * chen@rotemlevy.name
 - Currently @ SentinelOne ([[https://sentinelone.com/jobs/][we are hiring]])
 - A nerd since 1968, a computer geek since 1978
