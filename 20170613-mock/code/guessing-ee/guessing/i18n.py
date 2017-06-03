@@ -22,6 +22,6 @@ def is_quit(text):
 def is_yes(text):
     # type: (str) -> bool
     if is_lang('he'):
-        return test.strip() in ['כ', 'כן', 'בטח', 'סבבה']
+        return text.strip() in ['כ', 'כן', 'בטח', 'סבבה', '']
     else:
-        return text.strip().lower() in ['y', 'yes', 'yep', 'sure']
+        return text.strip().lower() in ['', 'y', 'yes', 'yep', 'sure']
