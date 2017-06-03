@@ -4,6 +4,9 @@
 #+date: [2017-06-12 Mon] (or the 13th)
 #+option: ^:nil
 
+#+CAPTION: source https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
+#+NAME:   fig:TITLE
+[[./img/dog_with_glasses.jpg]]
 * chen@rotemlevy.name
 - A nerd since 1968, a computer geek since 1978, GNU/* fan-boy since 1998
 - Currently @ SentinelOne ([[https://sentinelone.com/jobs/][we are hiring]])
