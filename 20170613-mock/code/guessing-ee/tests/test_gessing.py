@@ -16,4 +16,6 @@ from guessing import game
 @mock.patch('sys.stdout' , new_callable=StringIO)
 def test_outro(mock_stdout, mock_T):
     game.outro()
-    assert mock_stdout.getvalue() == "That was fun! Thank you for playing with me.\n"
+    msg = "That was fun! Thank you for playing with me."
+    mock_T.assert_called_once_with(msg)
+    assert mock_stdout.getvalue() == "{}\n".format(msg)
