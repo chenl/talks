@@ -17,42 +17,57 @@
 - GNU/* fan-boy since 1998
 - Enjoying Python since [[https://www.python.org/download/releases/1.5/][v1.5.2]]
 - Currently @ [[https://sentinelone.com/][SentinelOne]] found my job @ PyCon.il 2016 ([[https://sentinelone.com/jobs/][we are hiring]])
-** speaker notes
+#+BEGIN_NOTES
 My mother told me not to tire you too much, so I will do my best to be a good son.
+#+END_NOTES
 * Testing is important
 #+CATION: Testing is important
 #+NAME:   fig:CAUTION
 #+CREDIT: https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
 [[./img/caution.jpg]]
+#+BEGIN_NOTES
 Without it:
 - You can't refactor
 - Your productivity slows
 - Your code crashes
 - You loose all your hear
 - And you will die!
-** Speaker notes
+#+END_NOTES
+
 * Productivity
 #+CAPTION: Productivity downward graph
 #+NAME:    fig:DOWN_GRAPH
-[[./img/down_graph.svg]]
+[[./img/down_graph.png]]
+
+#+BEGIN_NOTES
+I could show you a cheesy graph I made with [[https://inkscape.org/][INKSCAPE]]
+#+END_NOTES
+
+* Productivity
 
 #+CREDIT: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/, https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
 #+CAPTION: Sad wet dog
 #+NAME:    fig:SAD_DOG
 [[./img/sad_wet_dog.jpg]]
-https://pixabay.com/p-2274100/
+
+#+BEGIN_NOTES
+But Instead I will show you a sad web doggy, which convey the same message.
+You will be unhappy.
+#+END_NOTES
+
+* Doom
+
+#+CREDIT: https://pixabay.com/p-2274100/ (cc-0)
 #+NAME: fig:BOMB
 [[./img/atomic_bomb.jpg]]
 
-** Speaker notes
-I could show you a cheesy graph I made with [[https://inkscape.org/][INKSCAPE]]
-But Instead I will show you a sad web doggy,
+#+BEGIN_NOTES
 
 If you listen to any of Uncle Bob Martin's talks you will here him say that some day soon lots of people are going to die due to a software bug, and it will be our fault.
 
+And my mother asked me not to bore you too much, I imagine she will be upset if I will kill some of you...
+#+END_NOTES
 * So you want to learn you a unit-test
-
-** Didactic example
 
 #+BEGIN_SRC python
 def test_to_roman_numerals():
@@ -60,6 +75,13 @@ def test_to_roman_numerals():
     assert to_roman_numerals(2017) == 'MMXVII'
 #+END_SRC
 
+#+BEGIN_NOTES
+When I tried to learn how to write unit-testing I mostly found tutorials that used example like this.
+
+~to_roman_numerals(decial: int) -> str~ is a good boy:
+
+It is a *pure* function. It gets a value and return a value that dependent *only* on its' input.
+#+END_NOTES
 * Unit testing is hard
   image: https://unsplash.com/?photo=daYpIvggFxA
   legacy code images:

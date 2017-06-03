@@ -15,7 +15,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.1 unknown"
-   sodipodi:docname="down_graph.svg">
+   sodipodi:docname="down_graph.svg"
+   inkscape:export-filename="/home/chen/Documents/talks/20170613-mock/img/down_graph.jpg.png"
+   inkscape:export-xdpi="295.45871"
+   inkscape:export-ydpi="295.45871">
   <defs
      id="defs2">
     <marker
@@ -86,9 +89,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.99109358"
-     inkscape:cx="121.1027"
-     inkscape:cy="344.9755"
+     inkscape:zoom="2.5589821"
+     inkscape:cx="259.93396"
+     inkscape:cy="173.50649"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
