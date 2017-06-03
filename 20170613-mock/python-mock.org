@@ -67,6 +67,7 @@ If you listen to any of Uncle Bob Martin's talks you will here him say that some
 
 And my mother asked me not to bore you too much, I imagine she will be upset if I will kill some of you...
 #+END_NOTES
+
 * So you want to learn you a unit-test
 
 #+BEGIN_SRC python
@@ -82,7 +83,20 @@ When I tried to learn how to write unit-testing I mostly found tutorials that us
 
 It is a *pure* function. It gets a value and return a value that dependent *only* on its' input.
 #+END_NOTES
+* I will save the day
+
+#+CREDIT:  https://unsplash.com/@zoncoll?photo=ZtLASJerPb0 (cc-0)
+#+CAPTION: I will save the day
+#+NAME:    fig:
+[[./img/superman.jpg]]
+
+#+BEGIN_NOTES
+This is not too hard. I can do that.
+Don't wary Humanity, I will save you!
+#+END_NOTES
+
 * Unit testing is hard
+
   image: https://unsplash.com/?photo=daYpIvggFxA
   legacy code images:
   - https://unsplash.com/?photo=FX__egbD0zE
