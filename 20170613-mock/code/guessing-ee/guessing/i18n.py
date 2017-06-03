@@ -15,9 +15,9 @@ def T(text):
 def is_quit(text):
     # type: (str) -> bool
     if is_lang('he'):
-        return test.strip() in ['לא', 'די', 'מספיק', 'חלאס']
+        return text.strip() in ['לא', 'די', 'מספיק', 'צא בחוץ']
     else:
-        return text.strip().lower() in ['quit', 'stop', 'no', 'enough']
+        return text.strip().lower() in ['quit', 'stop', 'exit', 'no', 'enough']
 
 def is_yes(text):
     # type: (str) -> bool
