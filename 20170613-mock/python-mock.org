@@ -4,13 +4,20 @@
 #+date: [2017-06-12 Mon] (or the 13th)
 #+option: ^:nil
 
-#+CAPTION: source https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
+#+CAPTION: Unit-testing in the real world with mock
 #+NAME:   fig:TITLE
+#+CREDIT: https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
 [[./img/dog_with_glasses.jpg]]
 * chen@rotemlevy.name
+#+CAPTION: chen@rotemlevy.name
+#+NAME:    fig:ABOUT_ME
+[[./img/at_key_signing_party.jpg]]
 - A nerd since 1968, a computer geek since 1978, GNU/* fan-boy since 1998
-- Currently @ SentinelOne ([[https://sentinelone.com/jobs/][we are hiring]])
+- Currently @ [[https://www.sentinleone.com][SentinelOne]] found my job @ PyCon.il 2016 ([[https://sentinelone.com/jobs/][we are hiring]])
+** speaker notes
+
 * My mother told me not to tire you too much
+
 * Unit testing is important
 Without it:
 - You can't refactor
@@ -173,6 +180,8 @@ m.foo().bar.baz(1, 2, 3, eggs='spam')  # ok
   danger: https://unsplash.com/search/danger?photo=28v9cq7ytNU
   exception: https://unsplash.com/collections/440851/work?photo=EXuKQaf3Ei8
 * credits:
+title:
+https://unsplash.com/photos/wOHH-NUTvVc
 sad dog:
 https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/
 https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
