@@ -13,7 +13,7 @@
 #+NAME:    fig:ABOUT_ME
 [[./img/at_key_signing_party.jpg]]
 - A nerd since 1968, a computer geek since 1978, GNU/* fan-boy since 1998
-- Currently @ [[https://www.sentinleone.com][SentinelOne]] found my job @ PyCon.il 2016 ([[https://sentinelone.com/jobs/][we are hiring]])
+- Currently @ [[https://sentinelone.com/][SentinelOne]] found my job @ PyCon.il 2016 ([[https://sentinelone.com/jobs/][we are hiring]])
 ** speaker notes
 
 * My mother told me not to tire you too much
