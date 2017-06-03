@@ -1,9 +1,11 @@
-#+title: Unit-testing in the real world with mock
-#+author: Chen Rotem Levy
-#+email: chen@rotemlevy.name
-#+date: [2017-06-12 Mon] (or the 13th)
+#+TITLE: Unit-testing in the real world with mock
+#+AUTHOR: Chen Rotem Levy
+#+EMAIL: chen@rotemlevy.name
+#+DATE: [2017-06-13 Tue]
 #+option: ^:nil
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 
+* Unit-testing in the real world with mock
 #+CAPTION: Unit-testing in the real world with mock
 #+NAME:   fig:TITLE
 #+CREDIT: https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
@@ -183,7 +185,6 @@ def charge_credit_card(amount, cc_number, exp_month, exp_year):
     c = CreditCard(cc_number, exp_month, exp_year)
     c.charge(ccp, amount)
 #+END_SRC
-
 
 * Mock makes it easy
 
