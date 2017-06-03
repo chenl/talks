@@ -1,0 +1,179 @@
+#+title: Unit-testing in the real world with mock
+#+author: Chen Rotem Levy
+#+email: chen@rotemlevy.name
+#+date: [2017-06-12 Mon] (or the 13th)
+#+option: ^:nil
+
+* chen@rotemlevy.name
+- A nerd since 1968, a computer geek since 1978, GNU/* fan-boy since 1998
+- Currently @ SentinelOne ([[https://sentinelone.com/jobs/][we are hiring]])
+* My mother told me not to tire you too much
+* Unit testing is important
+Without it:
+- You can't refactor
+- Your productivity slows
+- Your code crashes
+- You loose all your hear
+- And you will die!
+
+
+https://pixabay.com/p-2274100/
+
+If you listen to any of Uncle Bob Martin's talks you will here him say that some day soon lots of people are going to die due to a software bug, and it will be our fault.
+
+* So you want to learn you a unit-test
+
+** Didactic example
+
+#+BEGIN_SRC python
+def test_to_roman_numerals():
+    assert to_roman_numerals(1949) == 'MCMXLIX'
+    assert to_roman_numerals(2017) == 'MMXVII'
+#+END_SRC
+
+* Unit testing is hard
+  image: https://unsplash.com/?photo=daYpIvggFxA
+  legacy code images:
+  - https://unsplash.com/?photo=FX__egbD0zE
+  - https://unsplash.com/photos/-yz22gsqAH0
+
+~to_roman_numerals(decial: int) -> str~ is a good boy:
+
+It is a *pure* function. It gets a value and return a value that dependent *only* on its' input.
+
+So you go into the real world thinking, this unit-testing thing isn't that hard and you look at:
+
+** But int he real world it is not like that:
+- legacy code
+- inspects the world
+- has side effects
+- calls external services
+- have random components
+
+* Guessing Game the Enterprise Edition
+
+*** request time (inspect the world)
+
+#+BEGIN_SRC python
+from datetime import datetime
+import requests
+
+def request_time():
+    r = requests.get('http://now.httpbin.org/')
+    if r.status_code != 200:
+       raise RuntimeError("Oy Vey!")
+    return datetime.strptime(r.json()['now']['iso8601'],
+                             '%Y-%m-%dT%H:%M:%S.%fZ')
+#+END_SRC
+
+*** cmd2 (integration, mock os.system)
+
+#+BEGIN_SRC python
+>>> c = ExampleCmd()
+>>> c.one_cmd_plus_hooks('shell echo a')
+a
+#+END_SRC
+
+#+BEGIN_SRC python
+import os
+
+class ExampleCmd(cmd.Cmd):
+    # ...
+    def one_cmd_plus_hooks(self, line):
+        # ...
+        os.system(...)
+#+END_SRC
+
+#+BEGIN_SRC python
+from unittest.mock import patch
+
+@patch('os.system')
+def test_exmaple_cmd_shell(mock_system):
+    c = ExampleCmd()
+    c.one_cmd_plus_hooks('shell echo a')
+    mock_system.assert_called_once_with('echo a')
+#+END_SRC
+
+*** get json
+
+#+BEGIN_SRC python
+def get_json(filename):
+    try:
+        return json.loads(open(filename).read())
+    except (IOError, ValueError):
+        return {}
+#+END_SRC
+
+Well... I can create a `tempfile` with some json in it. And I can put some invalid json to have the ~ValueError~, and there must be something I can do to get an ~IOError~ and I will figure this out later somehow.
+
+But then you are writing a *functional* test.
+
+*** credit card (side effect)
+
+#+BEGIN_SRC python
+def charge_credit_card(amount, cc_number, exp_month, exp_year):
+    db = Database()
+    q = OfflineQueue(db)
+    ccp = CreditCardProcessor(q)
+    c = CreditCard(cc_number, exp_month, exp_year)
+    c.charge(ccp, amount)
+#+END_SRC
+
+
+* Mock makes it easy
+
+Meat ~Mock~
+
+He is an accommodating dude:
+
+#+BEGIN_SRC python
+m = mock.Mock()
+m()  # ok
+m.foo()  # ok
+m.foo().bar.baz(1, 2, 3, eggs='spam')  # ok
+#+END_SRC
+  I am ok with that: https://unsplash.com/collections/262992/funny?photo=BXs8SjVelKs
+
+** patch
+   patches the *name* of something
+
+* Mock makes it too easy
+
+- it is too permissive (can be made better)
+- if it is unit only, the boundaries between units aren't checked.
+
+- [[https://medium.com/python-pandemonium/mock-or-not-to-mock-41965d33f175][to mock or not to mock]]
+
+* One step on a long journey
+  image: https://unsplash.com/photos/1JWmFju8vVg
+
+- no tests
+- with unit coverage
+- define the boundaries you wish to mock
+- define the way you want to construct your mock
+
+* links
+  - [[https://www.youtube.com/watch?v=zW0f4ZRYF5M][Mocking Strategies]] ([[https://www.slideshare.net/excellaco/mocking-in-python-44973320][slides]]) / Excella's Dan Davis
+    at the Django District Meetup group on Feb 10, 2015
+
+  - [[https://www.youtube.com/watch?v=Xu5EhKVZdV8][Stop Moking, Start Testing]] / Augie Fackler, Nathaniel Manista
+    Project Hosting at Google Code is a large, well-established system written mostly in Python. We'll share our battle-born convictions about creating tests for test-unfriendly code and the larger topic of testing.
+
+  - images: https://unsplash.com/
+
+* images:
+  mock: https://unsplash.com/collections/262992/funny?photo=wOHH-NUTvVc
+  I am ok with that: https://unsplash.com/collections/262992/funny?photo=BXs8SjVelKs
+  duck typing: https://unsplash.com/?photo=5x7PmmHanG4
+  flimsy: https://unsplash.com/?photo=5DJqsjAYlmk
+  ??: https://unsplash.com/?photo=2Ts5HnA67k8
+  danger: https://unsplash.com/search/danger?photo=28v9cq7ytNU
+  exception: https://unsplash.com/collections/440851/work?photo=EXuKQaf3Ei8
+* credits:
+sad dog:
+https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/
+https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
+atomic bomb:
+https://pixabay.com/en/atomic-bomb-mushroom-cloud-explosion-1011738/
+enterprise:
+https://www.flickr.com/photos/thart2009/22658375526
