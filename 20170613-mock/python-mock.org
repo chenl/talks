@@ -4,16 +4,24 @@
 #+DATE: [2017-06-13 Tue]
 #+option: ^:nil
 #+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_EXTRA_CSS: ./custom.css
 
 * Unit-testing in the real world with mock
-#+CAPTION: Unit-testing in the real world with mock
-#+NAME:   fig:TITLE
-#+CREDIT: https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
+#+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
+#+ATTR_HTML: :width 60% :height 60%
+#+CAPTION:   Unit-testing in the real world with mock
+#+NAME:      fig:TITLE
 [[./img/dog_with_glasses.jpg]]
 * chen@rotemlevy.name
-#+CAPTION: chen@rotemlevy.name
-#+NAME:    fig:ABOUT_ME
-[[./img/at_key_signing_party.jpg]]
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION:   chen@rotemlevy.name
+#+NAME:      fig:ABOUT_ME
+[[./img/at_key_signing_party.jpg]]-
+** Nerd
+:PROPERTIES:
+:reveal_background: ./img/at_key_signing_party.jpg
+:reveal_background_trans: slide
+:END:
 - A nerd since 1968
 - a computer geek since 1978
 - GNU/* fan-boy since 1998
@@ -21,11 +29,14 @@
 - Currently @ [[https://sentinelone.com/][SentinelOne]] found my job @ PyCon.il 2016 ([[https://sentinelone.com/jobs/][we are hiring]])
 #+BEGIN_NOTES
 My mother told me not to tire you too much, so I will do my best to be a good son.
+
+(this slide is a POC for background image per slide)
 #+END_NOTES
 * Testing is important
+#+CREDIT: https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
+#+ATTR_HTML: :width 50% :height 50%
 #+CATION: Testing is important
 #+NAME:   fig:CAUTION
-#+CREDIT: https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
 [[./img/caution.jpg]]
 #+BEGIN_NOTES
 Without it:
@@ -36,7 +47,8 @@ Without it:
 - And you will die!
 #+END_NOTES
 
-* Productivity
+** Productivity
+#+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: Productivity downward graph
 #+NAME:    fig:DOWN_GRAPH
 [[./img/down_graph.png]]
@@ -45,9 +57,10 @@ Without it:
 I could show you a cheesy graph I made with [[https://inkscape.org/][INKSCAPE]]
 #+END_NOTES
 
-* Productivity
+** Productivity
 
 #+CREDIT: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/, https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
+#+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: Sad wet dog
 #+NAME:    fig:SAD_DOG
 [[./img/sad_wet_dog.jpg]]
@@ -57,9 +70,11 @@ But Instead I will show you a sad web doggy, which convey the same message.
 You will be unhappy.
 #+END_NOTES
 
-* Doom
+** Doom
 
 #+CREDIT: https://pixabay.com/p-2274100/ (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION: A catastrophic software bug
 #+NAME: fig:BOMB
 [[./img/atomic_bomb.jpg]]
 
@@ -85,9 +100,10 @@ When I tried to learn how to write unit-testing I mostly found tutorials that us
 
 It is a *pure* function. It gets a value and return a value that dependent *only* on its' input.
 #+END_NOTES
-* I will save the day
+** I will save the day
 
 #+CREDIT:  https://unsplash.com/@zoncoll?photo=ZtLASJerPb0 (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: I will save the day
 #+NAME:    fig:
 [[./img/superman.jpg]]
@@ -97,98 +113,39 @@ This is not too hard. I can do that.
 Don't wary Humanity, I will save you!
 #+END_NOTES
 
-* Unit testing is hard
+** Unit testing is hard
 
-  image: https://unsplash.com/?photo=daYpIvggFxA
-  legacy code images:
-  - https://unsplash.com/?photo=FX__egbD0zE
-  - https://unsplash.com/photos/-yz22gsqAH0
+#+CREDIT:    https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION:   The real world is not as simple
+#+NAME:      fig:KNOT
+[[./img/kont.gpj]]
 
-~to_roman_numerals(decial: int) -> str~ is a good boy:
+#+BEGIN_NOTES
+- It inspects the world,
+- Has side effects,
+- calls external services (slow expensive, flaky)
+- Might have random components
 
-It is a *pure* function. It gets a value and return a value that dependent *only* on its' input.
+@TODO: consider a new slide for legacy code
 
-So you go into the real world thinking, this unit-testing thing isn't that hard and you look at:
+- You have legacy code, with no code coverage, so you can't refactor,
+  so you can't test so you don't have coverage...
+#+END_NOTES
 
-** But int he real world it is not like that:
-- legacy code
-- inspects the world
-- has side effects
-- calls external services
-- have random components
+* Mocking
 
-* Guessing Game the Enterprise Edition
+#+BEGIN_NOTES
+Mocking is one way to isolate all the dependencies our unit requires, and replace them with an object that we will later be able to interrogate.
 
-*** request time (inspect the world)
+The dynamic nature of Python lends itself to for such manipulation by swapping the object our unit ask by name, and replace it with a Mock object.
+#+END_NOTES
 
-#+BEGIN_SRC python
-from datetime import datetime
-import requests
+** Meet ~Mock~
 
-def request_time():
-    r = requests.get('http://now.httpbin.org/')
-    if r.status_code != 200:
-       raise RuntimeError("Oy Vey!")
-    return datetime.strptime(r.json()['now']['iso8601'],
-                             '%Y-%m-%dT%H:%M:%S.%fZ')
-#+END_SRC
 
-*** cmd2 (integration, mock os.system)
-
-#+BEGIN_SRC python
->>> c = ExampleCmd()
->>> c.one_cmd_plus_hooks('shell echo a')
-a
-#+END_SRC
-
-#+BEGIN_SRC python
-import os
-
-class ExampleCmd(cmd.Cmd):
-    # ...
-    def one_cmd_plus_hooks(self, line):
-        # ...
-        os.system(...)
-#+END_SRC
-
-#+BEGIN_SRC python
-from unittest.mock import patch
-
-@patch('os.system')
-def test_exmaple_cmd_shell(mock_system):
-    c = ExampleCmd()
-    c.one_cmd_plus_hooks('shell echo a')
-    mock_system.assert_called_once_with('echo a')
-#+END_SRC
-
-*** get json
-
-#+BEGIN_SRC python
-def get_json(filename):
-    try:
-        return json.loads(open(filename).read())
-    except (IOError, ValueError):
-        return {}
-#+END_SRC
-
-Well... I can create a `tempfile` with some json in it. And I can put some invalid json to have the ~ValueError~, and there must be something I can do to get an ~IOError~ and I will figure this out later somehow.
-
-But then you are writing a *functional* test.
-
-*** credit card (side effect)
-
-#+BEGIN_SRC python
-def charge_credit_card(amount, cc_number, exp_month, exp_year):
-    db = Database()
-    q = OfflineQueue(db)
-    ccp = CreditCardProcessor(q)
-    c = CreditCard(cc_number, exp_month, exp_year)
-    c.charge(ccp, amount)
-#+END_SRC
-
-* Mock makes it easy
-
-Meat ~Mock~
+I am ok with that:
+https://unsplash.com/collections/262992/funny?photo=BXs8SjVelKs
 
 He is an accommodating dude:
 
@@ -198,7 +155,17 @@ m()  # ok
 m.foo()  # ok
 m.foo().bar.baz(1, 2, 3, eggs='spam')  # ok
 #+END_SRC
-  I am ok with that: https://unsplash.com/collections/262992/funny?photo=BXs8SjVelKs
+
+
+* Example: Guessing Game
+
+#+CREDIT:    https://www.flickr.com/photos/thart2009/22658375526 (cc-by)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   The Enterprise Edition
+#+NAME:      fig:ENTERPRISE
+[[./img/enterprise.jpg]]
+
+* Mock makes it easy
 
 ** patch
    patches the *name* of something
@@ -218,30 +185,93 @@ m.foo().bar.baz(1, 2, 3, eggs='spam')  # ok
 - define the boundaries you wish to mock
 - define the way you want to construct your mock
 
-* links
+* Credits
+** links
   - [[https://www.youtube.com/watch?v=zW0f4ZRYF5M][Mocking Strategies]] ([[https://www.slideshare.net/excellaco/mocking-in-python-44973320][slides]]) / Excella's Dan Davis
     at the Django District Meetup group on Feb 10, 2015
 
   - [[https://www.youtube.com/watch?v=Xu5EhKVZdV8][Stop Moking, Start Testing]] / Augie Fackler, Nathaniel Manista
     Project Hosting at Google Code is a large, well-established system written mostly in Python. We'll share our battle-born convictions about creating tests for test-unfriendly code and the larger topic of testing.
-
-  - images: https://unsplash.com/
-
-* images:
+** images:
+  title: https://unsplash.com/photos/wOHH-NUTvVc
   mock: https://unsplash.com/collections/262992/funny?photo=wOHH-NUTvVc
   I am ok with that: https://unsplash.com/collections/262992/funny?photo=BXs8SjVelKs
   duck typing: https://unsplash.com/?photo=5x7PmmHanG4
   flimsy: https://unsplash.com/?photo=5DJqsjAYlmk
-  ??: https://unsplash.com/?photo=2Ts5HnA67k8
+  coverage: https://unsplash.com/?photo=2Ts5HnA67k8
   danger: https://unsplash.com/search/danger?photo=28v9cq7ytNU
   exception: https://unsplash.com/collections/440851/work?photo=EXuKQaf3Ei8
-* credits:
-title:
-https://unsplash.com/photos/wOHH-NUTvVc
-sad dog:
-https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/
-https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
-atomic bomb:
-https://pixabay.com/en/atomic-bomb-mushroom-cloud-explosion-1011738/
-enterprise:
-https://www.flickr.com/photos/thart2009/22658375526
+  brick wall: https://unsplash.com/?photo=daYpIvggFxA
+  legacy code: https://unsplash.com/?photo=FX__egbD0zE
+  atomic bomb: https://pixabay.com/en/atomic-bomb-mushroom-cloud-explosion-1011738/
+  enterprise: https://www.flickr.com/photos/thart2009/22658375526
+  sad dog: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/
+           https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
+* didn't make it
+** Old examples
+**** request time (inspect the world)
+
+ #+BEGIN_SRC python
+ from datetime import datetime
+ import requests
+
+ def request_time():
+     r = requests.get('http://now.httpbin.org/')
+     if r.status_code != 200:
+        raise RuntimeError("Oy Vey!")
+     return datetime.strptime(r.json()['now']['iso8601'],
+                              '%Y-%m-%dT%H:%M:%S.%fZ')
+ #+END_SRC
+
+**** cmd2 (integration, mock os.system)
+
+ #+BEGIN_SRC python
+ >>> c = ExampleCmd()
+ >>> c.one_cmd_plus_hooks('shell echo a')
+ a
+ #+END_SRC
+
+ #+BEGIN_SRC python
+ import os
+
+ class ExampleCmd(cmd.Cmd):
+     # ...
+     def one_cmd_plus_hooks(self, line):
+         # ...
+         os.system(...)
+ #+END_SRC
+
+ #+BEGIN_SRC python
+ from unittest.mock import patch
+
+ @patch('os.system')
+ def test_exmaple_cmd_shell(mock_system):
+     c = ExampleCmd()
+     c.one_cmd_plus_hooks('shell echo a')
+     mock_system.assert_called_once_with('echo a')
+ #+END_SRC
+
+**** get json
+
+ #+BEGIN_SRC python
+ def get_json(filename):
+     try:
+         return json.loads(open(filename).read())
+     except (IOError, ValueError):
+         return {}
+ #+END_SRC
+
+ Well... I can create a `tempfile` with some json in it. And I can put some invalid json to have the ~ValueError~, and there must be something I can do to get an ~IOError~ and I will figure this out later somehow.
+
+ But then you are writing a *functional* test.
+
+**** credit card (side effect)
+
+ #+BEGIN_SRC python
+ def charge_credit_card(amount, cc_number, exp_month, exp_year):
+     db = Database()
+     q = OfflineQueue(db)
+     ccp = CreditCardProcessor(q)
+     c = CreditCard(cc_number, exp_month, exp_year)
+     c.charge(ccp, amount)
+ #+END_SRC

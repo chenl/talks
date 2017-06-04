@@ -1,0 +1,5 @@
+/* Custom definitions for org-reveal */
+
+.reveal pre {
+  font-size: 1.5em;
+}
