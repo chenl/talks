@@ -27,7 +27,7 @@ def game():
 
 def intro():
     # type: () -> None
-    print(T("I am board, lets play a game."))
+    print(T("I am bored, lets play a game."))
     random.seed()
 
 def outro():
@@ -58,7 +58,7 @@ def play(level):
         elif guess > num:
             print(T("No, my number is smaller than that"))
         else:
-            print(T("Yes, this is the number I was thinking about! How did you konw that?"))
+            print(T("Yes, this is the number I was thinking about! How did you know that?"))
             break
 
 def your_guess():

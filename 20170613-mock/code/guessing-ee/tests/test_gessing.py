@@ -20,7 +20,7 @@ from guessing import game
 @mock.patch('sys.stdout' , new_callable=StringIO)
 def test_intro(mock_stdout, mock_seed, mock_T):
     game.intro()
-    msg = "I am board, lets play a game."
+    msg = "I am bored, lets play a game."
     mock_T.assert_called_once_with(msg)
     mock_seed.assert_called_once_with()
     assert mock_stdout.getvalue() == "{}\n".format(msg)
