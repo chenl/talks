@@ -13,8 +13,6 @@ except ImportError:
 from guessing import game
 
 
-# TODO: use @mock.patch.multiple() here
-# https://docs.python.org/3/library/unittest.mock.html#patch-multiple
 @mock.patch('guessing.game.T', side_effect=lambda x: x)
 @mock.patch('random.seed')
 @mock.patch('sys.stdout' , new_callable=StringIO)
