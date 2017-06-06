@@ -242,6 +242,20 @@ def test_lang_default():
     with mock.patch.dict('guessing.i18n.environ', clear=True):
         assert i18n.lang() == 'C'
 #+END_SRC
+
+#+BEGIN_NOTES
+There is a lot going on here:
+
+First thing to note is while Python 3.3 comes with ~mock~ as part of the std-libs (under ~unittest~), in earlier we need to install it via ~pip~.
+
+Next we use ~mock.patch.dict~ one of the patchers included in Python, here we use it as context manager.
+
+There are several things we should note here:
+- it will do the ~import~ for us.
+- it modifies the binding of *names* and keeps the object as is.
+- it restores the binding after it is done.
+- since it change the binding the names we need to patch the names where they are used, not defined.
+#+END_NOTES
 * Thoughts
 ** patch
    patches the *name* of something
