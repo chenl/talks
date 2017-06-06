@@ -175,6 +175,9 @@ This is cool and all, but what is it sued for?
 #+NAME:      fig:ENTERPRISE
 [[./img/enterprise.jpg]]
 
+#+BEGIN_NOTES
+This is the classic Guessing game, the computer picks a number than the player need to guess what it is, But with extra enterprise-ness.
+#+END_NOTES
 ** play
 
 #+BEGIN_SRC python
@@ -201,8 +204,44 @@ def play(level):
 
 #+BEGIN_NOTES
 Sorry about the small font, but this is your run of the mill guessing game loop.
+
+TODO: not sure if this needs to be here.
 #+END_NOTES
 
+** i18n.lang
+
+#+BEGIN_SRC python
+def lang():
+    # type: () -> str
+    lang_keys = ('LC_MESSAGES', 'LANG', 'LC_ALL')
+    lang_env = (environ.get(key) for key in lang_keys)
+    return next(filter(None, chain(lang_env, 'C')))[:2]
+#+END_SRC
+
+#+BEGIN_NOTES
+One of G2E2 most Enterprise-y features is it ready-ness for the international market. So the first thing we need to do is to detect the player's language preference from the environment and report it.
+
+Note that our legacy code was written in Python 2.7 but with and eye to Python 3 migration, according to PEP-484.
+
+But this function doesn't get an input, instead it interrogates ~os.environ~, defaulting to ~"C"~ if no language found.
+
+So how should we test this?
+
+We could modify ~os.environ~, and see what we get, and it will work, but... `mock` gives us a better way to do that.
+#+END_NOTES
+
+** test_i18n.test_lang
+
+#+BEGIN_SRC python
+try:
+    from unittest import mock  # Python >= 3.3
+except ImportError:
+    import mock                # Python < 3.3
+
+def test_lang_default():
+    with mock.patch.dict('guessing.i18n.environ', clear=True):
+        assert i18n.lang() == 'C'
+#+END_SRC
 * Thoughts
 ** patch
    patches the *name* of something
