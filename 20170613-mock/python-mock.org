@@ -212,7 +212,7 @@ try:
 except ImportError:
     import mock                # Python < 3.3
 
-@mock.patch.dict('guessing.i18n.environ', LC_MESSAGES='he_IL'):
+@mock.patch.dict('guessing.i18n.environ', LC_MESSAGES='he_IL')
 def test_lang_lc_message_he():
     assert i18n.lang == 'he'
 #+END_SRC
