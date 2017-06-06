@@ -256,6 +256,18 @@ There are several things we should note here:
 - it restores the binding after it is done.
 - since it change the binding the names we need to patch the names where they are used, not defined.
 #+END_NOTES
+
+** options
+#+ATTR_HTML: :windth 50% :hiegnt 50%
+#+CAPTION: About 1/2 of the unittest.mock standard documenation
+#+NAME:    fig:DOCUMENATION
+[[./img/documentaion.png]]
+
+#+BEGIN_NOTES
+Each patcher can take several options, all of them listed in the standard documentation.
+BTW, I wanted to see if I can show all of the ~unittest.mock~ page in one slide, but I managed only about 1/2 of it.
+#+END_NOTES
+
 * Thoughts
 ** patch
    patches the *name* of something
