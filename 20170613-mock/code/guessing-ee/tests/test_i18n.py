@@ -8,6 +8,10 @@ except ImportError:
 from guessing import i18n
 
 
+@mock.patch.dict('guessing.i18n.environ', LC_MESSAGES='he_IL')
+def test_lang_lc_message_he():
+    assert i18n.lang() == 'he'
+
 def test_lang_default():
     with mock.patch.dict('guessing.i18n.environ', clear=True):
         assert i18n.lang() == 'C'
@@ -18,12 +22,6 @@ def test_is_lang_en():
                               LC_MESSAGES='en_US',
                               LANG='en_US')):
         assert i18n.lang() == 'en'
-
-def test_lang_lc_message_he():
-    with mock.patch.dict('guessing.i18n.environ',
-                         LC_MESSAGES='he_IL'):
-        assert i18n.is_lang('he')
-
 
 @mock.patch('guessing.i18n.lang')
 def test_T_not_hebrew(mock_lang):

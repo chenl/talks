@@ -214,7 +214,7 @@ except ImportError:
 
 @mock.patch.dict('guessing.i18n.environ', LC_MESSAGES='he_IL'):
 def test_lang_lc_message_he():
-    assert i18n.is_lang('he')
+    assert i18n.lang == 'he'
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -246,16 +246,49 @@ Next we want to test that if there are not values in `os.envrion` we get the our
 
 ** options
 #+ATTR_HTML: :windth 50% :hiegnt 50%
-#+CAPTION: About 1/2 of the unittest.mock standard documenation
+#+CAPTION: About 1/2 of the unittest.mock standard documentation
 #+NAME:    fig:DOCUMENATION
 [[./img/documentaion.png]]
 
 #+BEGIN_NOTES
-Each patcher can take several options, all of them listed in the standard documentation.
-BTW, I wanted to see if I can show all of the ~unittest.mock~ page in one slide, but I managed only about 1/2 of it.
+The mock API is very flexible, and all its' options are are listed in the standard documentation which is extensive.  I wanted to see if I can show all of the ~unittest.mock~ page in one slide, but I managed only about 1/2 of it.
 #+END_NOTES
 
 ** what to mock
+#+BEGIN_SRC python
+def is_quit(text):
+    # type: (str) -> bool
+    if lang() == 'he':
+        return text.strip() in [
+            'לא', 'די', 'מספיק', 'צא בחוץ']
+    else:
+        return text.strip().lower() in [
+            'quit', 'stop', 'exit', 'no', 'enough']
+#+END_SRC
+
+#+BEGIN_NOTES
+When the game prompts the player to give a guess, she can instead can ask to quit the game.  But this is dependent of the player's language.
+
+Again we *could* mock os.environ as we did before, but we have more options:
+#+END_NOTES
+
+** call graph
+
+#+CAPTION: The call graph of is_quit()
+#+NAME:    fig:ISQUIT
+[[./img/call_graph_is_quit.png]]
+
+** mock environ
+
+#+CAPTION: The call graph of is_quit() with mocked environ
+#+NAME:    fig:ISQUIT_MOCK_ENV
+[[./img/call_graph_is_quit_mock_environ.png]]
+
+** mock lang()
+
+#+CAPTION: The call graph of is_quit() with mocked lang()
+#+NAME:    fig:ISQUIT_MOCK_LANG
+[[./img/call_graph_is_quit_mock_lang.png]]
 
 ** Meet ~Mock~
 

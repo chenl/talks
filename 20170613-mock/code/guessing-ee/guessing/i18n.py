@@ -36,4 +36,4 @@ def T(text):
         format_='text',
         target_language=lng,
         source_language='en')
-    return tr[0]['translatedText']
+    return translation[0]['translatedText']
