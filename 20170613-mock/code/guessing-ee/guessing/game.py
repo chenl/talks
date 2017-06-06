@@ -27,7 +27,7 @@ def game():
 
 def intro():
     # type: () -> None
-    print(T("I am bored, lets play a game."))
+    print(T("I am bored, let's play a game."))
     random.seed()
 
 def outro():
