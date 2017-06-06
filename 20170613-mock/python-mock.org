@@ -141,32 +141,6 @@ Mocking is one way to isolate all the dependencies our unit requires, and replac
 The dynamic nature of Python lends itself to for such manipulation by swapping the object our unit ask by name, and replace it with a Mock object.
 #+END_NOTES
 
-** Meet ~Mock~
-
-#+CREDIT: https://unsplash.com/photos/BXs8SjVelKs
-#+ATTR_HTML: :width 50% :height 50%
-#+CAPTION: I am OK with that
-#+NAME:    fig:MOCK
-[[./img/happy_dog_with_a_hat.jpg]]
-
-** Lets call this Mock Fido
-Fido is an accommodating dude:
-#+NAME: code:FIDO
-#+BEGIN_SRC python
->>> fido = mock.Mock(name='Fido')
->>> fido
-<Mock name='Fido' id='140518155448504'>
->>> fido()
-<Mock name='Fido()' id='140518155482336'>
->>> fido.bark
-<Mock name='Fido.bark' id='140518155483064'>
->>> fido.bark()
-<Mock name='Fido.bark()' id='140518145633808'>
->>> fido.bark().run.after(42, what='cats')
-<Mock name='Fido.bark().run.after()' id='140518145716856'>
-#+END_SRC
-** So what?
-This is cool and all, but what is it sued for?
 * Example: Guessing Game
 
 #+CREDIT:    https://www.flickr.com/photos/thart2009/22658375526 (cc-by)
@@ -238,9 +212,9 @@ try:
 except ImportError:
     import mock                # Python < 3.3
 
-def test_lang_default():
-    with mock.patch.dict('guessing.i18n.environ', clear=True):
-        assert i18n.lang() == 'C'
+@mock.patch.dict('guessing.i18n.environ', LC_MESSAGES='he_IL'):
+def test_lang_lc_message_he():
+    assert i18n.is_lang('he')
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -257,6 +231,19 @@ There are several things we should note here:
 - since it change the binding the names we need to patch the names where they are used, not defined.
 #+END_NOTES
 
+** context manager
+
+#+BEGIN_SRC python
+def test_lang_default():
+    with mock.patch.dict('guessing.i18n.environ', clear=True):
+        assert os.envrion == {}
+        assert i18n.lang() == 'C'
+#+END_SRC
+
+#+BEGIN_NOTES
+Next we want to test that if there are not values in `os.envrion` we get the our expected default language. We use ~clear=True~. We use here a context manager, just because.
+#+END_NOTES
+
 ** options
 #+ATTR_HTML: :windth 50% :hiegnt 50%
 #+CAPTION: About 1/2 of the unittest.mock standard documenation
@@ -267,6 +254,37 @@ There are several things we should note here:
 Each patcher can take several options, all of them listed in the standard documentation.
 BTW, I wanted to see if I can show all of the ~unittest.mock~ page in one slide, but I managed only about 1/2 of it.
 #+END_NOTES
+
+** what to mock
+
+** Meet ~Mock~
+
+#+CREDIT: https://unsplash.com/photos/BXs8SjVelKs
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION: I am OK with that
+#+NAME:    fig:MOCK
+[[./img/happy_dog_with_a_hat.jpg]]
+
+** Lets call this Mock Fido
+Fido is an accommodating dude:
+#+NAME: code:FIDO
+#+BEGIN_SRC python
+>>> fido = mock.Mock(name='Fido')
+>>> fido
+<Mock name='Fido' id='140518155448504'>
+>>> fido()
+<Mock name='Fido()' id='140518155482336'>
+>>> fido.bark
+<Mock name='Fido.bark' id='140518155483064'>
+>>> fido.bark()
+<Mock name='Fido.bark()' id='140518145633808'>
+>>> fido.bark().run.after(42, what='cats')
+<Mock name='Fido.bark().run.after()' id='140518145716856'>
+#+END_SRC
+** So what?
+This is cool and all, but what is it sued for?
+
+
 
 * Thoughts
 ** patch
