@@ -11,7 +11,7 @@ import itertools
 
 from .i18n import T, is_yes, is_quit
 
-__author__ = "Chen Rotem Levy"
+__authors__ = ["Chen Rotem Levy", "Eliad Levy"]  # no relation
 __version__ = "0.1.0"
 __license__ = "Apache 2.0"
 

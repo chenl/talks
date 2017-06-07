@@ -124,18 +124,6 @@ Don't wary Humanity, I will save you!
   so you can't test so you don't have coverage...
 #+END_NOTES
 
-* Mocking
-#+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
-#+ATTR_HTML: :width 75% :height 75%
-#+NAME:      fig_MOKING
-[[./img/dog_with_glasses.jpg]]
-
-#+BEGIN_NOTES
-Mocking is one way to isolate all the dependencies our unit requires, and replace them with an object that we will later be able to interrogate.
-
-The dynamic nature of Python lends itself to for such manipulation by swapping the object our unit ask by name, and replace it with a Mock object.
-#+END_NOTES
-
 * Example: Guessing Game
 
 #+CREDIT:    https://www.flickr.com/photos/thart2009/22658375526 (cc-by)
@@ -175,10 +163,46 @@ def play(level):
 
 #+BEGIN_NOTES
 Sorry about the small font, but this is your run of the mill guessing game loop.
-
-TODO: not sure if this needs to be here.
+It has a random component, it calls ~T~ (whatever that is), and it doesn't return anything. How can we test that?
 #+END_NOTES
 
+** One step back
+
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION: (some of) the GGEE design
+#+NAME:    fig_CALL_GRAPH_RICH
+[[./img/call_graph_rich.png]]
+
+#+BEGIN_NOTES
+We see that game calls play, which ask for the player's guess.
+The player might indicate that she want to quit the game, but this is dependent on the system's language which checks ~os.environ~
+#+END_NOTES
+
+** Low hanging
+
+#+BEGIN_SRC python
+def max_number(level):
+    # type: (int) -> int
+    return (1 << level) - 1
+
+def test_max_number():
+    assert game.max_number(1) == 1
+    assert game.max_number(2) == 3
+    assert game.max_number(3) == 7
+#+END_SRC
+
+#+END_SRC
+* Mocking
+#+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+NAME:      fig_MOKING
+[[./img/dog_with_glasses.jpg]]
+
+#+BEGIN_NOTES
+Mocking is one way to isolate all the dependencies our unit requires, and replace them with an object that we will later be able to interrogate.
+
+The dynamic nature of Python lends itself to for such manipulation by swapping the object our unit ask by name, and replace it with a Mock object.
+#+END_NOTES
 ** i18n.lang
 
 #+NAME: code_LANG
@@ -271,7 +295,6 @@ When the game prompts the player to give a guess, she can instead can ask to qui
 
 Again we *could* mock os.environ as we did before, but we have more options:
 #+END_NOTES
-
 ** call graph
 
 #+ATTR_HTML: :width 50% :height 50%
@@ -293,6 +316,18 @@ Again we *could* mock os.environ as we did before, but we have more options:
 #+NAME:      fig_ISQUIT_MOCK_LANG
 [[./img/call_graph_is_quit_mock_lang.png]]
 
+** test_is_mock()
+#+BEGIN_SRC python
+def test_is_quit_english():
+    with mock.patch('guessing.i18n.lang', return_value='en'):
+        assert i18n.is_quit('QUIT')
+        assert i18n.is_quit('  stop ')
+        assert i18n.is_quit('exit')
+        assert not i18n.is_quit('')
+        assert not i18n.is_quit('I want my Mummy!')
+        assert not i18n.is_quit('q')
+        assert not i18n.is_quit('די')
+#+END_SRC
 ** Meet ~Mock~
 
 #+CREDIT:    https://unsplash.com/photos/BXs8SjVelKs
@@ -332,8 +367,6 @@ Lulu is very accommodating:
 >>> puppy.bark(3)
 'YEEP'
 #+END_SRC
-
-
 
 * Thoughts
 ** patch
