@@ -30,3 +30,8 @@ def test_outro(mock_stdout, mock_T):
     msg = "That was fun! Thank you for playing with me."
     mock_T.assert_called_once_with(msg)
     assert mock_stdout.getvalue() == "{}\n".format(msg)
+
+def test_max_number():
+    assert game.max_number(1) == 1
+    assert game.max_number(2) == 3
+    assert game.max_number(3) == 7
