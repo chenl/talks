@@ -16,6 +16,9 @@ __version__ = "0.1.0"
 __license__ = "Apache 2.0"
 
 
+# TODO: implement a high-score
+# see https://github.com/chenl/talks/issues/4
+
 def game():
     # type: () -> None
     intro()
