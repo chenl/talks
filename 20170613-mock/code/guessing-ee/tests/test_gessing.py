@@ -10,7 +10,9 @@ try:
 except ImportError:
     import mock
 
-from guessing import game
+with mock.patch('google.cloud.translate.Client'):
+    from guessing import game
+
 
 
 @mock.patch('guessing.game.T', side_effect=lambda x: x)
