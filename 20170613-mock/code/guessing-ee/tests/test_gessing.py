@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import pytest
+
 try:
     from io import StringIO
 except ImportError:
@@ -14,6 +16,21 @@ with mock.patch('google.cloud.translate.Client'):
     from guessing import game
 
 
+@pytest.mark.parametrize('fun_times', [0, 1, 5])
+def test_game(fun_times):
+    # given
+    with mock.patch.multiple('guessing.game',
+                             intro=mock.DEFAULT,
+                             play=mock.DEFAULT,
+                             was_this_fun=mock.DEFAULT,
+                             outro=mock.DEFAULT):
+        game.was_this_fun.side_effect = [True] * fun_times + [False]
+        # when
+        game.game()
+        # then
+        game.intro.assert_called_once()
+        assert game.play.call_count == 1 + fun_times
+        game.outro.assert_called_once()
 
 @mock.patch('guessing.game.T', side_effect=lambda x: x)
 @mock.patch('random.seed')
