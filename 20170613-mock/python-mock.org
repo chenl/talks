@@ -120,7 +120,7 @@ Don't wary Humanity, I will save you!
 #+ATTR_HTML: :width 50% :height 50%
 #+CAPTION:   The real world is not as simple
 #+NAME:      fig_KNOT
-[[./img/kont.jpg]]
+[[./img/knot.jpg]]
 
 #+BEGIN_NOTES
 - It inspects the world,
@@ -252,8 +252,8 @@ Next we want to test that if there are not values in `os.envrion` we get the our
 
 ** options
 #+ATTR_HTML: :windth 50% :hiegnt 50%
-#+CAPTION: About 1/2 of the unittest.mock standard documentation
-#+NAME:    fig_DOCUMENATION
+#+CAPTION:   About 1/2 of the unittest.mock standard documentation
+#+NAME:      fig_DOCUMENATION
 [[./img/documentation.png]]
 
 #+BEGIN_NOTES
@@ -280,15 +280,17 @@ Again we *could* mock os.environ as we did before, but we have more options:
 
 ** call graph
 
+#+ATTR_HTML: :width 50% :height 50%
 #+CAPTION: The call graph of is_quit()
 #+NAME:    fig_ISQUIT
 [[./img/call_graph_is_quit.png]]
 
 ** mock environ
 
+#+ATTR_HTML: :width 50% :height 50%
 #+CAPTION: The call graph of is_quit() with mocked environ
 #+NAME:    fig_ISQUIT_MOCK_ENV
-[[./img/call_graph_is_quit_mock_environ.png]]
+[[./img/call_graph_is_quit_mock_env.png]]
 
 ** mock lang()
 
