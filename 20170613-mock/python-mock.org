@@ -6,38 +6,28 @@
 #+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 #+REVEAL_EXTRA_CSS: ./custom.css
 
-* Unit-testing in the real world with mock
-#+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
-#+ATTR_HTML: :width 60% :height 60%
-#+CAPTION:   Unit-testing in the real world with mock
-#+NAME:      fig_TITLE
-[[./img/dog_with_glasses.jpg]]
 * chen@rotemlevy.name
-#+ATTR_HTML: :width 50% :height 50%
-#+CAPTION:   chen@rotemlevy.name
+#+ATTR_HTML: :width 65% :height 65%
+#+CAPTION:   Nerd!
 #+NAME:      fig_ABOUT_ME
-[[./img/at_key_signing_party.jpg]]-
-** Nerd
-:PROPERTIES:
-:reveal_background: ./img/at_key_signing_party.jpg
-:reveal_background_trans: slide
-:END:
+[[./img/at_key_signing_party.jpg]]
+
+#+BEGIN_NOTES
 - A nerd since 1968
 - a computer geek since 1978
 - GNU/* fan-boy since 1998
 - Enjoying Python since [[https://www.python.org/download/releases/1.5/][v1.5.2]]
 - Currently @ [[https://sentinelone.com/][SentinelOne]] found my job @ PyCon.il 2016 ([[https://sentinelone.com/jobs/][we are hiring]])
-#+BEGIN_NOTES
-My mother told me not to tire you too much, so I will do my best to be a good son.
 
-(this slide is a POC for background image per slide)
+My mother told me not to tire you too much, so I will do my best to be a good son.
 #+END_NOTES
 * Testing is important
-#+CREDIT: https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
-#+ATTR_HTML: :width 30% :height 30%
-#+CATION: Testing is important
-#+NAME:   fig_CAUTION
+#+CREDIT:    https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Testing is important
+#+NAME:      fig_CAUTION
 [[./img/caution.jpg]]
+
 #+BEGIN_NOTES
 Without it:
 - You can't refactor
@@ -73,7 +63,7 @@ You will be unhappy.
 ** Doom
 
 #+CREDIT: https://pixabay.com/p-2274100/ (cc-0)
-#+ATTR_HTML: :width 75% :height 75%
+#+ATTR_HTML: :width 85% :height 85%
 #+CAPTION: A catastrophic software bug
 #+NAME: fig_BOMB
 [[./img/atomic_bomb.jpg]]
@@ -117,7 +107,7 @@ Don't wary Humanity, I will save you!
 ** Unit testing is hard
 
 #+CREDIT:    https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
-#+ATTR_HTML: :width 50% :height 50%
+#+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   The real world is not as simple
 #+NAME:      fig_KNOT
 [[./img/knot.jpg]]
@@ -135,6 +125,10 @@ Don't wary Humanity, I will save you!
 #+END_NOTES
 
 * Mocking
+#+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+NAME:      fig_MOKING
+[[./img/dog_with_glasses.jpg]]
 
 #+BEGIN_NOTES
 Mocking is one way to isolate all the dependencies our unit requires, and replace them with an object that we will later be able to interrogate.
@@ -145,7 +139,7 @@ The dynamic nature of Python lends itself to for such manipulation by swapping t
 * Example: Guessing Game
 
 #+CREDIT:    https://www.flickr.com/photos/thart2009/22658375526 (cc-by)
-#+ATTR_HTML: :width 75% :height 75%
+#+ATTR_HTML: :width 85% :height 85%
 #+CAPTION:   The Enterprise Edition
 #+NAME:      fig_ENTERPRISE
 [[./img/enterprise.jpg]]
@@ -281,29 +275,30 @@ Again we *could* mock os.environ as we did before, but we have more options:
 ** call graph
 
 #+ATTR_HTML: :width 50% :height 50%
-#+CAPTION: The call graph of is_quit()
-#+NAME:    fig_ISQUIT
+#+CAPTION:   The call graph of is_quit()
+#+NAME:      fig_ISQUIT
 [[./img/call_graph_is_quit.png]]
 
 ** mock environ
 
 #+ATTR_HTML: :width 50% :height 50%
-#+CAPTION: The call graph of is_quit() with mocked environ
-#+NAME:    fig_ISQUIT_MOCK_ENV
+#+CAPTION:   The call graph of is_quit() with mocked environ
+#+NAME:      fig_ISQUIT_MOCK_ENV
 [[./img/call_graph_is_quit_mock_env.png]]
 
 ** mock lang()
 
-#+CAPTION: The call graph of is_quit() with mocked lang()
-#+NAME:    fig_ISQUIT_MOCK_LANG
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION:   The call graph of is_quit() with mocked lang()
+#+NAME:      fig_ISQUIT_MOCK_LANG
 [[./img/call_graph_is_quit_mock_lang.png]]
 
 ** Meet ~Mock~
 
-#+CREDIT: https://unsplash.com/photos/BXs8SjVelKs
-#+ATTR_HTML: :width 50% :height 50%
-#+CAPTION: I am OK with that
-#+NAME:    fig_MOCK
+#+CREDIT:    https://unsplash.com/photos/BXs8SjVelKs
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   I am OK with that
+#+NAME:      fig_MOCK
 [[./img/happy_dog_with_a_hat.jpg]]
 
 ** Lets call this Mock Fido
@@ -434,3 +429,13 @@ This is cool and all, but what is it sued for?
      c = CreditCard(cc_number, exp_month, exp_year)
      c.charge(ccp, amount)
  #+END_SRC
+
+
+** Nerd
+:PROPERTIES:
+:reveal_background: ./img/at_key_signing_party.jpg
+:reveal_background_trans: slide
+:END:
+
+
+This is how to add background image to a silde
