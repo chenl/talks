@@ -296,29 +296,42 @@ Again we *could* mock os.environ as we did before, but we have more options:
 ** Meet ~Mock~
 
 #+CREDIT:    https://unsplash.com/photos/BXs8SjVelKs
-#+ATTR_HTML: :width 75% :height 75%
+#+ATTR_HTML: :width 75% :height 5%
 #+CAPTION:   I am OK with that
 #+NAME:      fig_MOCK
 [[./img/happy_dog_with_a_hat.jpg]]
 
-** Lets call this Mock Fido
-Fido is an accommodating dude:
+** Lets call this Mock Lulu
+Lulu is very accommodating:
 #+NAME: code_FIDO
 #+BEGIN_SRC python
->>> fido = mock.Mock(name='Fido')
->>> fido
-<Mock name='Fido' id='140518155448504'>
->>> fido()
-<Mock name='Fido()' id='140518155482336'>
->>> fido.bark
-<Mock name='Fido.bark' id='140518155483064'>
->>> fido.bark()
-<Mock name='Fido.bark()' id='140518145633808'>
->>> fido.bark().run.after(42, what='cats')
-<Mock name='Fido.bark().run.after()' id='140518145716856'>
+>>> lulu = mock.Mock(name='Lulu')
+>>> lulu
+<Mock name='Lulu' id='140518155448504'>
+>>> lulu()
+<Mock name='Lulu()' id='140518155482336'>
+>>> lulu.bark
+<Mock name='Lulu.bark' id='140518155483064'>
+>>> lulu.bark()
+<Mock name='Lulu.bark()' id='140518145633808'>
+>>> lulu.bark().run.after(42, what='cats')
+<Mock name='Lulu.bark().run.after()' id='140518145716856'>
 #+END_SRC
-** So what?
-This is cool and all, but what is it sued for?
+** We can tell Lulu what to do
+#+NAME: code_PUPPY
+#+BEGIN_SRC python
+>>> lulu.bark.return_value = 'Woof!'
+>>> lulu.bark()
+'Woof!'
+>>> lulu.make_puppy.return_value.bark.side_effect = ['yip', 'yeep', 'YEEP']
+>>> puppy = Lulu.make_puppy(with_='Fido')
+>>> puppy.bark()
+'yip'
+>>> puppy.bark('again')
+'yeep'
+>>> puppy.bark(3)
+'YEEP'
+#+END_SRC
 
 
 
