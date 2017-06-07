@@ -76,8 +76,7 @@ def your_guess():
 def was_this_fun():
     # type: () -> bool
     print(T("I enjoyed that. Shall we play again?"))
-    answer = sys.stdin.readline()
-    return is_yes(answer)
+    return is_yes(sys.stdin.readline())
 
 if __name__ == '__main__':
     game()
