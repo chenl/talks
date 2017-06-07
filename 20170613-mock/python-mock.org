@@ -2,7 +2,7 @@
 #+AUTHOR: Chen Rotem Levy
 #+EMAIL: chen@rotemlevy.name
 #+DATE: [2017-06-13 Tue]
-#+option: ^:nil
+#+OPTIONS: ^:nil num:nil toc:nil
 #+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 #+REVEAL_EXTRA_CSS: ./custom.css
 
@@ -10,12 +10,12 @@
 #+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
 #+ATTR_HTML: :width 60% :height 60%
 #+CAPTION:   Unit-testing in the real world with mock
-#+NAME:      fig:TITLE
+#+NAME:      fig-TITLE
 [[./img/dog_with_glasses.jpg]]
 * chen@rotemlevy.name
 #+ATTR_HTML: :width 50% :height 50%
 #+CAPTION:   chen@rotemlevy.name
-#+NAME:      fig:ABOUT_ME
+#+NAME:      fig-ABOUT_ME
 [[./img/at_key_signing_party.jpg]]-
 ** Nerd
 :PROPERTIES:
@@ -34,9 +34,9 @@ My mother told me not to tire you too much, so I will do my best to be a good so
 #+END_NOTES
 * Testing is important
 #+CREDIT: https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
-#+ATTR_HTML: :width 50% :height 50%
+#+ATTR_HTML: :width 30% :height 30%
 #+CATION: Testing is important
-#+NAME:   fig:CAUTION
+#+NAME:   fig-CAUTION
 [[./img/caution.jpg]]
 #+BEGIN_NOTES
 Without it:
@@ -50,7 +50,7 @@ Without it:
 ** Productivity
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: Productivity downward graph
-#+NAME:    fig:DOWN_GRAPH
+#+NAME:    fig-DOWN_GRAPH
 [[./img/down_graph.png]]
 
 #+BEGIN_NOTES
@@ -62,7 +62,7 @@ I could show you a cheesy graph I made with [[https://inkscape.org/][INKSCAPE]]
 #+CREDIT: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/, https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: Sad wet dog
-#+NAME:    fig:SAD_DOG
+#+NAME:    fig-SAD_DOG
 [[./img/sad_wet_dog.jpg]]
 
 #+BEGIN_NOTES
@@ -75,7 +75,7 @@ You will be unhappy.
 #+CREDIT: https://pixabay.com/p-2274100/ (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: A catastrophic software bug
-#+NAME: fig:BOMB
+#+NAME: fig-BOMB
 [[./img/atomic_bomb.jpg]]
 
 #+BEGIN_NOTES
@@ -105,7 +105,7 @@ It is a *pure* function. It gets a value and return a value that dependent *only
 #+CREDIT:  https://unsplash.com/@zoncoll?photo=ZtLASJerPb0 (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: I will save the day
-#+NAME:    fig:
+#+NAME:    fig-SUPERMAN
 [[./img/superman.jpg]]
 
 #+BEGIN_NOTES
@@ -118,7 +118,7 @@ Don't wary Humanity, I will save you!
 #+CREDIT:    https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
 #+ATTR_HTML: :width 50% :height 50%
 #+CAPTION:   The real world is not as simple
-#+NAME:      fig:KNOT
+#+NAME:      fig-KNOT
 [[./img/kont.gpj]]
 
 #+BEGIN_NOTES
@@ -146,7 +146,7 @@ The dynamic nature of Python lends itself to for such manipulation by swapping t
 #+CREDIT:    https://www.flickr.com/photos/thart2009/22658375526 (cc-by)
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   The Enterprise Edition
-#+NAME:      fig:ENTERPRISE
+#+NAME:      fig-ENTERPRISE
 [[./img/enterprise.jpg]]
 
 #+BEGIN_NOTES
@@ -184,6 +184,7 @@ TODO: not sure if this needs to be here.
 
 ** i18n.lang
 
+#+NAME: code-LANG
 #+BEGIN_SRC python
 def lang():
     # type: () -> str
@@ -247,7 +248,7 @@ Next we want to test that if there are not values in `os.envrion` we get the our
 ** options
 #+ATTR_HTML: :windth 50% :hiegnt 50%
 #+CAPTION: About 1/2 of the unittest.mock standard documentation
-#+NAME:    fig:DOCUMENATION
+#+NAME:    fig-DOCUMENATION
 [[./img/documentaion.png]]
 
 #+BEGIN_NOTES
@@ -275,19 +276,19 @@ Again we *could* mock os.environ as we did before, but we have more options:
 ** call graph
 
 #+CAPTION: The call graph of is_quit()
-#+NAME:    fig:ISQUIT
+#+NAME:    fig-ISQUIT
 [[./img/call_graph_is_quit.png]]
 
 ** mock environ
 
 #+CAPTION: The call graph of is_quit() with mocked environ
-#+NAME:    fig:ISQUIT_MOCK_ENV
+#+NAME:    fig-ISQUIT_MOCK_ENV
 [[./img/call_graph_is_quit_mock_environ.png]]
 
 ** mock lang()
 
 #+CAPTION: The call graph of is_quit() with mocked lang()
-#+NAME:    fig:ISQUIT_MOCK_LANG
+#+NAME:    fig-ISQUIT_MOCK_LANG
 [[./img/call_graph_is_quit_mock_lang.png]]
 
 ** Meet ~Mock~
@@ -295,7 +296,7 @@ Again we *could* mock os.environ as we did before, but we have more options:
 #+CREDIT: https://unsplash.com/photos/BXs8SjVelKs
 #+ATTR_HTML: :width 50% :height 50%
 #+CAPTION: I am OK with that
-#+NAME:    fig:MOCK
+#+NAME:    fig-MOCK
 [[./img/happy_dog_with_a_hat.jpg]]
 
 ** Lets call this Mock Fido
