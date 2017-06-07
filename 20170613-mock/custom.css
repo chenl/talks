@@ -6,6 +6,10 @@
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.0);
 }
 
-#code-LANG {
-  font-size: 0.8em;
+#code_PLAY {
+  font-size: 0.7em;
+}
+
+#code_LANG {
+  font-size: 1.0em;
 }

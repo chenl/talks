@@ -10,12 +10,12 @@
 #+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
 #+ATTR_HTML: :width 60% :height 60%
 #+CAPTION:   Unit-testing in the real world with mock
-#+NAME:      fig-TITLE
+#+NAME:      fig_TITLE
 [[./img/dog_with_glasses.jpg]]
 * chen@rotemlevy.name
 #+ATTR_HTML: :width 50% :height 50%
 #+CAPTION:   chen@rotemlevy.name
-#+NAME:      fig-ABOUT_ME
+#+NAME:      fig_ABOUT_ME
 [[./img/at_key_signing_party.jpg]]-
 ** Nerd
 :PROPERTIES:
@@ -36,7 +36,7 @@ My mother told me not to tire you too much, so I will do my best to be a good so
 #+CREDIT: https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
 #+ATTR_HTML: :width 30% :height 30%
 #+CATION: Testing is important
-#+NAME:   fig-CAUTION
+#+NAME:   fig_CAUTION
 [[./img/caution.jpg]]
 #+BEGIN_NOTES
 Without it:
@@ -49,8 +49,8 @@ Without it:
 
 ** Productivity
 #+ATTR_HTML: :width 75% :height 75%
-#+CAPTION: Productivity downward graph
-#+NAME:    fig-DOWN_GRAPH
+#+CAPTION: Productivity suffers
+#+NAME:    fig_DOWN_GRAPH
 [[./img/down_graph.png]]
 
 #+BEGIN_NOTES
@@ -61,8 +61,8 @@ I could show you a cheesy graph I made with [[https://inkscape.org/][INKSCAPE]]
 
 #+CREDIT: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/, https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
 #+ATTR_HTML: :width 75% :height 75%
-#+CAPTION: Sad wet dog
-#+NAME:    fig-SAD_DOG
+#+CAPTION: No tests
+#+NAME:    fig_SAD_DOG
 [[./img/sad_wet_dog.jpg]]
 
 #+BEGIN_NOTES
@@ -75,7 +75,7 @@ You will be unhappy.
 #+CREDIT: https://pixabay.com/p-2274100/ (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: A catastrophic software bug
-#+NAME: fig-BOMB
+#+NAME: fig_BOMB
 [[./img/atomic_bomb.jpg]]
 
 #+BEGIN_NOTES
@@ -87,6 +87,7 @@ And my mother asked me not to bore you too much, I imagine she will be upset if 
 
 * So you want to learn you a unit-test
 
+#+NAME: code_ROAMN
 #+BEGIN_SRC python
 def test_to_roman_numerals():
     assert to_roman_numerals(1949) == 'MCMXLIX'
@@ -105,7 +106,7 @@ It is a *pure* function. It gets a value and return a value that dependent *only
 #+CREDIT:  https://unsplash.com/@zoncoll?photo=ZtLASJerPb0 (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: I will save the day
-#+NAME:    fig-SUPERMAN
+#+NAME:    fig_SUPERMAN
 [[./img/superman.jpg]]
 
 #+BEGIN_NOTES
@@ -118,8 +119,8 @@ Don't wary Humanity, I will save you!
 #+CREDIT:    https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
 #+ATTR_HTML: :width 50% :height 50%
 #+CAPTION:   The real world is not as simple
-#+NAME:      fig-KNOT
-[[./img/kont.gpj]]
+#+NAME:      fig_KNOT
+[[./img/kont.jpg]]
 
 #+BEGIN_NOTES
 - It inspects the world,
@@ -146,7 +147,7 @@ The dynamic nature of Python lends itself to for such manipulation by swapping t
 #+CREDIT:    https://www.flickr.com/photos/thart2009/22658375526 (cc-by)
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   The Enterprise Edition
-#+NAME:      fig-ENTERPRISE
+#+NAME:      fig_ENTERPRISE
 [[./img/enterprise.jpg]]
 
 #+BEGIN_NOTES
@@ -154,6 +155,7 @@ This is the classic Guessing game, the computer picks a number than the player n
 #+END_NOTES
 ** play
 
+#+NAME: code_PLAY
 #+BEGIN_SRC python
 def play(level):
     # type: (int) -> None
@@ -164,7 +166,8 @@ def play(level):
         print(T("Can you guess what number I am thinking about?"))
         guess = your_guess()
         if guess is None:
-            print(T("Just wanted you to know that I was thinking about {}").format(num))
+            print(T("Just wanted you to know that "
+                    "I was thinking about {}").format(num))
             break
         if guess < num:
             print(T("No, my number is bigger than that"))
@@ -184,7 +187,7 @@ TODO: not sure if this needs to be here.
 
 ** i18n.lang
 
-#+NAME: code-LANG
+#+NAME: code_LANG
 #+BEGIN_SRC python
 def lang():
     # type: () -> str
@@ -209,11 +212,12 @@ We could modify ~os.environ~, and see what we get, and it will work, but... `moc
 
 #+BEGIN_SRC python
 try:
-    from unittest import mock  # Python >= 3.3
+    from unittest import mock
 except ImportError:
-    import mock                # Python < 3.3
+    import mock  # Python < 3.3
 
-@mock.patch.dict('guessing.i18n.environ', LC_MESSAGES='he_IL')
+@mock.patch.dict('guessing.i18n.environ',
+                 LC_MESSAGES='he_IL')
 def test_lang_lc_message_he():
     assert i18n.lang == 'he'
 #+END_SRC
@@ -236,7 +240,8 @@ There are several things we should note here:
 
 #+BEGIN_SRC python
 def test_lang_default():
-    with mock.patch.dict('guessing.i18n.environ', clear=True):
+    with mock.patch.dict('guessing.i18n.environ',
+                         clear=True):
         assert os.envrion == {}
         assert i18n.lang() == 'C'
 #+END_SRC
@@ -248,8 +253,8 @@ Next we want to test that if there are not values in `os.envrion` we get the our
 ** options
 #+ATTR_HTML: :windth 50% :hiegnt 50%
 #+CAPTION: About 1/2 of the unittest.mock standard documentation
-#+NAME:    fig-DOCUMENATION
-[[./img/documentaion.png]]
+#+NAME:    fig_DOCUMENATION
+[[./img/documentation.png]]
 
 #+BEGIN_NOTES
 The mock API is very flexible, and all its' options are are listed in the standard documentation which is extensive.  I wanted to see if I can show all of the ~unittest.mock~ page in one slide, but I managed only about 1/2 of it.
@@ -276,19 +281,19 @@ Again we *could* mock os.environ as we did before, but we have more options:
 ** call graph
 
 #+CAPTION: The call graph of is_quit()
-#+NAME:    fig-ISQUIT
+#+NAME:    fig_ISQUIT
 [[./img/call_graph_is_quit.png]]
 
 ** mock environ
 
 #+CAPTION: The call graph of is_quit() with mocked environ
-#+NAME:    fig-ISQUIT_MOCK_ENV
+#+NAME:    fig_ISQUIT_MOCK_ENV
 [[./img/call_graph_is_quit_mock_environ.png]]
 
 ** mock lang()
 
 #+CAPTION: The call graph of is_quit() with mocked lang()
-#+NAME:    fig-ISQUIT_MOCK_LANG
+#+NAME:    fig_ISQUIT_MOCK_LANG
 [[./img/call_graph_is_quit_mock_lang.png]]
 
 ** Meet ~Mock~
@@ -296,12 +301,12 @@ Again we *could* mock os.environ as we did before, but we have more options:
 #+CREDIT: https://unsplash.com/photos/BXs8SjVelKs
 #+ATTR_HTML: :width 50% :height 50%
 #+CAPTION: I am OK with that
-#+NAME:    fig-MOCK
+#+NAME:    fig_MOCK
 [[./img/happy_dog_with_a_hat.jpg]]
 
 ** Lets call this Mock Fido
 Fido is an accommodating dude:
-#+NAME: code:FIDO
+#+NAME: code_FIDO
 #+BEGIN_SRC python
 >>> fido = mock.Mock(name='Fido')
 >>> fido
