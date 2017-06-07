@@ -21,7 +21,7 @@ def is_quit(text):
 
 def is_yes(text):
     # type: (str) -> bool
-    if lang == 'he':
+    if lang() == 'he':
         return text.strip() in ['כ', 'כן', 'בטח', 'סבבה', '']
     else:
         return text.strip().lower() in ['', 'y', 'yes', 'yep', 'sure']
@@ -36,4 +36,4 @@ def T(text):
         format_='text',
         target_language=lng,
         source_language='en')
-    return translation[0]['translatedText']
+    return tr[0]['translatedText']

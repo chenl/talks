@@ -24,15 +24,16 @@ def test_is_lang_en():
         assert i18n.lang() == 'en'
 
 @mock.patch('guessing.i18n.lang')
-def test_T_not_hebrew(mock_lang):
+def test_T_default(mock_lang):
     mock_lang.return_value = 'C'
     assert i18n.T('hello') == 'hello'
 
-@mock.patch('guessing.i18n.CLIENT')
+@mock.patch('guessing.i18n.CLIENT')  #, spec=mock.create_autospec(i18n.CLIENT))
 @mock.patch('guessing.i18n.lang')
-def test_T_hebrew(mock_is_lang, mock_CLIENT):
-    mock_lang.side_effect = lambda lang: lang == 'he'
-    assert i18n.T('hello') == 'OLLEH'
+def test_T_hebrew(mock_lang, mock_CLIENT):
+    mock_CLIENT.translate.return_value = [dict(translatedText='שלום')]
+    mock_lang.return_value = 'he'
+    assert i18n.T('hello') == 'שלום'
 
 
 def test_is_quit_english():
@@ -68,8 +69,9 @@ def test_is_yes_english(_):
     assert not i18n.is_yes('you tell me')
     assert not i18n.is_yes('כן')
 
-def test_is_yes_hebrew(_):
-    with mock.patch('guessing.i18n.lang', return_value='he'):
+def test_is_yes_hebrew():
+    with mock.patch('guessing.i18n.lang') as mock_lang:
+        mock_lang.return_value = 'he'
         assert i18n.is_yes('')
         assert i18n.is_yes('כן')
         assert i18n.is_yes('כ')
