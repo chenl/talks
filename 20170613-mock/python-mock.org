@@ -104,7 +104,7 @@ This is not too hard. I can do that.
 Don't wary Humanity, I will save you!
 #+END_NOTES
 
-** Unit testing is hard
+* Unit testing is hard
 
 #+CREDIT:    https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
@@ -124,7 +124,7 @@ Don't wary Humanity, I will save you!
   so you can't test so you don't have coverage...
 #+END_NOTES
 
-* Example: Guessing Game
+** Example: Guessing Game
 
 #+CREDIT:    https://www.flickr.com/photos/thart2009/22658375526 (cc-by)
 #+ATTR_HTML: :width 85% :height 85%
@@ -135,6 +135,7 @@ Don't wary Humanity, I will save you!
 #+BEGIN_NOTES
 This is the classic Guessing game, the computer picks a number than the player need to guess what it is, But with extra enterprise-ness.
 #+END_NOTES
+
 ** play
 
 #+NAME: code_PLAY
@@ -166,12 +167,12 @@ Sorry about the small font, but this is your run of the mill guessing game loop.
 It has a random component, it calls ~T~ (whatever that is), and it doesn't return anything. How can we test that?
 #+END_NOTES
 
-** One step back
+* A step back
 
-#+ATTR_HTML: :width 50% :height 50%
+#+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: (some of) the GGEE design
 #+NAME:    fig_CALL_GRAPH_RICH
-[[./img/call_graph_rich.png]]
+[[./img/call_graph.png]]
 
 #+BEGIN_NOTES
 We see that game calls play, which ask for the player's guess.
@@ -179,32 +180,48 @@ The player might indicate that she want to quit the game, but this is dependent 
 #+END_NOTES
 
 ** Low hanging
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Found one!
+#+NAME:      fig_CALL_GRAPH_RICH_MOX_NUM
+[[./img/call_graph_max_num.png]]
 
+** test max_number
 #+BEGIN_SRC python
 def max_number(level):
     # type: (int) -> int
     return (1 << level) - 1
 
+#+END_SRC
+
+#+ATTR_REVEAL: :frag t
+#+BEGIN_SRC python
 def test_max_number():
     assert game.max_number(1) == 1
     assert game.max_number(2) == 3
     assert game.max_number(3) == 7
 #+END_SRC
 
-#+END_SRC
-* Mocking
-#+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
+** Woo-Hoo!
 #+ATTR_HTML: :width 75% :height 75%
-#+NAME:      fig_MOKING
-[[./img/dog_with_glasses.jpg]]
+#+CAPTION:   We have a DOT!
+#+NAME:      fig_GRAPH_MAX_NUM_CHECK
+[[./img/call_graph_max_num_check.png]]
 
 #+BEGIN_NOTES
-Mocking is one way to isolate all the dependencies our unit requires, and replace them with an object that we will later be able to interrogate.
+Yes! I have my dot! I am not totally useless...
+just mostly useless.
 
-The dynamic nature of Python lends itself to for such manipulation by swapping the object our unit ask by name, and replace it with a Mock object.
+So it seems that Roman Numerals are the exception rather than the Rule,
+And I guess I just give up and declare my code as non-testable.
 #+END_NOTES
-** i18n.lang
 
+** i18n.lang calls…
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   lang uses environ
+#+NAME:      fig_GRAPH_LANG
+[[./img/call_graph_lang.png]]
+
+** i18n.lang
 #+NAME: code_LANG
 #+BEGIN_SRC python
 def lang():
@@ -226,6 +243,25 @@ So how should we test this?
 We could modify ~os.environ~, and see what we get, and it will work, but... `mock` gives us a better way to do that.
 #+END_NOTES
 
+* Enter Mocking
+#+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+NAME:      fig_MOKING
+[[./img/dog_with_glasses.jpg]]
+
+#+BEGIN_NOTES
+Mocking is one way to isolate all the dependencies our unit requires, and replace them with an object that we will later be able to interrogate.
+
+The dynamic nature of Python lends itself to for such manipulation by swapping the object our unit ask by name, and replace it with a Mock object.
+#+END_NOTES
+
+** patch environ
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Pathing environ
+#+NAME:      fig_GRAPH_LANG_MOCK_ENV
+[[./img/call_graph_lang_mock_env.png]]
+
 ** test_i18n.test_lang
 
 #+BEGIN_SRC python
@@ -234,6 +270,10 @@ try:
 except ImportError:
     import mock  # Python < 3.3
 
+#+END_SRC
+
+#+ATTR_REVEAL: :frag t
+#+BEGIN_SRC python
 @mock.patch.dict('guessing.i18n.environ',
                  LC_MESSAGES='he_IL')
 def test_lang_lc_message_he():
@@ -268,17 +308,20 @@ def test_lang_default():
 Next we want to test that if there are not values in `os.envrion` we get the our expected default language. We use ~clear=True~. We use here a context manager, just because.
 #+END_NOTES
 
-** options
-#+ATTR_HTML: :windth 50% :hiegnt 50%
-#+CAPTION:   About 1/2 of the unittest.mock standard documentation
-#+NAME:      fig_DOCUMENATION
-[[./img/documentation.png]]
+** Check! Next…
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   2 down
+#+NAME:      fig_GRAPH_LANG_CHECK
+[[./img/call_graph_lang_check.png]]
 
-#+BEGIN_NOTES
-The mock API is very flexible, and all its' options are are listed in the standard documentation which is extensive.  I wanted to see if I can show all of the ~unittest.mock~ page in one slide, but I managed only about 1/2 of it.
-#+END_NOTES
+** is_quit calls…
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   The call graph of is_quit()
+#+NAME:      fig_ISQUIT
+[[./img/call_graph_quit.png]]
 
-** what to mock
+** is_quit
 #+BEGIN_SRC python
 def is_quit(text):
     # type: (str) -> bool
@@ -295,40 +338,38 @@ When the game prompts the player to give a guess, she can instead can ask to qui
 
 Again we *could* mock os.environ as we did before, but we have more options:
 #+END_NOTES
-** call graph
+** patch environ
 
-#+ATTR_HTML: :width 50% :height 50%
-#+CAPTION:   The call graph of is_quit()
-#+NAME:      fig_ISQUIT
-[[./img/call_graph_is_quit.png]]
-
-** mock environ
-
-#+ATTR_HTML: :width 50% :height 50%
+#+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   The call graph of is_quit() with mocked environ
 #+NAME:      fig_ISQUIT_MOCK_ENV
-[[./img/call_graph_is_quit_mock_env.png]]
+[[./img/call_graph_quit_mock_env.png]]
 
-** mock lang()
+#+BEGIN_NOTES
+We can do as we did before and patch ~environ~, but...
+#+END_NOTES
+** patch lang()
 
-#+ATTR_HTML: :width 50% :height 50%
+#+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   The call graph of is_quit() with mocked lang()
 #+NAME:      fig_ISQUIT_MOCK_LANG
-[[./img/call_graph_is_quit_mock_lang.png]]
+[[./img/call_graph_quit_mock_lang.png]]
 
-** test_is_mock()
+#+BEGIN_NOTES
+Since we already know that ~lang~ is tested, and our unit is really ~is_quit~, we can patch *it* instead.
+#+END_NOTES
+** test is_quit …
 #+BEGIN_SRC python
 def test_is_quit_english():
-    with mock.patch('guessing.i18n.lang', return_value='en'):
-        assert i18n.is_quit('QUIT')
-        assert i18n.is_quit('  stop ')
-        assert i18n.is_quit('exit')
-        assert not i18n.is_quit('')
+    with mock.patch('guessing.i18n.lang', …):
+        assert i18n.is_quit('  QUIT ')
         assert not i18n.is_quit('I want my Mummy!')
-        assert not i18n.is_quit('q')
-        assert not i18n.is_quit('די')
 #+END_SRC
-** Meet ~Mock~
+
+#+BEGIN_NOTES
+We need to patch ~lang~ somehow so that when ~is_quit~ calls it will do what we expect return ~'en'~, we could put a ~lambda~ there, but there is an easier way:
+#+END_NOTES
+* Meet Mock
 
 #+CREDIT:    https://unsplash.com/photos/BXs8SjVelKs
 #+ATTR_HTML: :width 75% :height 5%
@@ -337,35 +378,97 @@ def test_is_quit_english():
 [[./img/happy_dog_with_a_hat.jpg]]
 
 ** Lets call this Mock Lulu
-Lulu is very accommodating:
-#+NAME: code_FIDO
+#+NAME: code_LULU0
 #+BEGIN_SRC python
 >>> lulu = mock.Mock(name='Lulu')
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_LULU1
+#+BEGIN_SRC python
 >>> lulu
 <Mock name='Lulu' id='140518155448504'>
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_LULU2
+#+BEGIN_SRC python
 >>> lulu()
-<Mock name='Lulu()' id='140518155482336'>
+<Mock name='Lulu()' id='…55482336'>
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_LULU3
+#+BEGIN_SRC python
 >>> lulu.bark
-<Mock name='Lulu.bark' id='140518155483064'>
+<Mock name='Lulu.bark' id='…55483064'>
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_LULU4
+#+BEGIN_SRC python
 >>> lulu.bark()
-<Mock name='Lulu.bark()' id='140518145633808'>
+<Mock name='Lulu.bark()' id='…45633808'>
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_LULU5
+#+BEGIN_SRC python
 >>> lulu.bark().run.after(42, what='cats')
-<Mock name='Lulu.bark().run.after()' id='140518145716856'>
+<Mock name='Lulu.bark().run.after()' id=1'…45716856'>
 #+END_SRC
 ** We can tell Lulu what to do
-#+NAME: code_PUPPY
+#+NAME: code_PUPPY0
 #+BEGIN_SRC python
 >>> lulu.bark.return_value = 'Woof!'
 >>> lulu.bark()
 'Woof!'
->>> lulu.make_puppy.return_value.bark.side_effect = ['yip', 'yeep', 'YEEP']
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_PUPPY1
+#+BEGIN_SRC python
+>>> lulu.make_puppy.return_value.bark.side_effect = [
+        'yip', 'YEEP!', Exception('stinky!')]
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_PUPPY2
+#+BEGIN_SRC python
 >>> puppy = Lulu.make_puppy(with_='Fido')
 >>> puppy.bark()
 'yip'
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_PUPPY3
+#+BEGIN_SRC python
 >>> puppy.bark('again')
-'yeep'
->>> puppy.bark(3)
-'YEEP'
+'YEEP!'
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_PUPPY4
+#+BEGIN_SRC python
+>>> puppy.bark()
+… Exception: stinky!
+#+END_SRC
+** options
+#+ATTR_HTML: :width 90% :height 90%
+#+CAPTION:   About 1/2 of the unittest.mock std doc
+#+NAME:      fig_DOCUMENATION
+[[./img/documentation.png]]
+
+#+BEGIN_NOTES
+The mock API is very flexible, and all its' options are are listed in the standard documentation which is extensive.  I wanted to see if I can show all of the ~unittest.mock~ page in one slide, but I managed only about 1/2 of it.
+#+END_NOTES
+
+** test_is_quit()
+#+BEGIN_SRC python
+@mock.patch('guessing.i18n.lang')
+def test_is_quit_english(mock_lang):
+    mock_lang.return_value='en'
+    assert i18n.is_quit('  QUIT ')
+    assert not i18n.is_quit('I want my Mummy!')
+#+END_SRC
+#+REVEAL: split
+#+BEGIN_SRC python
+@mock.patch('guessing.i18n.lang',
+            return_value=’en’)
+def test_is_quit_english(_):
+    assert i18n.is_quit('  QUIT ')
+    assert not i18n.is_quit('I want my Mummy!')
 #+END_SRC
 
 * Thoughts
@@ -485,3 +588,5 @@ Lulu is very accommodating:
 
 
 This is how to add background image to a silde
+
+#+REVEAL: split

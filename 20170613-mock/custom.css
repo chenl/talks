@@ -4,9 +4,12 @@
   text-transform: none;
 }
 
+div.org-src-container {
+  transform: translate(-20%, 0);
+}
+
 .reveal pre {
   font-size: 1.1em;
-  transform: translate(-20%, 0);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.0);
 }
 
@@ -18,6 +21,10 @@
   font-size: 1.0em;
 }
 
-#code_FIDO {
+#code_LULU0, #code_LULU1, #code_LULU2, #code_LULU3, #code_LULU4, #code_LULU5 {
   font-size: 1.0em;
+}
+
+#code_PUPPY0, #code_PUPPY1, #code_PUPPY2, #code_PUPPY3, #code_PUPPY4 {
+  font-size: 0.9em;
 }
