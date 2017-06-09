@@ -59,6 +59,34 @@ def test_max_number():
     assert game.max_number(2) == 3
     assert game.max_number(3) == 7
 
+@mock.patch('guessing.i18n.lang', return_value='C')
+@mock.patch('sys.stdin.readline', return_value='15\n')
+@mock.patch('sys.stdout', new_callable=StringIO)
+def test_your_guess_num(mock_stdout, mock_readline, mock_lang):
+    assert game.your_guess() == 15
+    assert mock_stdout.getvalue() == "Your guess is:\n"
+
+@mock.patch('guessing.i18n.lang', return_value='C')
+@mock.patch('sys.stdin.readline', side_effect=[
+    'hello\n', '42\n'])
+@mock.patch('sys.stdout', new_callable=StringIO)
+def test_your_guess_2nd_try(mock_stdout, mock_readline, mock_lang):
+    assert game.your_guess() == 42
+    assert mock_stdout.getvalue() == (
+        "Your guess is:\n"
+        "Sorry, I didn't get that\n"
+        "Your guess is:\n"
+    )
+
+@mock.patch('guessing.i18n.lang', return_value='C')
+@mock.patch('sys.stdin.readline', side_effect=['stop\n'])
+@mock.patch('sys.stdout', new_callable=StringIO)
+def test_your_guess_quit(mock_stdout, mock_readline, mock_lang):
+    assert game.your_guess() is None
+    assert mock_stdout.getvalue() == (
+        "Your guess is:\n"
+    )
+
 
 @pytest.mark.parametrize('guesses,expected_messages', [
     ([4, 6, 5], [  # full scenario

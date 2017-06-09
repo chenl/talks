@@ -14,6 +14,7 @@ def test_lang_lc_message_he():
 
 def test_lang_default():
     with mock.patch.dict('guessing.i18n.environ', clear=True):
+        assert i18n.environ == {}
         assert i18n.lang() == 'C'
 
 def test_is_lang_en():

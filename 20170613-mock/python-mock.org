@@ -13,31 +13,40 @@
 [[./img/at_key_signing_party.jpg]]
 
 #+BEGIN_NOTES
+About myself:
+I can talk about myself, but my mother told me not to tire you too much, So lets say I did that and go to the next slide.
+
+SKIP THIS:
 - A nerd since 1968
 - a computer geek since 1978
 - GNU/* fan-boy since 1998
 - Enjoying Python since [[https://www.python.org/download/releases/1.5/][v1.5.2]]
 - Currently @ [[https://sentinelone.com/][SentinelOne]] found my job @ PyCon.il 2016 ([[https://sentinelone.com/jobs/][we are hiring]])
-
-My mother told me not to tire you too much, so I will do my best to be a good son.
 #+END_NOTES
-* Testing is important
-#+CREDIT:    https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
+
+** SentinelOne
+
+#+CREDIT:    https://sentinelone.com/
 #+ATTR_HTML: :width 75% :height 75%
-#+CAPTION:   Testing is important
-#+NAME:      fig_CAUTION
-[[./img/caution.jpg]]
+#+CAPTION:   We are hiring
+#+NAME:      fig_SENTINELONE
+[[./img/sentinelone.jpg]]
 
 #+BEGIN_NOTES
-Without it:
-- You can't refactor
-- Your productivity slows
-- Your code crashes
-- You loose all your hear
-- And you will die!
+There are 3 things I need to say about SentinelOne:
+1. The opinions I express here are my own, and don't represent my employer.
+2. The worst thing about working in SentinelOne is that I get to sit 12 paces from a huge pile of chocolates that I try every day not to eat. Besides that I am loving working there.
+3. That I found this job @ PyCon 2016, and we are looking form more good people who don’t mind sitting next to a huge pile of chocolates.
 #+END_NOTES
 
-** Productivity
+* Testing is important
+#+CREDIT:    https://pixabay.com/en/road-sign-attention-right-of-way-663368/ (cc-0)
+#+ATTR_HTML: :width 70% :height 70%
+#+CAPTION:   important
+#+NAME:      fig_IMPORTANT
+[[./img/important.jpg]]
+
+** Productivity suffers
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: Productivity suffers
 #+NAME:    fig_DOWN_GRAPH
@@ -47,7 +56,7 @@ Without it:
 I could show you a cheesy graph I made with [[https://inkscape.org/][INKSCAPE]]
 #+END_NOTES
 
-** Productivity
+** You will be unhappy
 
 #+CREDIT: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/, https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
 #+ATTR_HTML: :width 75% :height 75%
@@ -58,6 +67,14 @@ I could show you a cheesy graph I made with [[https://inkscape.org/][INKSCAPE]]
 #+BEGIN_NOTES
 But Instead I will show you a sad web doggy, which convey the same message.
 You will be unhappy.
+
+Without it:
+- You can't refactor
+- Your code crashes
+- Your productivity slows
+- You will be cold
+- You will be wet
+- You will miserable
 #+END_NOTES
 
 ** Doom
@@ -69,7 +86,6 @@ You will be unhappy.
 [[./img/atomic_bomb.jpg]]
 
 #+BEGIN_NOTES
-
 If you listen to any of Uncle Bob Martin's talks you will here him say that some day soon lots of people are going to die due to a software bug, and it will be our fault.
 
 And my mother asked me not to bore you too much, I imagine she will be upset if I will kill some of you...
@@ -77,7 +93,14 @@ And my mother asked me not to bore you too much, I imagine she will be upset if 
 
 * So you want to learn you a unit-test
 
-#+NAME: code_ROAMN
+#+CREDIT: https://unsplash.com/search/books?photo=AtLajzgFyAQ (cc-0)
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION:   pick up a book
+#+NAME:      fig_BOOKS
+[[./img/books.jpg]]
+
+** Example
+#+NAME: code_ROMAN
 #+BEGIN_SRC python
 def test_to_roman_numerals():
     assert to_roman_numerals(1949) == 'MCMXLIX'
@@ -104,7 +127,7 @@ This is not too hard. I can do that.
 Don't wary Humanity, I will save you!
 #+END_NOTES
 
-* Unit testing is hard
+* Unit testing is complicated
 
 #+CREDIT:    https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
@@ -126,6 +149,31 @@ Don't wary Humanity, I will save you!
 
 ** Example: Guessing Game
 
+#+NAME: code_GUESSING_GAME
+#+BEGIN_SRC python
+num = think_of_a_number(level)
+while True:
+    print(T("Can you guess what number "
+            "I am thinking about?"))
+    guess = your_guess()
+    if guess < num:
+        print(T("No, my number is bigger than that"))
+    elif guess > num:
+        print(T("No, my number is smaller than that"))
+    else:
+        print(T("Yes, this is the number "
+                "I was thinking about! "
+                "How did you konw that?"))
+        break
+#+END_SRC
+
+#+BEGIN_NOTES
+Sorry about the small font, but this is your run of the mill guessing game loop.
+It has a random component, it calls ~T~ (whatever that is), and it doesn't return anything. How can we test that?
+#+END_NOTES
+
+** Enterprise Edition
+
 #+CREDIT:    https://www.flickr.com/photos/thart2009/22658375526 (cc-by)
 #+ATTR_HTML: :width 85% :height 85%
 #+CAPTION:   The Enterprise Edition
@@ -136,38 +184,7 @@ Don't wary Humanity, I will save you!
 This is the classic Guessing game, the computer picks a number than the player need to guess what it is, But with extra enterprise-ness.
 #+END_NOTES
 
-** play
-
-#+NAME: code_PLAY
-#+BEGIN_SRC python
-def play(level):
-    # type: (int) -> None
-    print(T("Level {level}: 0 to {max_num}").format(
-        level=level, max_num=max_number(level)))
-    num = think_of_a_number(level)
-    while True:
-        print(T("Can you guess what number I am thinking about?"))
-        guess = your_guess()
-        if guess is None:
-            print(T("Just wanted you to know that "
-                    "I was thinking about {}").format(num))
-            break
-        if guess < num:
-            print(T("No, my number is bigger than that"))
-        elif guess > num:
-            print(T("No, my number is smaller than that"))
-        else:
-            print(T("Yes, this is the number I was thinking about! "
-                    "How did you konw that?"))
-            break
-#+END_SRC
-
-#+BEGIN_NOTES
-Sorry about the small font, but this is your run of the mill guessing game loop.
-It has a random component, it calls ~T~ (whatever that is), and it doesn't return anything. How can we test that?
-#+END_NOTES
-
-* A step back
+** A step back
 
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: (some of) the GGEE design
@@ -179,7 +196,7 @@ We see that game calls play, which ask for the player's guess.
 The player might indicate that she want to quit the game, but this is dependent on the system's language which checks ~os.environ~
 #+END_NOTES
 
-** Low hanging
+* Low hanging
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   Found one!
 #+NAME:      fig_CALL_GRAPH_RICH_MOX_NUM
@@ -224,6 +241,8 @@ And I guess I just give up and declare my code as non-testable.
 ** i18n.lang
 #+NAME: code_LANG
 #+BEGIN_SRC python
+from os import environ
+
 def lang():
     # type: () -> str
     lang_keys = ('LC_MESSAGES', 'LANG', 'LC_ALL')
@@ -268,11 +287,11 @@ try:
     from unittest import mock
 except ImportError:
     import mock  # Python < 3.3
-
 #+END_SRC
-
 #+ATTR_REVEAL: :frag t
 #+BEGIN_SRC python
+from guessing import i18n
+
 @mock.patch.dict('guessing.i18n.environ',
                  LC_MESSAGES='he_IL')
 def test_lang_lc_message_he():
@@ -299,7 +318,7 @@ There are several things we should note here:
 def test_lang_default():
     with mock.patch.dict('guessing.i18n.environ',
                          clear=True):
-        assert os.envrion == {}
+        assert i18n.envrion == {}
         assert i18n.lang() == 'C'
 #+END_SRC
 
@@ -663,6 +682,21 @@ def test_intro(mock_T, mock_print, mock_seed):
 #+NAME:      fig_GRAPH_INTRO_DONE
 [[./img/call_graph_intro_check.png]]
 
+* User input
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Your guess
+#+NAME:      fig_GRAPH_GUESS
+[[./img/call_graph_guess.png]]
+
+* Caution
+
+#+CREDIT:    https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   wet floor
+#+NAME:      fig_CAUTION
+[[./img/caution.jpg]]
+
 * Thoughts
 ** patch
    patches the *name* of something
@@ -702,6 +736,7 @@ def test_intro(mock_T, mock_print, mock_seed):
   enterprise: https://www.flickr.com/photos/thart2009/22658375526
   sad dog: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/
            https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
+  important: https://pixabay.com/en/road-sign-attention-right-of-way-663368/
 * didn't make it
 ** Old examples
 **** request time (inspect the world)
