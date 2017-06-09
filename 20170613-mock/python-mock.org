@@ -256,7 +256,6 @@ The dynamic nature of Python lends itself to for such manipulation by swapping t
 #+END_NOTES
 
 ** patch environ
-#+CREDIT:
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   Pathing environ
 #+NAME:      fig_GRAPH_LANG_MOCK_ENV
@@ -309,7 +308,6 @@ Next we want to test that if there are not values in `os.envrion` we get the our
 #+END_NOTES
 
 ** Check! Next…
-#+CREDIT:
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   2 down
 #+NAME:      fig_GRAPH_LANG_CHECK
@@ -472,7 +470,6 @@ def test_is_quit_english(_):
 #+END_SRC
 
 ** …
-#+CREDIT:
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   OK, what next…
 #+NAME:      fig_GRAPH_QUIT_DONE
@@ -501,7 +498,6 @@ def T(text):
     return tr[0]['translatedText']
 #+END_SRC
 ** simple first
-#+CREDIT:
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   We already know how to do this
 #+NAME:      fig_GRAPH_T_MOCK_ENV
@@ -514,7 +510,6 @@ def test_T_default(mock_lang):
     assert i18n.T('hello') == 'hello'
 #+END_SRC
 ** Patch the cloud
-#+CREDIT:
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   Patch the cloud
 #+NAME:      fig_GRAPH_T_MOCK_ENV_TR
@@ -541,7 +536,6 @@ def test_T_hebrew(mock_lang, mock_CLIENT):
 #+END_SRC
 
 ** module done
-#+CREDIT:
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   i18n – Check!
 #+NAME:      fig_?
