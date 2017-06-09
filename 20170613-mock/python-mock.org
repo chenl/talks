@@ -469,7 +469,7 @@ def test_is_quit_english(_):
     assert not i18n.is_quit('I want my Mummy!')
 #+END_SRC
 
-** …
+** ...
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   OK, what next…
 #+NAME:      fig_GRAPH_QUIT_DONE
@@ -540,6 +540,59 @@ def test_T_hebrew(mock_lang, mock_CLIENT):
 #+CAPTION:   i18n – Check!
 #+NAME:      fig_?
 [[./img/call_graph_t_check.png]]
+
+* print
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   it prints
+#+NAME:      fig_GRAPH_OUTRO
+[[./img/call_graph_outro.png]]
+
+** outro
+#+BEGIN_SRC python
+def outro():
+    # type: () -> None
+    print(T("That was fun! Thank you for playing with me."))
+#+END_SRC
+
+** first lets patch T
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   side_effect can be a callable
+#+NAME:      fig_GRAPH_OUTRO_MOCK_T
+[[./img/call_graph_outro_mock_t.png]]
+
+** patch T
+#+BEGIN_SRC python
+@mock.patch('guessing.game.T', side_effect=lambda x: x)
+def test_outro(mock_T):
+    game.outro()
+    # …
+#+END_SRC
+
+** But we also need to patch print
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   patch print
+#+NAME:      fig_GRAPH_OUTRO_MOCK_ALL
+[[./img/call_graph_outro_mock_t_print.png]]
+
+** test_outro
+#+BEGIN_SRC python
+@mock.patch('sys.stdout' , new_callable=StringIO)
+@mock.patch('guessing.game.T', side_effect=lambda x: x)
+def test_outro(mock_T, mock_stdout):
+    game.outro()
+    assert mock_stdout.getvalue() == (
+        "That was fun! "
+        "Thank you for playing with me.\n")
+#+END_SRC
+
+** Nice
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   We’re on fire!
+#+NAME:      fig_GRAPH_OUTRO_DONE
+[[./img/call_graph_outro_check.png]]
 
 * Thoughts
 ** patch
