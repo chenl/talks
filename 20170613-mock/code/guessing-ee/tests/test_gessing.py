@@ -2,10 +2,10 @@
 
 import pytest
 
-from io import BytesIO
 try:
     from io import StringIO
 except ImportError:
+    #from io import BytesIO as StringIO
     from StringIO import StringIO
 
 try:
@@ -34,15 +34,15 @@ def test_game(fun_times):
         game.outro.assert_called_once()
 
 
-@mock.patch('guessing.game.T', side_effect=lambda x: x)
 @mock.patch('random.seed')
-@mock.patch('sys.stdout' , new_callable=StringIO)
-def test_intro(mock_stdout, mock_seed, mock_T):
+@mock.patch('guessing.game.print')
+@mock.patch('guessing.game.T', side_effect=lambda x: x)
+def test_intro(mock_T, mock_print, mock_seed):
     game.intro()
     msg = "I am bored, let's play a game."
     mock_T.assert_called_once_with(msg)
+    mock_print.asseret_called_once_with(msg)
     mock_seed.assert_called_once_with()
-    assert mock_stdout.getvalue() == "{}\n".format(msg)
 
 
 @mock.patch('guessing.game.T', side_effect=lambda x: x)
@@ -82,7 +82,7 @@ def test_max_number():
     ]),
 ])
 @mock.patch('guessing.game.T', side_effect=lambda x: x)
-@mock.patch('sys.stdout', new_callable=BytesIO)
+@mock.patch('sys.stdout', new_callable=StringIO)
 def test_play(mock_stdout, mock_T, guesses, expected_messages):
     level = 3
     num = 5

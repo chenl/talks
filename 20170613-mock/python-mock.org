@@ -594,6 +594,75 @@ def test_outro(mock_T, mock_stdout):
 #+NAME:      fig_GRAPH_OUTRO_DONE
 [[./img/call_graph_outro_check.png]]
 
+* Did it happen?
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   calls random.seed()
+#+NAME:      fig_GRAPH_INTRO
+[[./img/call_graph_intro.png]]
+
+** game.intro
+
+#+BEGIN_SRC python
+def intro():
+    # type: () -> None
+    print(T("I am bored, let's play a game."))
+    random.seed()
+#+END_SRC
+
+** Lulu is a snitch
+
+#+CREDIT:    https://unsplash.com/photos/BXs8SjVelKs
+#+ATTR_HTML: :width 75% :height 5%
+#+CAPTION:   Remember me?
+#+NAME:      fig_MOCK_SPY
+[[./img/happy_dog_with_a_hat.jpg]]
+
+** Tell
+
+#+NAME: code_TELL1
+#+BEGIN_SRC python
+>>> lulu.paly('ball')
+>>> lulu.paly('the', 'Lute')
+>>> lulu.play.call_count
+2
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_TELL2
+#+BEGIN_SRC python
+>>> lulu.run_around(how='in circles')
+>>> lulu.run_around.assert_called_once_with(
+        how='in circles')
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_TELL3
+#+BEGIN_SRC python
+>>> lulu.bark_in_the_night.assert_not_called()
+#+END_SRC
+
+** test_intro
+
+#+BEGIN_SRC python
+@mock.patch('random.seed')
+@mock.patch('guessing.game.print')
+@mock.patch('guessing.game.T',
+            side_effect=lambda x: x)
+def test_intro(mock_T, mock_print, mock_seed):
+    game.intro()
+    msg = "I am bored, let's play a game."
+    mock_T.assert_called_once_with(msg)
+    mock_print.asseret_called_once_with(msg)
+    mock_seed.assert_called_once_with()
+#+END_SRC
+
+** Done!
+
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Yeh!
+#+NAME:      fig_GRAPH_INTRO_DONE
+[[./img/call_graph_intro_check.png]]
+
 * Thoughts
 ** patch
    patches the *name* of something
