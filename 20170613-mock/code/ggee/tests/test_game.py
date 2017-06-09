@@ -120,5 +120,5 @@ def test_play(mock_stdout, mock_T, guesses, expected_messages):
             mock.patch('guessing.game.your_guess', side_effect=guesses):
         game.play(level)
 
-    mock_T.call_args_list = map(mock.call, expected_messages)
+    assert mock_T.call_args_list == map(mock.call, expected_messages)
     assert mock_stdout.getvalue() == '\n'.join(expected_messages) + '\n'
