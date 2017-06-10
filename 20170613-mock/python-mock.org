@@ -754,7 +754,7 @@ def test_your_guess_2nd_try(mock_print, mock_readline, mock_lang):
 * Some hand waving
 
 #+CREDIT: https://unsplash.com/photos/SZYreZsJ-fE
-#+ATTR_HTML: :width 40% :height 40%
+#+ATTR_HTML: :width 35% :height 35%
 #+CAPTION:   Something, something, something, done!
 #+NAME:      fig_HAND_WAVING
 [[./img/hand_waiving.jpg]]
@@ -788,7 +788,7 @@ def test_your_guess_2nd_try(mock_print, mock_readline, mock_lang):
 #+NAME:      fig_GRAPH_DONE
 [[./img/call_graph_wrong_bad_mock.png]]
 
-** Don’t go unless it is green
+** Go only when the light is green
 
 #+CREDIT:    https://pixabay.com/en/traffic-lights-green-light-1013506/
 #+ATTR_HTML: :width 75% :height 75%
@@ -796,11 +796,11 @@ def test_your_guess_2nd_try(mock_print, mock_readline, mock_lang):
 #+NAME:      fig_GREEN_LIGHT
 [[./img/green_light.jpg]]
 
-** But green light doesn't always means go!
+** But also use your common sense
 
 #+CREDIT:    https://unsplash.com/photos/LbUzPqxPUAs
 #+ATTR_HTML: :width 75% :height 75%
-#+CAPTION:   But
+#+CAPTION:   But green doesn't say drive
 #+NAME:      fig_GREEN_LIGHT_DIRNKS
 [[./img/green_light_drinks.jpg]]
 
