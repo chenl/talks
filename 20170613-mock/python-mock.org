@@ -377,10 +377,11 @@ Since we already know that ~lang~ is tested, and our unit is really ~is_quit~, w
 #+END_NOTES
 ** test is_quit …
 #+BEGIN_SRC python
-def test_is_quit_english():
-    with mock.patch('guessing.i18n.lang', …):
-        assert i18n.is_quit('  QUIT ')
-        assert not i18n.is_quit('I want my Mummy!')
+@mock.patch('guessing.i18n.lang', …)
+def test_is_quit_english(…):
+    # …
+    assert i18n.is_quit('  QUIT ')
+    assert not i18n.is_quit('I want my Mummy!')
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -419,12 +420,6 @@ We need to patch ~lang~ somehow so that when ~is_quit~ calls it will do what we 
 #+END_SRC
 #+ATTR_REVEAL: :frag t
 #+NAME: code_LULU4
-#+BEGIN_SRC python
->>> lulu.bark()
-<Mock name='Lulu.bark()' id='…45633808'>
-#+END_SRC
-#+ATTR_REVEAL: :frag t
-#+NAME: code_LULU5
 #+BEGIN_SRC python
 >>> lulu.bark().run.after(42, what='cats')
 <Mock name='Lulu.bark().run.after()' id=1'…45716856'>
@@ -471,11 +466,19 @@ We need to patch ~lang~ somehow so that when ~is_quit~ calls it will do what we 
 The mock API is very flexible, and all its' options are are listed in the standard documentation which is extensive.  I wanted to see if I can show all of the ~unittest.mock~ page in one slide, but I managed only about 1/2 of it.
 #+END_NOTES
 
+** test is_quit …
+#+BEGIN_SRC python
+@mock.patch('guessing.i18n.lang', …)
+def test_is_quit_english(…):
+RR    # …
+    assert i18n.is_quit('  QUIT ')
+    assert not i18n.is_quit('I want my Mummy!')
+#+END_SRC
 ** test_is_quit()
 #+BEGIN_SRC python
 @mock.patch('guessing.i18n.lang')
 def test_is_quit_english(mock_lang):
-    mock_lang.return_value='en'
+    mock_lang.return_value = 'en'
     assert i18n.is_quit('  QUIT ')
     assert not i18n.is_quit('I want my Mummy!')
 #+END_SRC
@@ -583,7 +586,8 @@ def outro():
 
 ** patch T
 #+BEGIN_SRC python
-@mock.patch('guessing.game.T', side_effect=lambda x: x)
+@mock.patch('guessing.game.T',
+            side_effect=lambda x: x)
 def test_outro(mock_T):
     game.outro()
     # …
@@ -730,19 +734,31 @@ def your_guess():
 
 ** test your_guess
 
-#+NAME: code_TEST_GUESS
+#+NAME: code_TEST_GUESS0
 #+BEGIN_SRC python
 @mock.patch('guessing.i18n.lang', return_value='C')
+@mock.patch('guessing.game.print')
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_TEST_GUESS1
+#+BEGIN_SRC python
 @mock.patch('sys.stdin.readline', side_effect=[
     'hello\n', '42\n'])
-@mock.patch('guessing.game.print')
-def test_your_guess_2nd_try(mock_print, mock_readline, mock_lang):
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_TEST_GUESS2
+#+BEGIN_SRC python
+def test_your_guess_2nd_try(mock_readline, mock_print,
+                            mock_lang):
     assert game.your_guess() == 42
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_TEST_GUESS3
+#+BEGIN_SRC python
     assert mock_print.call_args_list == [
         mock.call("Your guess is:"),
         mock.call("Sorry, I didn't get that"),
-        mock.call("Your guess is:"),
-    ]
+        mock.call("Your guess is:")]
 #+END_SRC
 
 ** Almost done
@@ -820,18 +836,9 @@ def test_your_guess_2nd_try(mock_print, mock_readline, mock_lang):
 - define the way you want to construct your mock
 #+END_NOTES
 
-* Questions?
+** Questions?
 
-https://github.com/chenl/talks/
-
-* Thoughts
-** patch
-   patches the *name* of something
-** Mock makes it too easy
-
-- it is too permissive (can be made better)
-- if it is unit only, the boundaries between units aren't checked.
-- [[https://medium.com/python-pandemonium/mock-or-not-to-mock-41965d33f175][to mock or not to mock]]
+[[https://github.com/chenl/talks/][github.com/chenl/talks/]]
 
 * Credits
 ** links
@@ -848,6 +855,7 @@ https://github.com/chenl/talks/
 - mocking: https://unsplash.com/photos/wOHH-NUTvVc
 - atomic bomb: https://pixabay.com/en/atomic-bomb-mushroom-cloud-explosion-1011738/
 - enterprise: https://www.flickr.com/photos/thart2009/22658375526
+#+REVEAL: split
 - superman: https://unsplash.com/@zoncoll?photo=ZtLASJerPb0
 - knot: https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
 - happy dog with hat: https://unsplash.com/photos/BXs8SjVelKs
@@ -855,6 +863,7 @@ https://github.com/chenl/talks/
 - coverage: https://unsplash.com/?photo=2Ts5HnA67k8
 - danger: https://unsplash.com/search/danger?photo=28v9cq7ytNU
 - green light: https://pixabay.com/en/traffic-lights-green-light-1013506/
+#+REVEAL: split
 - green light drinks: https://unsplash.com/photos/LbUzPqxPUAs
 - exception: https://unsplash.com/collections/440851/work?photo=EXuKQaf3Ei8
 - brick wall: https://unsplash.com/?photo=daYpIvggFxA
