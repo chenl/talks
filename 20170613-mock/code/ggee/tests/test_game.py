@@ -69,14 +69,14 @@ def test_your_guess_num(mock_stdout, mock_readline, mock_lang):
 @mock.patch('guessing.i18n.lang', return_value='C')
 @mock.patch('sys.stdin.readline', side_effect=[
     'hello\n', '42\n'])
-@mock.patch('sys.stdout', new_callable=StringIO)
-def test_your_guess_2nd_try(mock_stdout, mock_readline, mock_lang):
+@mock.patch('guessing.game.print')
+def test_your_guess_2nd_try(mock_print, mock_readline, mock_lang):
     assert game.your_guess() == 42
-    assert mock_stdout.getvalue() == (
-        "Your guess is:\n"
-        "Sorry, I didn't get that\n"
-        "Your guess is:\n"
-    )
+    assert mock_print.call_args_list == [
+        mock.call("Your guess is:"),
+        mock.call("Sorry, I didn't get that"),
+        mock.call("Your guess is:"),
+    ]
 
 @mock.patch('guessing.i18n.lang', return_value='C')
 @mock.patch('sys.stdin.readline', side_effect=['stop\n'])

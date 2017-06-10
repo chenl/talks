@@ -295,7 +295,7 @@ from guessing import i18n
 @mock.patch.dict('guessing.i18n.environ',
                  LC_MESSAGES='he_IL')
 def test_lang_lc_message_he():
-    assert i18n.lang == 'he'
+    assert i18n.lang() == 'he'
 #+END_SRC
 
 #+BEGIN_NOTES
@@ -303,10 +303,10 @@ There is a lot going on here:
 
 First thing to note is while Python 3.3 comes with ~mock~ as part of the std-libs (under ~unittest~), in earlier we need to install it via ~pip~.
 
-Next we use ~mock.patch.dict~ one of the patchers included in Python, here we use it as context manager.
+Next we use ~mock.patch.dict~ one of the patchers included in Python, here we use it as decorator.
 
 There are several things we should note here:
-- it will do the ~import~ for us.
+- it will do the ~import~ for us when the test is run (not when the module is loaded)
 - it modifies the binding of *names* and keeps the object as is.
 - it restores the binding after it is done.
 - since it change the binding the names we need to patch the names where they are used, not defined.
@@ -674,7 +674,7 @@ def test_intro(mock_T, mock_print, mock_seed):
     mock_seed.assert_called_once_with()
 #+END_SRC
 
-** Done!
+** We are getting there…
 
 #+CREDIT:
 #+ATTR_HTML: :width 75% :height 75%
@@ -689,6 +689,83 @@ def test_intro(mock_T, mock_print, mock_seed):
 #+NAME:      fig_GRAPH_GUESS
 [[./img/call_graph_guess.png]]
 
+** game.your_guess
+
+#+NAME: code_YOUR_GUESS
+#+BEGIN_SRC python
+def your_guess():
+    # type: () -> Optional[int]
+    while True:
+        print(T("Your guess is:"))
+        answer = sys.stdin.readline()
+        if is_quit(answer):
+            return None
+        try:
+            return int(answer)
+        except ValueError:
+            print(T("Sorry, I didn't get that"))
+#+END_SRC
+
+** dependencies
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Your guess
+#+NAME:      fig_GRAPH_GUESS_FULL
+[[./img/call_graph_guess_full.png]]
+
+** mock dependencies
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Your guess
+#+NAME:      fig_GRAPH_GUESS_MOCK_FULL
+[[./img/call_graph_guess_mock_full.png]]
+
+** easier
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Your guess
+#+NAME:      fig_GRAPH_GUESS_MOCK_LANG
+[[./img/call_graph_guess_mock_lang.png]]
+
+** test your_guess
+
+#+NAME: code_TEST_GUESS
+#+BEGIN_SRC python
+@mock.patch('guessing.i18n.lang', return_value='C')
+@mock.patch('sys.stdin.readline', side_effect=[
+    'hello\n', '42\n'])
+@mock.patch('guessing.game.print')
+def test_your_guess_2nd_try(mock_print, mock_readline, mock_lang):
+    assert game.your_guess() == 42
+    assert mock_print.call_args_list == [
+        mock.call("Your guess is:"),
+        mock.call("Sorry, I didn't get that"),
+        mock.call("Your guess is:"),
+    ]
+#+END_SRC
+
+** Almost done
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Check that
+#+NAME:      fig_CALL_GRAPH_DONE
+[[./img/call_graph_guess_check.png]]
+
+* Some hand waving
+
+#+CREDIT: https://unsplash.com/photos/SZYreZsJ-fE
+#+ATTR_HTML: :width 40% :height 40%
+#+CAPTION:   Something, something, something, done!
+#+NAME:      fig_HAND_WAVING
+[[./img/hand_waiving.jpg]]
+
+** Done
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   All done!
+#+NAME:      fig_GRAPH_DONE
+[[./img/call_graph_done.png]]
+
 * Caution
 
 #+CREDIT:    https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
@@ -696,6 +773,40 @@ def test_intro(mock_T, mock_print, mock_seed):
 #+CAPTION:   wet floor
 #+NAME:      fig_CAUTION
 [[./img/caution.jpg]]
+
+** Wrong
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Err…
+#+NAME:      fig_GRAPH_DONE
+[[./img/call_graph_wrong.png]]
+
+** Bad mock
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Face palm
+#+NAME:      fig_GRAPH_DONE
+[[./img/call_graph_wrong_bad_mock.png]]
+
+** Don’t go unless it is green
+
+#+CREDIT:    https://pixabay.com/en/traffic-lights-green-light-1013506/
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Light must be green
+#+NAME:      fig_GREEN_LIGHT
+[[./img/green_light.jpg]]
+
+** But green light doesn't always means go!
+
+#+CREDIT:    https://unsplash.com/photos/LbUzPqxPUAs
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   But
+#+NAME:      fig_GREEN_LIGHT_DIRNKS
+[[./img/green_light_drinks.jpg]]
+
+* Questions?
+
+https://github.com/chenl/talks/
 
 * Thoughts
 ** patch
@@ -722,21 +833,26 @@ def test_intro(mock_T, mock_print, mock_seed):
   - [[https://www.youtube.com/watch?v=Xu5EhKVZdV8][Stop Moking, Start Testing]] / Augie Fackler, Nathaniel Manista
     Project Hosting at Google Code is a large, well-established system written mostly in Python. We'll share our battle-born convictions about creating tests for test-unfriendly code and the larger topic of testing.
 ** images
-  title: https://unsplash.com/photos/wOHH-NUTvVc
-  mock: https://unsplash.com/collections/262992/funny?photo=wOHH-NUTvVc
-  happy dog with hat: https://unsplash.com/photos/BXs8SjVelKs
-  duck typing: https://unsplash.com/?photo=5x7PmmHanG4
-  flimsy: https://unsplash.com/?photo=5DJqsjAYlmk
-  coverage: https://unsplash.com/?photo=2Ts5HnA67k8
-  danger: https://unsplash.com/search/danger?photo=28v9cq7ytNU
-  exception: https://unsplash.com/collections/440851/work?photo=EXuKQaf3Ei8
-  brick wall: https://unsplash.com/?photo=daYpIvggFxA
-  legacy code: https://unsplash.com/?photo=FX__egbD0zE
-  atomic bomb: https://pixabay.com/en/atomic-bomb-mushroom-cloud-explosion-1011738/
-  enterprise: https://www.flickr.com/photos/thart2009/22658375526
-  sad dog: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/
-           https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
-  important: https://pixabay.com/en/road-sign-attention-right-of-way-663368/
+- sentinelone: …
+- important: https://pixabay.com/en/road-sign-attention-right-of-way-663368/
+- sad dog: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/
+  + https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
+- mocking: https://unsplash.com/photos/wOHH-NUTvVc
+- atomic bomb: https://pixabay.com/en/atomic-bomb-mushroom-cloud-explosion-1011738/
+- enterprise: https://www.flickr.com/photos/thart2009/22658375526
+- superman: https://unsplash.com/@zoncoll?photo=ZtLASJerPb0
+- knot: https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
+- happy dog with hat: https://unsplash.com/photos/BXs8SjVelKs
+- hand waiving: https://unsplash.com/photos/SZYreZsJ-fE
+- coverage: https://unsplash.com/?photo=2Ts5HnA67k8
+- danger: https://unsplash.com/search/danger?photo=28v9cq7ytNU
+- green light: https://pixabay.com/en/traffic-lights-green-light-1013506/
+- green light drinks: https://unsplash.com/photos/LbUzPqxPUAs
+- exception: https://unsplash.com/collections/440851/work?photo=EXuKQaf3Ei8
+- brick wall: https://unsplash.com/?photo=daYpIvggFxA
+- legacy code: https://unsplash.com/?photo=FX__egbD0zE
+- flimsy: https://unsplash.com/?photo=5DJqsjAYlmk
+- duck typing: https://unsplash.com/?photo=5x7PmmHanG4
 * didn't make it
 ** Old examples
 **** request time (inspect the world)
