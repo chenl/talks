@@ -19,6 +19,35 @@ __license__ = "Apache 2.0"
 # TODO: implement a high-score
 # see https://github.com/chenl/talks/issues/4
 
+class PromptGGEE(object):
+    """This class was made to work around a problem,
+     where a string is translated before formatting.
+
+     E.g. a part like `{level}` might translate too,
+     thus breaking the formatting.
+
+     This class allows to replace `{level}` with `{0:0}`:
+     >>> prompt = PromptGGEE(3, 7, 5)
+     >>> 'using level {0:0}'.format(prompt)
+
+     Using a fixed mapping between indices (0) and attrs (level),
+     we prevent the translation of any attr.
+    """
+
+    attr_by_index = {'0': 'level', '1': 'max_num', '2': 'num'}
+
+    def __init__(self, level, max_num, num):
+        self.level = str(level)
+        self.max_num = str(max_num)
+        self.num = str(num)
+
+    def __getitem__(self, item):
+        attr = self.attr_by_index[item]
+        return getattr(self, attr)
+
+    def __format__(self, format_spec):
+        return self[format_spec]
+
 def game():
     # type: () -> None
     intro()

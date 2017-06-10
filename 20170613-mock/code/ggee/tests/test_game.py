@@ -88,6 +88,13 @@ def test_your_guess_quit(mock_stdout, mock_readline, mock_lang):
     )
 
 
+def test_PromptGGEE():
+    prompt = game.PromptGGEE(level=3, max_num=7, num=5)
+    assert '{0:0} {0:1} {0:2}'.format(prompt) == '3 7 5'
+    assert '{a} {b:1} {c}'.format(a='a', b=prompt, c='c') == 'a 7 c'
+    assert 'simple'.format(prompt) == 'simple'
+
+
 @pytest.mark.parametrize('guesses,expected_messages', [
     ([4, 6, 5], [  # full scenario
         "Level 3: 0 to 7",
