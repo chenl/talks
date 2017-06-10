@@ -571,7 +571,8 @@ def test_T_hebrew(mock_lang, mock_CLIENT):
 #+BEGIN_SRC python
 def outro():
     # type: () -> None
-    print(T("That was fun! Thank you for playing with me."))
+    print(T("That was fun! "
+            "Thank you for playing with me."))
 #+END_SRC
 
 ** first lets patch T
@@ -804,6 +805,21 @@ def test_your_guess_2nd_try(mock_print, mock_readline, mock_lang):
 #+NAME:      fig_GREEN_LIGHT_DIRNKS
 [[./img/green_light_drinks.jpg]]
 
+* One step on a long journey
+
+#+CREDIT:    https://unsplash.com/photos/IUY_3DvM__w
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Still long to go
+#+NAME:      fig_WAY_AHEAD
+[[./img/way_ahead.jpg]]
+
+#+BEGIN_NOTES
+- no tests
+- with unit coverage
+- define the boundaries you wish to mock
+- define the way you want to construct your mock
+#+END_NOTES
+
 * Questions?
 
 https://github.com/chenl/talks/
@@ -816,14 +832,6 @@ https://github.com/chenl/talks/
 - it is too permissive (can be made better)
 - if it is unit only, the boundaries between units aren't checked.
 - [[https://medium.com/python-pandemonium/mock-or-not-to-mock-41965d33f175][to mock or not to mock]]
-
-* One step on a long journey
-  image: https://unsplash.com/photos/1JWmFju8vVg
-
-- no tests
-- with unit coverage
-- define the boundaries you wish to mock
-- define the way you want to construct your mock
 
 * Credits
 ** links
@@ -853,83 +861,3 @@ https://github.com/chenl/talks/
 - legacy code: https://unsplash.com/?photo=FX__egbD0zE
 - flimsy: https://unsplash.com/?photo=5DJqsjAYlmk
 - duck typing: https://unsplash.com/?photo=5x7PmmHanG4
-* didn't make it
-** Old examples
-**** request time (inspect the world)
-
- #+BEGIN_SRC python
- from datetime import datetime
- import requests
-
- def request_time():
-     r = requests.get('http://now.httpbin.org/')
-     if r.status_code != 200:
-        raise RuntimeError("Oy Vey!")
-     return datetime.strptime(r.json()['now']['iso8601'],
-                              '%Y-%m-%dT%H:%M:%S.%fZ')
- #+END_SRC
-
-**** cmd2 (integration, mock os.system)
-
- #+BEGIN_SRC python
- >>> c = ExampleCmd()
- >>> c.one_cmd_plus_hooks('shell echo a')
- a
- #+END_SRC
-
- #+BEGIN_SRC python
- import os
-
- class ExampleCmd(cmd.Cmd):
-     # ...
-     def one_cmd_plus_hooks(self, line):
-         # ...
-         os.system(...)
- #+END_SRC
-
- #+BEGIN_SRC python
- from unittest.mock import patch
-
- @patch('os.system')
- def test_exmaple_cmd_shell(mock_system):
-     c = ExampleCmd()
-     c.one_cmd_plus_hooks('shell echo a')
-     mock_system.assert_called_once_with('echo a')
- #+END_SRC
-
-**** get json
-
- #+BEGIN_SRC python
- def get_json(filename):
-     try:
-         return json.loads(open(filename).read())
-     except (IOError, ValueError):
-         return {}
- #+END_SRC
-
- Well... I can create a `tempfile` with some json in it. And I can put some invalid json to have the ~ValueError~, and there must be something I can do to get an ~IOError~ and I will figure this out later somehow.
-
- But then you are writing a *functional* test.
-
-**** credit card (side effect)
-
- #+BEGIN_SRC python
- def charge_credit_card(amount, cc_number, exp_month, exp_year):
-     db = Database()
-     q = OfflineQueue(db)
-     ccp = CreditCardProcessor(q)
-     c = CreditCard(cc_number, exp_month, exp_year)
-     c.charge(ccp, amount)
- #+END_SRC
-
-
-** Nerd
-:PROPERTIES:
-:reveal_background: ./img/at_key_signing_party.jpg
-:reveal_background_trans: slide
-:END:
-
-
-This is how to add background image to a silde
-
-#+REVEAL: split
