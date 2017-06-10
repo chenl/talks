@@ -97,7 +97,7 @@ def test_PromptGGEE():
 
 @pytest.mark.parametrize('guesses,expected_messages', [
     ([4, 6, 5], [  # full scenario
-        "Level 3: 0 to 7",
+        "Level {0:0}: 0 to {0:1}",
         "Can you guess what number I am thinking about?",
         "No, my number is bigger than that",
         "Can you guess what number I am thinking about?",
@@ -106,12 +106,12 @@ def test_PromptGGEE():
         "Yes, this is the number I was thinking about! How did you know that?",
     ]),
     ([None], [     # empty scenario
-        "Level 3: 0 to 7",
+        "Level {0:0}: 0 to {0:1}",
         "Can you guess what number I am thinking about?",
-        "Just wanted you to know that I was thinking about 5",
+        "Just wanted you to know that I was thinking about {0:2}",
     ]),
     ([5], [        # lucky scenario
-        "Level 3: 0 to 7",
+        "Level {0:0}: 0 to {0:1}",
         "Can you guess what number I am thinking about?",
         "Yes, this is the number I was thinking about! How did you know that?",
     ]),
@@ -128,4 +128,8 @@ def test_play(mock_stdout, mock_T, guesses, expected_messages):
         game.play(level)
 
     assert mock_T.call_args_list == map(mock.call, expected_messages)
-    assert mock_stdout.getvalue() == '\n'.join(expected_messages) + '\n'
+
+    prompt = game.PromptGGEE(level=level, max_num=7, num=num)
+    printed_messages = [msg.format(prompt) + '\n'
+                        for msg in expected_messages]
+    assert mock_stdout.getvalue() == ''.join(printed_messages)
