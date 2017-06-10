@@ -3,10 +3,9 @@
 import pytest
 
 try:
-    from io import StringIO
-except ImportError:
-    #from io import BytesIO as StringIO
     from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 try:
     from unittest import mock
