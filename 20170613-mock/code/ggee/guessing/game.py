@@ -47,14 +47,14 @@ def think_of_a_number(level):
 
 def play(level):
     # type: (int) -> None
-    print(T("Level {level}: 0 to {max_num}".format(
-        level=level, max_num=max_number(level))))
+    print(T("Level {level}: 0 to {max_num}").format(
+        level=level, max_num=max_number(level)))
     num = think_of_a_number(level)
     while True:
         print(T("Can you guess what number I am thinking about?"))
         guess = your_guess()
         if guess is None:
-            print(T("Just wanted you to know that I was thinking about {}".format(num)))
+            print(T("Just wanted you to know that I was thinking about {}").format(num))
             break
         if guess < num:
             print(T("No, my number is bigger than that"))
