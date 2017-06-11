@@ -79,13 +79,6 @@ def test_to_roman_numerals():
     assert to_roman_numerals(2017) == 'MMXVII'
 #+END_SRC
 
-#+BEGIN_NOTES
-When I tried to learn how to write unit-testing I mostly found tutorials that used example like this.
-
-~to_roman_numerals(decial: int) -> str~ is a good boy:
-
-It is a *pure* function. It gets a value and return a value that dependent *only* on its' input.
-#+END_NOTES
 ** I will save the day – 0:15
 
 #+CREDIT:  https://unsplash.com/@zoncoll?photo=ZtLASJerPb0 (cc-0)
@@ -96,6 +89,7 @@ It is a *pure* function. It gets a value and return a value that dependent *only
 
 #+BEGIN_NOTES
 This is not too hard. I can do that.
+
 I can fix everything.
 #+END_NOTES
 
@@ -108,6 +102,12 @@ I can fix everything.
 [[./img/knot.jpg]]
 
 #+BEGIN_NOTES
+It turns out that ~to_roman_numerals(decial: int) -> str~ is a nice function:
+
+It gets a value and return a value that dependent *only* on its' input.
+
+But the real world is ugly:
+
 - It inspects the world,
 - Has side effects,
 - calls external services (slow expensive, flaky)
@@ -135,6 +135,12 @@ while True:
         print("Yes, you win!")
         break
 #+END_SRC
+
+#+BEGIN_NOTES
+1. Explain this simple code.
+2. Note that it is not trivial to test.
+#+END_NOTES
+
 ** Enterprise Edition – 0:10
 
 #+CREDIT:    https://www.flickr.com/photos/thart2009/22658375526 (cc-by)
@@ -144,24 +150,26 @@ while True:
 [[./img/enterprise.jpg]]
 
 #+BEGIN_NOTES
-This is the classic Guessing game, the computer picks a number than the player need to guess what it is, But with extra enterprise-ness.
+But this is not simple GG, but GGEE
 #+END_NOTES
 
 ** GGEE – 1:20
 
 #+ATTR_HTML: :width 75% :height 75%
-#+CAPTION: (some of) the GGEE design
+#+CAPTION: (some of) GGEE’s design
 #+NAME:    fig_CALL_GRAPH_RICH
 [[./img/call_graph.png]]
 
 #+BEGIN_NOTES
-Our Guessing Game Enterprise Edition caters to the international market.
+Our *Guessing Game Enterprise Edition* caters to the international market.
 
 Se it has the i18n module.
 
 All  user facing strings are passing via this module, that depends on external resources.
 
 And even operations that does not requires the i18n still might depend on some external resource this is not trivial to test.
+
+Can we find some function that don’t do that?
 #+END_NOTES
 
 * Low hanging – 0:20
