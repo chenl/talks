@@ -125,10 +125,10 @@ But the real world is ugly:
 #+BEGIN_SRC python
 num = think_of_a_number()
 while True:
-    print("Can you my number?")
+    print("Can you guess my number?")
     guess = your_guess()
     if guess < num:
-        print("No, too samll.")
+        print("No, too small.")
     elif guess > num:
         print("No, too big.")
     else:
@@ -525,8 +525,8 @@ def intro():
 
 #+NAME: code_TELL1
 #+BEGIN_SRC python
->>> lulu.paly('ball')
->>> lulu.paly('the', 'Lute')
+>>> lulu.play('ball')
+>>> lulu.play('the', 'Lute')
 >>> lulu.play.call_count
 2
 #+END_SRC
@@ -554,7 +554,7 @@ def test_intro(mock_T, mock_print, mock_seed):
     game.intro()
     msg = "I am bored, let's play a game."
     mock_T.assert_called_once_with(msg)
-    mock_print.asseret_called_once_with(msg)
+    mock_print.assert_called_once_with(msg)
     mock_seed.assert_called_once_with()
 #+END_SRC
 
