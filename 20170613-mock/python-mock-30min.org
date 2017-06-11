@@ -5,7 +5,8 @@
 #+OPTIONS: ^:nil num:nil toc:nil
 #+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 #+REVEAL_EXTRA_CSS: ./custom.css
-* Time me – 0:10 (1:10)
+
+* Time me – 0:20
 
 #+CREDIT:    https://unsplash.com/photos/p3Pj7jOYvMn (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
@@ -13,14 +14,25 @@
 #+NAME:      fig_STOP_WATCH
 [[./img/stop_watch.jpg]]
 
-* Testing is important – 00:20 (1:05)
+#+BEGIN_NOTES
+It is surprisingly hard go give a short talk.
+So I timed my slides, and put the time next to the title.
+Please feel free to hackle me, if I go over, because it will be at the expense of your coffee break.
+#+END_NOTES
+
+* Testing is important – 0:20
 #+CREDIT:    https://pixabay.com/en/road-sign-attention-right-of-way-663368/ (cc-0)
 #+ATTR_HTML: :width 70% :height 70%
 #+CAPTION:   important
 #+NAME:      fig_IMPORTANT
 [[./img/important.jpg]]
 
-** Productivity suffers – 00:10
+#+BEGIN_NOTES
+Everybody agree that automatic tests are important, but why.
+
+It turns out that if you don’t have tests bad things happen.
+#+END_NOTES
+** Productivity suffers – 0:10
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION: Productivity suffers
 #+NAME:    fig_DOWN_GRAPH
@@ -30,7 +42,7 @@
 I could show you a cheesy graph I made with [[https://inkscape.org/][INKSCAPE]]
 #+END_NOTES
 
-** You will be unhappy – 00:35
+** You will be unhappy – 0:35
 
 #+CREDIT: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/, https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
 #+ATTR_HTML: :width 75% :height 75%
@@ -51,7 +63,7 @@ Without it:
 - You will miserable
 #+END_NOTES
 
-* Let’s learn unit-testing – 00:10 (1:10)
+* Let’s learn unit-testing – 0:10
 
 #+CREDIT: https://unsplash.com/search/books?photo=AtLajzgFyAQ (cc-0)
 #+ATTR_HTML: :width 50% :height 50%
@@ -59,7 +71,7 @@ Without it:
 #+NAME:      fig_BOOKS
 [[./img/books.jpg]]
 
-** Example – 00:45
+** Example – 0:45
 #+NAME: code_ROMAN
 #+BEGIN_SRC python
 def test_to_roman_numerals():
@@ -74,7 +86,7 @@ When I tried to learn how to write unit-testing I mostly found tutorials that us
 
 It is a *pure* function. It gets a value and return a value that dependent *only* on its' input.
 #+END_NOTES
-** I will save the day – 00:15
+** I will save the day – 0:15
 
 #+CREDIT:  https://unsplash.com/@zoncoll?photo=ZtLASJerPb0 (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
@@ -84,14 +96,14 @@ It is a *pure* function. It gets a value and return a value that dependent *only
 
 #+BEGIN_NOTES
 This is not too hard. I can do that.
-Don't wary Humanity, I will save you!
+I can fix everything.
 #+END_NOTES
 
-* Unit testing is complicated – 1:30 (4:15)
+* The real world is complicated – 1:30
 
 #+CREDIT:    https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
-#+CAPTION:   The real world is not as simple
+#+CAPTION:   If it only was that easy…
 #+NAME:      fig_KNOT
 [[./img/knot.jpg]]
 
@@ -143,11 +155,16 @@ This is the classic Guessing game, the computer picks a number than the player n
 [[./img/call_graph.png]]
 
 #+BEGIN_NOTES
-We see that game calls play, which ask for the player's guess.
-The player might indicate that she want to quit the game, but this is dependent on the system's language which checks ~os.environ~
+Our Guessing Game Enterprise Edition caters to the international market.
+
+Se it has the i18n module.
+
+All  user facing strings are passing via this module, that depends on external resources.
+
+And even operations that does not requires the i18n still might depend on some external resource this is not trivial to test.
 #+END_NOTES
 
-* Low hanging – 0:20 (1:30)
+* Low hanging – 0:20
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   Found one!
 #+NAME:      fig_CALL_GRAPH_RICH_MOX_NUM
@@ -183,7 +200,7 @@ So it seems that Roman Numerals are the exception rather than the Rule,
 And I guess I just give up and declare my code as non-testable.
 #+END_NOTES
 
-* i18n.lang calls… – 0:10 (2:00)
+* i18n.lang calls… – 0:10
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   lang uses environ
 #+NAME:      fig_GRAPH_LANG
@@ -213,7 +230,7 @@ So how should we test this?
 We could modify ~os.environ~, and see what we get, and it will work, but... `mock` gives us a better way to do that.
 #+END_NOTES
 
-* Enter Mocking – 1:05 (4:30)
+* Enter Mocking – 1:05
 #+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
 #+NAME:      fig_MOKING
@@ -269,7 +286,7 @@ There are several things we should note here:
 #+NAME:      fig_GRAPH_LANG_CHECK
 [[./img/call_graph_lang_check.png]]
 
-* is_quit calls… – 0:45 (2:05)
+* is_quit calls… – 0:45
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   The call graph of is_quit()
 #+NAME:      fig_ISQUIT
@@ -312,7 +329,7 @@ We can do as we did before and patch ~environ~, but...
 #+BEGIN_NOTES
 Since we already know that ~lang~ is tested, and our unit is really ~is_quit~, we can patch *it* instead.
 #+END_NOTES
-* Meet Mock – 0:10 (3:55)
+* Meet Mock – 0:10
 
 #+CREDIT:    https://unsplash.com/photos/BXs8SjVelKs
 #+ATTR_HTML: :width 75% :height 5%
@@ -396,7 +413,7 @@ def test_is_quit_english(mock_lang):
 #+NAME:      fig_GRAPH_QUIT_DONE
 [[./img/call_graph_quit_check.png]]
 
-* API Calls – 0:50 (3:30)
+* API Calls – 0:50
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   calls exteranl API
 #+NAME:      fig_GRAPH_T
@@ -450,7 +467,7 @@ def test_T_hebrew(mock_lang, mock_CLIENT):
 #+NAME:      fig_?
 [[./img/call_graph_t_check.png]]
 
-* print – 0:10 (0:25)
+* print – 0:10
 
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   it prints
@@ -472,7 +489,7 @@ def test_T_hebrew(mock_lang, mock_CLIENT):
 #+NAME:      fig_GRAPH_OUTRO_DONE
 [[./img/call_graph_outro_check.png]]
 
-* Did it happen? – 0:15 (2:50)
+* Did it happen? – 0:15
 
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   calls random.seed()
@@ -541,7 +558,7 @@ def test_intro(mock_T, mock_print, mock_seed):
 #+NAME:      fig_GRAPH_INTRO_DONE
 [[./img/call_graph_intro_check.png]]
 
-* Some hand waving – 0:10 (0:15)
+* Some hand waving – 0:10
 
 #+CREDIT: https://unsplash.com/photos/SZYreZsJ-fE
 #+ATTR_HTML: :width 35% :height 35%
@@ -556,7 +573,7 @@ def test_intro(mock_T, mock_print, mock_seed):
 #+NAME:      fig_GRAPH_DONE
 [[./img/call_graph_done.png]]
 
-* Caution – 0:15 (2:00)
+* Caution – 0:15
 
 #+CREDIT:    https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
@@ -594,7 +611,7 @@ def test_intro(mock_T, mock_print, mock_seed):
 #+NAME:      fig_GREEN_LIGHT_DIRNKS
 [[./img/green_light_drinks.jpg]]
 
-* A Step on a long journey – 1:00 (0:50)
+* A Step on a long journey – 0:50
 
 #+CREDIT:    https://unsplash.com/photos/IUY_3DvM__w
 #+ATTR_HTML: :width 75% :height 75%
