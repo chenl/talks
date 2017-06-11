@@ -486,7 +486,7 @@ def test_T_hebrew(mock_lang, mock_CLIENT):
 
 #+CREDIT:    https://unsplash.com/photos/hzgs56Ze49s (cc-0)
 #+ATTR_HTML: :width 75% :height 75%
-#+CAPTION:   Blha blah blah
+#+CAPTION:   Blah blah blah
 #+NAME:      fig_HAND_WAIVING_2
 [[./img/hand_waving_2.jpg]]
 
