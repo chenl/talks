@@ -1,0 +1,650 @@
+#+TITLE: Unit-testing in the real world with mock
+#+AUTHOR: Chen Rotem Levy
+#+EMAIL: chen@rotemlevy.name
+#+DATE: [2017-06-13 Tue 14:30]
+#+OPTIONS: ^:nil num:nil toc:nil
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_EXTRA_CSS: ./custom.css
+* Time me – 0:10 (1:10)
+
+#+CREDIT:    https://unsplash.com/photos/p3Pj7jOYvMn (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Time: 30:35
+#+NAME:      fig_STOP_WATCH
+[[./img/stop_watch.jpg]]
+
+* Testing is important – 00:20 (1:05)
+#+CREDIT:    https://pixabay.com/en/road-sign-attention-right-of-way-663368/ (cc-0)
+#+ATTR_HTML: :width 70% :height 70%
+#+CAPTION:   important
+#+NAME:      fig_IMPORTANT
+[[./img/important.jpg]]
+
+** Productivity suffers – 00:10
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION: Productivity suffers
+#+NAME:    fig_DOWN_GRAPH
+[[./img/down_graph.png]]
+
+#+BEGIN_NOTES
+I could show you a cheesy graph I made with [[https://inkscape.org/][INKSCAPE]]
+#+END_NOTES
+
+** You will be unhappy – 00:35
+
+#+CREDIT: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/, https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION: No tests
+#+NAME:    fig_SAD_DOG
+[[./img/sad_wet_dog.jpg]]
+
+#+BEGIN_NOTES
+But Instead I will show you a sad web doggy, which convey the same message.
+You will be unhappy.
+
+Without it:
+- You can't refactor
+- Your code crashes
+- Your productivity slows
+- You will be cold
+- You will be wet
+- You will miserable
+#+END_NOTES
+
+* Let’s learn unit-testing – 00:10 (1:10)
+
+#+CREDIT: https://unsplash.com/search/books?photo=AtLajzgFyAQ (cc-0)
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION:   pick up a book
+#+NAME:      fig_BOOKS
+[[./img/books.jpg]]
+
+** Example – 00:45
+#+NAME: code_ROMAN
+#+BEGIN_SRC python
+def test_to_roman_numerals():
+    assert to_roman_numerals(1949) == 'MCMXLIX'
+    assert to_roman_numerals(2017) == 'MMXVII'
+#+END_SRC
+
+#+BEGIN_NOTES
+When I tried to learn how to write unit-testing I mostly found tutorials that used example like this.
+
+~to_roman_numerals(decial: int) -> str~ is a good boy:
+
+It is a *pure* function. It gets a value and return a value that dependent *only* on its' input.
+#+END_NOTES
+** I will save the day – 00:15
+
+#+CREDIT:  https://unsplash.com/@zoncoll?photo=ZtLASJerPb0 (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION: I will save the day
+#+NAME:    fig_SUPERMAN
+[[./img/superman.jpg]]
+
+#+BEGIN_NOTES
+This is not too hard. I can do that.
+Don't wary Humanity, I will save you!
+#+END_NOTES
+
+* Unit testing is complicated – 1:30 (4:15)
+
+#+CREDIT:    https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   The real world is not as simple
+#+NAME:      fig_KNOT
+[[./img/knot.jpg]]
+
+#+BEGIN_NOTES
+- It inspects the world,
+- Has side effects,
+- calls external services (slow expensive, flaky)
+- Might have random components
+
+@TODO: consider a new slide for legacy code
+
+- You have legacy code, with no code coverage, so you can't refactor,
+  so you can't test so you don't have coverage...
+#+END_NOTES
+
+** Example: Guessing Game – 1:15
+
+#+NAME: code_GUESSING_GAME
+#+BEGIN_SRC python
+num = think_of_a_number()
+while True:
+    print("Can you my number?")
+    guess = your_guess()
+    if guess < num:
+        print("No, too samll.")
+    elif guess > num:
+        print("No, too big.")
+    else:
+        print("Yes, you win!")
+        break
+#+END_SRC
+** Enterprise Edition – 0:10
+
+#+CREDIT:    https://www.flickr.com/photos/thart2009/22658375526 (cc-by)
+#+ATTR_HTML: :width 85% :height 85%
+#+CAPTION:   The Enterprise Edition
+#+NAME:      fig_ENTERPRISE
+[[./img/enterprise.jpg]]
+
+#+BEGIN_NOTES
+This is the classic Guessing game, the computer picks a number than the player need to guess what it is, But with extra enterprise-ness.
+#+END_NOTES
+
+** GGEE – 1:20
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION: (some of) the GGEE design
+#+NAME:    fig_CALL_GRAPH_RICH
+[[./img/call_graph.png]]
+
+#+BEGIN_NOTES
+We see that game calls play, which ask for the player's guess.
+The player might indicate that she want to quit the game, but this is dependent on the system's language which checks ~os.environ~
+#+END_NOTES
+
+* Low hanging – 0:20 (1:30)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Found one!
+#+NAME:      fig_CALL_GRAPH_RICH_MOX_NUM
+[[./img/call_graph_max_num.png]]
+
+** test max_number – 0:50
+#+BEGIN_SRC python
+def max_number(level):
+    # type: (int) -> int
+    return (1 << level) - 1
+
+#+END_SRC
+
+#+ATTR_REVEAL: :frag t
+#+BEGIN_SRC python
+def test_max_number():
+    assert game.max_number(1) == 1
+    assert game.max_number(2) == 3
+    assert game.max_number(3) == 7
+#+END_SRC
+
+** Woo-Hoo! – 0:20
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   We have a DOT!
+#+NAME:      fig_GRAPH_MAX_NUM_CHECK
+[[./img/call_graph_max_num_check.png]]
+
+#+BEGIN_NOTES
+Yes! I have my dot! I am not totally useless...
+just mostly useless.
+
+So it seems that Roman Numerals are the exception rather than the Rule,
+And I guess I just give up and declare my code as non-testable.
+#+END_NOTES
+
+* i18n.lang calls… – 0:10 (2:00)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   lang uses environ
+#+NAME:      fig_GRAPH_LANG
+[[./img/call_graph_lang.png]]
+
+** i18n.lang – 1:50
+#+NAME: code_LANG
+#+BEGIN_SRC python
+from os import environ
+
+def lang():
+    # type: () -> str
+    lang_keys = ('LC_MESSAGES', 'LANG', 'LC_ALL')
+    lang_env = (environ.get(key) for key in lang_keys)
+    return next(filter(None, chain(lang_env, 'C')))[:2]
+#+END_SRC
+
+#+BEGIN_NOTES
+One of G2E2 most Enterprise-y features is it ready-ness for the international market. So the first thing we need to do is to detect the player's language preference from the environment and report it.
+
+Note that our legacy code was written in Python 2.7 but with and eye to Python 3 migration, according to PEP-484.
+
+But this function doesn't get an input, instead it interrogates ~os.environ~, defaulting to ~"C"~ if no language found.
+
+So how should we test this?
+
+We could modify ~os.environ~, and see what we get, and it will work, but... `mock` gives us a better way to do that.
+#+END_NOTES
+
+* Enter Mocking – 1:05 (4:30)
+#+CREDIT:    https://unsplash.com/photos/wOHH-NUTvVc (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+NAME:      fig_MOKING
+[[./img/dog_with_glasses.jpg]]
+
+#+BEGIN_NOTES
+Mocking is one way to isolate all the dependencies our unit requires, and replace them with an object that we will later be able to interrogate.
+
+The dynamic nature of Python lends itself to for such manipulation by swapping the object our unit ask by name, and replace it with a Mock object.
+#+END_NOTES
+
+** patch environ – 0:15
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Pathing environ
+#+NAME:      fig_GRAPH_LANG_MOCK_ENV
+[[./img/call_graph_lang_mock_env.png]]
+
+** test_i18n.test_lang – 03:05
+
+#+BEGIN_SRC python
+try:
+    from unittest import mock
+except ImportError:
+    import mock  # Python < 3.3
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+BEGIN_SRC python
+from guessing import i18n
+
+@mock.patch.dict('guessing.i18n.environ',
+                 LC_MESSAGES='he_IL')
+def test_lang_lc_message_he():
+    assert i18n.lang() == 'he'
+#+END_SRC
+
+#+BEGIN_NOTES
+There is a lot going on here:
+
+First thing to note is while Python 3.3 comes with ~mock~ as part of the std-libs (under ~unittest~), in earlier we need to install it via ~pip~.
+
+Next we use ~mock.patch.dict~ one of the patchers included in Python, here we use it as decorator.
+
+There are several things we should note here:
+- it will do the ~import~ for us when the test is run (not when the module is loaded)
+- it modifies the binding of *names* and keeps the object as is.
+- it restores the binding after it is done.
+- since it change the binding the names we need to patch the names where they are used, not defined.
+#+END_NOTES
+
+** Check! Next… – 0:05
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   2 down
+#+NAME:      fig_GRAPH_LANG_CHECK
+[[./img/call_graph_lang_check.png]]
+
+* is_quit calls… – 0:45 (2:05)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   The call graph of is_quit()
+#+NAME:      fig_ISQUIT
+[[./img/call_graph_quit.png]]
+
+** is_quit – 0:35
+#+BEGIN_SRC python
+def is_quit(text):
+    # type: (str) -> bool
+    if lang() == 'he':
+        return text.strip() in [
+            'לא', 'די', 'מספיק', 'צא בחוץ']
+    else:
+        return text.strip().lower() in [
+            'quit', 'stop', 'exit', 'no', 'enough']
+#+END_SRC
+
+#+BEGIN_NOTES
+When the game prompts the player to give a guess, she can instead can ask to quit the game.  But this is dependent of the player's language.
+
+Again we *could* mock os.environ as we did before, but we have more options:
+#+END_NOTES
+** patch environ – 0:10
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   The call graph of is_quit() with mocked environ
+#+NAME:      fig_ISQUIT_MOCK_ENV
+[[./img/call_graph_quit_mock_env.png]]
+
+#+BEGIN_NOTES
+We can do as we did before and patch ~environ~, but...
+#+END_NOTES
+** patch lang() – 0:35
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   The call graph of is_quit() with mocked lang()
+#+NAME:      fig_ISQUIT_MOCK_LANG
+[[./img/call_graph_quit_mock_lang.png]]
+
+#+BEGIN_NOTES
+Since we already know that ~lang~ is tested, and our unit is really ~is_quit~, we can patch *it* instead.
+#+END_NOTES
+* Meet Mock – 0:10 (3:55)
+
+#+CREDIT:    https://unsplash.com/photos/BXs8SjVelKs
+#+ATTR_HTML: :width 75% :height 5%
+#+CAPTION:   I am OK with that
+#+NAME:      fig_MOCK
+[[./img/happy_dog_with_a_hat.jpg]]
+
+** Lets call this Mock Lulu – 1:00
+#+NAME: code_LULU0
+#+BEGIN_SRC python
+>>> lulu = mock.Mock(name='Lulu')
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_LULU1
+#+BEGIN_SRC python
+>>> lulu
+<Mock name='Lulu' id='140518155448504'>
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_LULU2
+#+BEGIN_SRC python
+>>> lulu()
+<Mock name='Lulu()' id='…55482336'>
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_LULU3
+#+BEGIN_SRC python
+>>> lulu.bark
+<Mock name='Lulu.bark' id='…55483064'>
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_LULU4
+#+BEGIN_SRC python
+>>> lulu.bark().run.after(42, what='cats')
+<Mock name='Lulu.bark().run.after()' id=1'…45716856'>
+#+END_SRC
+** We can tell Lulu what to do – 2:00
+#+NAME: code_PUPPY0
+#+BEGIN_SRC python
+>>> lulu.bark.return_value = 'Woof!'
+>>> lulu.bark()
+'Woof!'
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_PUPPY1
+#+BEGIN_SRC python
+>>> lulu.make_puppy.return_value.bark.side_effect = [
+        'yip', 'YEEP!', Exception('stinky!')]
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_PUPPY2
+#+BEGIN_SRC python
+>>> puppy = Lulu.make_puppy(with_='Fido')
+>>> puppy.bark()
+'yip'
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_PUPPY3
+#+BEGIN_SRC python
+>>> puppy.bark('again')
+'YEEP!'
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_PUPPY4
+#+BEGIN_SRC python
+>>> puppy.bark()
+… Exception: stinky!
+#+END_SRC
+** test_is_quit() – 0:40
+#+BEGIN_SRC python
+@mock.patch('guessing.i18n.lang')
+def test_is_quit_english(mock_lang):
+    mock_lang.return_value = 'en'
+    assert i18n.is_quit('  QUIT ')
+    assert not i18n.is_quit('I want my Mummy!')
+#+END_SRC
+
+** ... – 0:05
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   OK, what next…
+#+NAME:      fig_GRAPH_QUIT_DONE
+[[./img/call_graph_quit_check.png]]
+
+* API Calls – 0:50 (3:30)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   calls exteranl API
+#+NAME:      fig_GRAPH_T
+[[./img/call_graph_t.png]]
+
+** T – 1:00
+#+NAME: code_T
+#+BEGIN_SRC python
+from google.cloud import translate
+CLIENT = translate.Client()
+
+def T(text):
+    # type: (str) -> str
+    lng = lang()
+    if lng in ('C', 'en'):
+        return text
+
+    tr = CLIENT.translate(text, format_='text',
+        source_language='en', target_language=lng)
+    return tr[0]['translatedText']
+#+END_SRC
+** Patch the cloud – 0:20
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Patch the cloud
+#+NAME:      fig_GRAPH_T_MOCK_ENV_TR
+[[./img/call_graph_t_mock_env_tr.png]]
+
+** remember that – 0:30
+#+BEGIN_SRC python
+CLINET = …
+def T(text):
+    # …
+    tr = CLIENT.translate(…)
+    return tr[0]['translatedText']
+#+END_SRC
+
+** full test_T – 0:45
+#+BEGIN_SRC python
+@mock.patch('guessing.i18n.CLIENT')
+@mock.patch('guessing.i18n.lang')
+def test_T_hebrew(mock_lang, mock_CLIENT):
+    mock_lang.return_value = 'he'
+    mock_CLIENT.translate.return_value = [
+        {'translatedText': 'שלום'}]
+    assert i18n.T('hello') == 'שלום'
+#+END_SRC
+
+** module done – 0:05
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   i18n – Check!
+#+NAME:      fig_?
+[[./img/call_graph_t_check.png]]
+
+* print – 0:10 (0:25)
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   it prints
+#+NAME:      fig_GRAPH_OUTRO
+[[./img/call_graph_outro.png]]
+
+** Some hand waving – 0:10
+
+#+CREDIT:    https://unsplash.com/photos/hzgs56Ze49s (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Blha blah blah
+#+NAME:      fig_HAND_WAIVING_2
+[[./img/hand_waving_2.jpg]]
+
+** OK… – 0:05
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Let’s say we did it
+#+NAME:      fig_GRAPH_OUTRO_DONE
+[[./img/call_graph_outro_check.png]]
+
+* Did it happen? – 0:15 (2:50)
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   calls random.seed()
+#+NAME:      fig_GRAPH_INTRO
+[[./img/call_graph_intro.png]]
+
+** game.intro – 0:25
+
+#+BEGIN_SRC python
+def intro():
+    # type: () -> None
+    print(T("I am bored, let's play a game."))
+    random.seed()
+#+END_SRC
+
+** Lulu is a snitch – 0:10
+
+#+CREDIT:    https://unsplash.com/photos/BXs8SjVelKs
+#+ATTR_HTML: :width 75% :height 5%
+#+CAPTION:   Remember me?
+#+NAME:      fig_MOCK_SPY
+[[./img/happy_dog_with_a_hat.jpg]]
+
+** Tell – 0:55
+
+#+NAME: code_TELL1
+#+BEGIN_SRC python
+>>> lulu.paly('ball')
+>>> lulu.paly('the', 'Lute')
+>>> lulu.play.call_count
+2
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_TELL2
+#+BEGIN_SRC python
+>>> lulu.run_around(how='in circles')
+>>> lulu.run_around.assert_called_once_with(
+        how='in circles')
+#+END_SRC
+#+ATTR_REVEAL: :frag t
+#+NAME: code_TELL3
+#+BEGIN_SRC python
+>>> lulu.bark_in_the_night.assert_not_called()
+#+END_SRC
+
+** test_intro – 1:00
+
+#+BEGIN_SRC python
+@mock.patch('random.seed')
+@mock.patch('guessing.game.print')
+@mock.patch('guessing.game.T',
+            side_effect=lambda x: x)
+def test_intro(mock_T, mock_print, mock_seed):
+    game.intro()
+    msg = "I am bored, let's play a game."
+    mock_T.assert_called_once_with(msg)
+    mock_print.asseret_called_once_with(msg)
+    mock_seed.assert_called_once_with()
+#+END_SRC
+
+** We are getting there… – 0:05
+
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Yeh!
+#+NAME:      fig_GRAPH_INTRO_DONE
+[[./img/call_graph_intro_check.png]]
+
+* Some hand waving – 0:10 (0:15)
+
+#+CREDIT: https://unsplash.com/photos/SZYreZsJ-fE
+#+ATTR_HTML: :width 35% :height 35%
+#+CAPTION:   Something, something, something, done!
+#+NAME:      fig_HAND_WAVING
+[[./img/hand_waving.jpg]]
+
+** Done – 0:05
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   All done!
+#+NAME:      fig_GRAPH_DONE
+[[./img/call_graph_done.png]]
+
+* Caution – 0:15 (2:00)
+
+#+CREDIT:    https://unsplash.com/search/caution?photo=rNTXkBaQAvk (cc-0)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   wet floor
+#+NAME:      fig_CAUTION
+[[./img/caution.jpg]]
+
+** Wrong – 0:15
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Err…
+#+NAME:      fig_GRAPH_DONE
+[[./img/call_graph_wrong.png]]
+
+** Bad mock – 1:00
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Face palm
+#+NAME:      fig_GRAPH_DONE
+[[./img/call_graph_wrong_bad_mock.png]]
+
+** Go only when the light is green – 0:15
+
+#+CREDIT:    https://pixabay.com/en/traffic-lights-green-light-1013506/
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Light must be green
+#+NAME:      fig_GREEN_LIGHT
+[[./img/green_light.jpg]]
+
+** But also use your common sense – 0:15
+
+#+CREDIT:    https://unsplash.com/photos/LbUzPqxPUAs
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   But green doesn't say drive
+#+NAME:      fig_GREEN_LIGHT_DIRNKS
+[[./img/green_light_drinks.jpg]]
+
+* A Step on a long journey – 1:00 (0:50)
+
+#+CREDIT:    https://unsplash.com/photos/IUY_3DvM__w
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Still long to go
+#+NAME:      fig_WAY_AHEAD
+[[./img/way_ahead.jpg]]
+
+#+BEGIN_NOTES
+- no tests
+- with unit coverage
+- define the boundaries you wish to mock
+- define the way you want to construct your mock
+#+END_NOTES
+
+** Questions? – 0:10
+
+   (sorry no time)
+
+   [[https://github.com/chenl/talks/][github.com/chenl/talks/]]
+* Credits
+** links
+  - [[https://www.youtube.com/watch?v=zW0f4ZRYF5M][Mocking Strategies]] ([[https://www.slideshare.net/excellaco/mocking-in-python-44973320][slides]]) / Excella's Dan Davis
+    at the Django District Meetup group on Feb 10, 2015
+
+  - [[https://www.youtube.com/watch?v=Xu5EhKVZdV8][Stop Moking, Start Testing]] / Augie Fackler, Nathaniel Manista
+    Project Hosting at Google Code is a large, well-established system written mostly in Python. We'll share our battle-born convictions about creating tests for test-unfriendly code and the larger topic of testing.
+** images
+- important: https://pixabay.com/en/road-sign-attention-right-of-way-663368/
+- sad dog: https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/
+  + https://pixabay.com/en/china-dog-sad-animal-wet-1070771/
+- mocking: https://unsplash.com/photos/wOHH-NUTvVc
+- atomic bomb: https://pixabay.com/en/atomic-bomb-mushroom-cloud-explosion-1011738/
+- enterprise: https://www.flickr.com/photos/thart2009/22658375526
+- superman: https://unsplash.com/@zoncoll?photo=ZtLASJerPb0
+- knot: https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
+#+REVEAL: split
+- happy dog with hat: https://unsplash.com/photos/BXs8SjVelKs
+- hand waving: https://unsplash.com/photos/SZYreZsJ-fE
+- hand waving 2: https://unsplash.com/photos/hzgs56Ze49s
+- hand waving 3: https://unsplash.com/photos/cAtzHUz7Z8g
+- hand waving 4: https://unsplash.com/photos/TA6t4NbHCv4
+- coverage: https://unsplash.com/?photo=2Ts5HnA67k8
+- danger: https://unsplash.com/search/danger?photo=28v9cq7ytNU
+- green light: https://pixabay.com/en/traffic-lights-green-light-1013506/
+#+REVEAL: split
+- green light drinks: https://unsplash.com/photos/LbUzPqxPUAs
+- exception: https://unsplash.com/collections/440851/work?photo=EXuKQaf3Ei8
+- brick wall: https://unsplash.com/?photo=daYpIvggFxA
+- legacy code: https://unsplash.com/?photo=FX__egbD0zE
+- flimsy: https://unsplash.com/?photo=5DJqsjAYlmk
+- duck typing: https://unsplash.com/?photo=5x7PmmHanG4
+- mocking the cloud: https://unsplash.com/photos/0DosbK_etK8
+- stop watch: https://unsplash.com/photos/p3Pj7jOYvnM
