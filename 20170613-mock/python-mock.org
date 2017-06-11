@@ -1,7 +1,7 @@
 #+TITLE: Unit-testing in the real world with mock
 #+AUTHOR: Chen Rotem Levy
 #+EMAIL: chen@rotemlevy.name
-#+DATE: [2017-06-13 Tue]
+#+DATE: [2017-06-13 Tue 14:30]
 #+OPTIONS: ^:nil num:nil toc:nil
 #+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 #+REVEAL_EXTRA_CSS: ./custom.css
@@ -774,7 +774,7 @@ def test_your_guess_2nd_try(mock_readline, mock_print,
 #+ATTR_HTML: :width 35% :height 35%
 #+CAPTION:   Something, something, something, done!
 #+NAME:      fig_HAND_WAVING
-[[./img/hand_waiving.jpg]]
+[[./img/hand_waving.jpg]]
 
 ** Done
 
@@ -859,7 +859,7 @@ def test_your_guess_2nd_try(mock_readline, mock_print,
 - superman: https://unsplash.com/@zoncoll?photo=ZtLASJerPb0
 - knot: https://unsplash.com/photos/-yz22gsqAH0 (cc-0)
 - happy dog with hat: https://unsplash.com/photos/BXs8SjVelKs
-- hand waiving: https://unsplash.com/photos/SZYreZsJ-fE
+- hand waving: https://unsplash.com/photos/SZYreZsJ-fE
 - coverage: https://unsplash.com/?photo=2Ts5HnA67k8
 - danger: https://unsplash.com/search/danger?photo=28v9cq7ytNU
 - green light: https://pixabay.com/en/traffic-lights-green-light-1013506/
