@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Unit-testing in the real world with mock</title>
+<meta name="author" content="(Chen Rotem Levy)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/moon.css" id="theme"/>
+
+<link rel="stylesheet" href="./custom.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Unit-testing in the real world with mock</h1><h2 class="author">Chen Rotem Levy</h2><h2 class="date">2017-06-13 ג' 14:30</h2><p class="date">Created: 2017-06-15 ה' 21:36</p>
+</section>
+
+<section>
+<section id="slide-orgd362caa">
+<h2 id="orgd362caa">Time me — (0:20)</h2>
+
+<div id="org84394bf" class="figure">
+<p><img src="./img/stop_watch.jpg" alt="stop_watch.jpg" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Time: 30:35</p>
+</div>
+
+<aside class="notes">
+<p>
+It is surprisingly hard go give a short talk.
+So I timed my slides, and put the time next to the title.
+Please feel free to hackle me, if I go over, because it will be at the expense of your coffee break.
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org36090f9">
+<h2 id="org36090f9">Testing is important — (0:20)</h2>
+
+<div id="orgb32cfba" class="figure">
+<p><img src="./img/important.jpg" alt="important.jpg" width="70%" height="70%" />
+</p>
+<p><span class="figure-number">Figure 2: </span>important</p>
+</div>
+
+<p>
+#+BEGIN_NOTES
+Everybody agree that automatic tests are important, but why.
+</p>
+
+<p>
+It turns out that if you don’t have tests bad things happen.
+#+END_NOTESRR
+</p>
+</section>
+<section id="slide-org9d75edf">
+<h3 id="org9d75edf">Productivity suffers — (0:10)</h3>
+
+<div id="org8ce1e70" class="figure">
+<p><img src="./img/down_graph.png" alt="down_graph.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Productivity suffers</p>
+</div>
+
+<aside class="notes">
+<p>
+I could show you a cheesy graph I made with <a href="https://inkscape.org/">INKSCAPE</a>
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org282f76c">
+<h3 id="org282f76c">You will be unhappy — (0:35)</h3>
+
+<div id="orgd8c2806" class="figure">
+<p><img src="./img/sad_wet_dog.jpg" alt="sad_wet_dog.jpg" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 4: </span>No tests</p>
+</div>
+
+<aside class="notes">
+<p>
+But Instead I will show you a sad web doggy, which convey the same message.
+You will be unhappy.
+</p>
+
+<p>
+Without it:
+</p>
+<ul>
+<li>You can't refactor</li>
+<li>Your code crashes</li>
+<li>Your productivity slows</li>
+<li>You will be cold</li>
+<li>You will be wet</li>
+<li>You will miserable</li>
+
+</ul>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org6f95611">
+<h2 id="org6f95611">Let’s learn unit-testing — (0:10)</h2>
+
+<div id="org4146f35" class="figure">
+<p><img src="./img/books.jpg" alt="books.jpg" width="50%" height="50%" />
+</p>
+<p><span class="figure-number">Figure 5: </span>pick up a book</p>
+</div>
+
+</section>
+<section id="slide-org58de2d0">
+<h3 id="org58de2d0">Example — (0:45)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python" id="code_ROMAN"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">test_to_roman_numerals</span>():
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">assert</span> to_roman_numerals(1949) == <span style="color: #CC9393;">'MCMXLIX'</span>
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">assert</span> to_roman_numerals(2017) == <span style="color: #CC9393;">'MMXVII'</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-org2d75a05">
+<h3 id="org2d75a05">I will save the day — (0:15)</h3>
+
+<div id="org9439445" class="figure">
+<p><img src="./img/superman.jpg" alt="superman.jpg" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 6: </span>I will save the day</p>
+</div>
+
+<aside class="notes">
+<p>
+This is not too hard. I can do that.
+</p>
+
+<p>
+I can fix everything.
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-org67b9fb1">
+<h2 id="org67b9fb1">The real world is complicated — (1:30)</h2>
+
+<div id="org88a5b58" class="figure">
+<p><img src="./img/knot.jpg" alt="knot.jpg" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 7: </span>If it only was that easy…</p>
+</div>
+
+<aside class="notes">
+<p>
+It turns out that <code>to_roman_numerals(decial: int) -&gt; str</code> is a nice function:
+</p>
+
+<p>
+It gets a value and return a value that dependent <b>only</b> on its' input.
+</p>
+
+<p>
+But the real world is ugly:
+</p>
+
+<ul>
+<li>It inspects the world,</li>
+<li>Has side effects,</li>
+<li>calls external services (slow expensive, flaky)</li>
+<li>Might have random components</li>
+
+</ul>
+
+<p>
+@TODO: consider a new slide for legacy code
+</p>
+
+<ul>
+<li>You have legacy code, with no code coverage, so you can't refactor,
+so you can't test so you don't have coverage&#x2026;</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-orgf0d815d">
+<h3 id="orgf0d815d">Example: Guessing Game — (1:15)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python" id="code_GUESSING_GAME"><span style="color: #DFAF8F;">num</span> = think_of_a_number()
+<span style="color: #F0DFAF; font-weight: bold;">while</span> <span style="color: #BFEBBF;">True</span>:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">print</span>(<span style="color: #CC9393;">"Can you guess my number?"</span>)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">guess</span> = your_guess()
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">if</span> guess &lt; num:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">print</span>(<span style="color: #CC9393;">"No, too small."</span>)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">elif</span> guess &gt; num:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">print</span>(<span style="color: #CC9393;">"No, too big."</span>)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">else</span>:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">print</span>(<span style="color: #CC9393;">"Yes, you win!"</span>)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">break</span>
+</pre>
+</div>
+
+<aside class="notes">
+<ol>
+<li>Explain this simple code.</li>
+<li>Note that it is not trivial to test.</li>
+
+</ol>
+
+</aside>
+
+</section>
+<section id="slide-org947a7a2">
+<h3 id="org947a7a2">Enterprise Edition — (0:10)</h3>
+
+<div id="org94f2d19" class="figure">
+<p><img src="./img/enterprise.jpg" alt="enterprise.jpg" width="85%" height="85%" />
+</p>
+<p><span class="figure-number">Figure 8: </span>The Enterprise Edition</p>
+</div>
+
+<aside class="notes">
+<p>
+But this is not simple GG, but GGEE
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org8245b5e">
+<h3 id="org8245b5e">GGEE — (1:20)</h3>
+
+<div id="orgabe445c" class="figure">
+<p><img src="./img/call_graph.png" alt="call_graph.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 9: </span>(some of) GGEE’s design</p>
+</div>
+
+<aside class="notes">
+<p>
+Our <b>Guessing Game Enterprise Edition</b> caters to the international market.
+</p>
+
+<p>
+Se it has the i18n module.
+</p>
+
+<p>
+All  user facing strings are passing via this module, that depends on external resources.
+</p>
+
+<p>
+And even operations that does not requires the i18n still might depend on some external resource this is not trivial to test.
+</p>
+
+<p>
+Can we find some function that don’t do that?
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf1515f3">
+<h2 id="orgf1515f3">Low hanging — (0:20)</h2>
+
+<div id="orgb7f76e6" class="figure">
+<p><img src="./img/call_graph_max_num.png" alt="call_graph_max_num.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 10: </span>Found one!</p>
+</div>
+
+</section>
+<section id="slide-orgb072d8e">
+<h3 id="orgb072d8e">test max_number — (0:50)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">max_number</span>(level):
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">type: (int) -&gt; int</span>
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">return</span> (1 &lt;&lt; level) - 1
+
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="fragment"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">test_max_number</span>():
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">assert</span> game.max_number(1) == 1
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">assert</span> game.max_number(2) == 3
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">assert</span> game.max_number(3) == 7
+</pre>
+</div>
+
+</section>
+<section id="slide-orgf85ff4e">
+<h3 id="orgf85ff4e">Woo-Hoo! — (0:20)</h3>
+
+<div id="org11400d9" class="figure">
+<p><img src="./img/call_graph_max_num_check.png" alt="call_graph_max_num_check.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 11: </span>We have a DOT!</p>
+</div>
+
+<aside class="notes">
+<p>
+Yes! I have my dot! I am not totally useless&#x2026;
+just mostly useless.
+</p>
+
+<p>
+So it seems that Roman Numerals are the exception rather than the Rule,
+And I guess I just give up and declare my code as non-testable.
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd8770be">
+<h2 id="orgd8770be">i18n.lang calls… — (0:10)</h2>
+
+<div id="orgf650a76" class="figure">
+<p><img src="./img/call_graph_lang.png" alt="call_graph_lang.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 12: </span>lang uses environ</p>
+</div>
+
+</section>
+<section id="slide-orgf319f5f">
+<h3 id="orgf319f5f">i18n.lang — (1:50)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python" id="code_LANG"><span style="color: #F0DFAF; font-weight: bold;">from</span> os <span style="color: #F0DFAF; font-weight: bold;">import</span> environ
+
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">lang</span>():
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">type: () -&gt; str</span>
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">lang_keys</span> = (<span style="color: #CC9393;">'LC_MESSAGES'</span>, <span style="color: #CC9393;">'LANG'</span>, <span style="color: #CC9393;">'LC_ALL'</span>)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">lang_env</span> = (environ.get(key) <span style="color: #F0DFAF; font-weight: bold;">for</span> key <span style="color: #F0DFAF; font-weight: bold;">in</span> lang_keys)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">return</span> <span style="color: #DCDCCC; font-weight: bold;">next</span>(<span style="color: #DCDCCC; font-weight: bold;">filter</span>(<span style="color: #BFEBBF;">None</span>, chain(lang_env, <span style="color: #CC9393;">'C'</span>)))[:2]
+</pre>
+</div>
+
+<aside class="notes">
+<p>
+One of G2E2 most Enterprise-y features is it ready-ness for the international market. So the first thing we need to do is to detect the player's language preference from the environment and report it.
+</p>
+
+<p>
+Note that our legacy code was written in Python 2.7 but with and eye to Python 3 migration, according to PEP-484.
+</p>
+
+<p>
+But this function doesn't get an input, instead it interrogates <code>os.environ</code>, defaulting to <code>"C"</code> if no language found.
+</p>
+
+<p>
+So how should we test this?
+</p>
+
+<p>
+We could modify <code>os.environ</code>, and see what we get, and it will work, but&#x2026; `mock` gives us a better way to do that.
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc7d5488">
+<h2 id="orgc7d5488">Enter Mocking — (1:05)</h2>
+
+<div id="org9873d63" class="figure">
+<p><img src="./img/dog_with_glasses.jpg" alt="dog_with_glasses.jpg" width="75%" height="75%" />
+</p>
+</div>
+
+<aside class="notes">
+<p>
+Mocking is one way to isolate all the dependencies our unit requires, and replace them with an object that we will later be able to interrogate.
+</p>
+
+<p>
+The dynamic nature of Python lends itself to for such manipulation by swapping the object our unit ask by name, and replace it with a Mock object.
+</p>
+
+</aside>
+
+</section>
+<section id="slide-org69d04ca">
+<h3 id="org69d04ca">patch environ — (0:15)</h3>
+
+<div id="org2143ea1" class="figure">
+<p><img src="./img/call_graph_lang_mock_env.png" alt="call_graph_lang_mock_env.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 14: </span>Pathing environ</p>
+</div>
+
+</section>
+<section id="slide-orgfced210">
+<h3 id="orgfced210">test_i18n.test_lang — (3:05)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">try</span>:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">from</span> unittest <span style="color: #F0DFAF; font-weight: bold;">import</span> mock
+<span style="color: #F0DFAF; font-weight: bold;">except</span> <span style="color: #7CB8BB;">ImportError</span>:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">import</span> mock  <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Python &lt; 3.3</span>
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment"><span style="color: #F0DFAF; font-weight: bold;">from</span> guessing <span style="color: #F0DFAF; font-weight: bold;">import</span> i18n
+
+<span style="color: #7CB8BB;">@mock.patch.dict</span>(<span style="color: #CC9393;">'guessing.i18n.environ'</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>LC_MESSAGES=<span style="color: #CC9393;">'he_IL'</span>)
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">test_lang_lc_message_he</span>():
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">assert</span> i18n.lang() == <span style="color: #CC9393;">'he'</span>
+</pre>
+</div>
+
+<aside class="notes">
+<p>
+There is a lot going on here:
+</p>
+
+<p>
+First thing to note is while Python 3.3 comes with <code>mock</code> as part of the std-libs (under <code>unittest</code>), in earlier we need to install it via <code>pip</code>.
+</p>
+
+<p>
+Next we use <code>mock.patch.dict</code> one of the patchers included in Python, here we use it as decorator.
+</p>
+
+<p>
+There are several things we should note here:
+</p>
+<ul>
+<li>it will do the <code>import</code> for us when the test is run (not when the module is loaded)</li>
+<li>it modifies the binding of <b>names</b> and keeps the object as is.</li>
+<li>it restores the binding after it is done.</li>
+<li>since it change the binding the names we need to patch the names where they are used, not defined.</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-orgcfe85d7">
+<h3 id="orgcfe85d7">Check! Next… — (0:05)</h3>
+
+<div id="org2bca418" class="figure">
+<p><img src="./img/call_graph_lang_check.png" alt="call_graph_lang_check.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 15: </span>2 down</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgde5f9e8">
+<h2 id="orgde5f9e8">is_quit calls… — (0:45)</h2>
+
+<div id="orgd68bcf0" class="figure">
+<p><img src="./img/call_graph_quit.png" alt="call_graph_quit.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 16: </span>The call graph of is_quit()</p>
+</div>
+
+</section>
+<section id="slide-orga5cbeaa">
+<h3 id="orga5cbeaa">is_quit — (0:35)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">is_quit</span>(text):
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">type: (str) -&gt; bool</span>
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">if</span> lang() == <span style="color: #CC9393;">'he'</span>:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">return</span> text.strip() <span style="color: #F0DFAF; font-weight: bold;">in</span> [
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #CC9393;">'&#1500;&#1488;'</span>, <span style="color: #CC9393;">'&#1491;&#1497;'</span>, <span style="color: #CC9393;">'&#1502;&#1505;&#1508;&#1497;&#1511;'</span>, <span style="color: #CC9393;">'&#1510;&#1488; &#1489;&#1495;&#1493;&#1509;'</span>]
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">else</span>:
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">return</span> text.strip().lower() <span style="color: #F0DFAF; font-weight: bold;">in</span> [
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #CC9393;">'quit'</span>, <span style="color: #CC9393;">'stop'</span>, <span style="color: #CC9393;">'exit'</span>, <span style="color: #CC9393;">'no'</span>, <span style="color: #CC9393;">'enough'</span>]
+</pre>
+</div>
+
+<aside class="notes">
+<p>
+When the game prompts the player to give a guess, she can instead can ask to quit the game.  But this is dependent of the player's language.
+</p>
+
+<p>
+Again we <b>could</b> mock os.environ as we did before, but we have more options:
+</p>
+
+</aside>
+</section>
+<section id="slide-org64a470e">
+<h3 id="org64a470e">patch environ — (0:10)</h3>
+
+<div id="org8f0bb69" class="figure">
+<p><img src="./img/call_graph_quit_mock_env.png" alt="call_graph_quit_mock_env.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 17: </span>The call graph of is_quit() with mocked environ</p>
+</div>
+
+<aside class="notes">
+<p>
+We can do as we did before and patch <code>environ</code>, but&#x2026;
+</p>
+
+</aside>
+</section>
+<section id="slide-org5a0e223">
+<h3 id="org5a0e223">patch lang — (0:35)</h3>
+
+<div id="orgc302f27" class="figure">
+<p><img src="./img/call_graph_quit_mock_lang.png" alt="call_graph_quit_mock_lang.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 18: </span>The call graph of is_quit() with mocked lang()</p>
+</div>
+
+<aside class="notes">
+<p>
+Since we already know that <code>lang</code> is tested, and our unit is really <code>is_quit</code>, we can patch <b>it</b> instead.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgf5a3568">
+<h2 id="orgf5a3568">Meet Mock — (0:10)</h2>
+
+<div id="org041464e" class="figure">
+<p><img src="./img/happy_dog_with_a_hat.jpg" alt="happy_dog_with_a_hat.jpg" width="75%" height="5%" />
+</p>
+<p><span class="figure-number">Figure 19: </span>I am OK with that</p>
+</div>
+
+</section>
+<section id="slide-org954fbcd">
+<h3 id="org954fbcd">Lets call this Mock Lulu — (1:00)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python" id="code_LULU0">&gt;&gt;&gt; <span style="color: #DFAF8F;">lulu</span> = mock.Mock(name=<span style="color: #CC9393;">'Lulu'</span>)
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment" id="code_LULU1">&gt;&gt;&gt; lulu
+&lt;Mock <span style="color: #DFAF8F;">name</span>=<span style="color: #CC9393;">'Lulu'</span> <span style="color: #DCDCCC; font-weight: bold;">id</span>=<span style="color: #CC9393;">'140518155448504'</span>&gt;
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment" id="code_LULU2">&gt;&gt;&gt; lulu()
+&lt;Mock <span style="color: #DFAF8F;">name</span>=<span style="color: #CC9393;">'Lulu()'</span> <span style="color: #DCDCCC; font-weight: bold;">id</span>=<span style="color: #CC9393;">'&#8230;55482336'</span>&gt;
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment" id="code_LULU3">&gt;&gt;&gt; lulu.bark
+&lt;Mock <span style="color: #DFAF8F;">name</span>=<span style="color: #CC9393;">'Lulu.bark'</span> <span style="color: #DCDCCC; font-weight: bold;">id</span>=<span style="color: #CC9393;">'&#8230;55483064'</span>&gt;
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment" id="code_LULU4">&gt;&gt;&gt; lulu.bark().run.after(42, what=<span style="color: #CC9393;">'cats'</span>)
+&lt;Mock <span style="color: #DFAF8F;">name</span>=<span style="color: #CC9393;">'Lulu.bark().run.after()'</span> <span style="color: #DCDCCC; font-weight: bold;">id</span>=1<span style="color: #CC9393;">'&#8230;45716856'</span>&gt;
+</pre>
+</div>
+</section>
+<section id="slide-org31d46b4">
+<h3 id="org31d46b4">We can tell Lulu what to do — (2:00)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python" id="code_PUPPY0">&gt;&gt;&gt; <span style="color: #DFAF8F;">lulu.bark.return_value</span> = <span style="color: #CC9393;">'Woof!'</span>
+&gt;&gt;&gt; lulu.bark()
+<span style="color: #CC9393;">'Woof!'</span>
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment" id="code_PUPPY1">&gt;&gt;&gt; <span style="color: #DFAF8F;">lulu.make_puppy.return_value.bark.side_effect</span> = [
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #CC9393;">'yip'</span>, <span style="color: #CC9393;">'YEEP!'</span>, <span style="color: #7CB8BB;">Exception</span>(<span style="color: #CC9393;">'stinky!'</span>)]
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment" id="code_PUPPY2">&gt;&gt;&gt; <span style="color: #DFAF8F;">puppy</span> = Lulu.make_puppy(with_=<span style="color: #CC9393;">'Fido'</span>)
+&gt;&gt;&gt; puppy.bark()
+<span style="color: #CC9393;">'yip'</span>
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment" id="code_PUPPY3">&gt;&gt;&gt; puppy.bark(<span style="color: #CC9393;">'again'</span>)
+<span style="color: #9FC59F;">'YEEP!'</span>
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment" id="code_PUPPY4">&gt;&gt;&gt; puppy.bark()
+&#8230; <span style="color: #7CB8BB;">Exception</span>: stinky!
+</pre>
+</div>
+</section>
+<section id="slide-org44307cd">
+<h3 id="org44307cd">test_is_quit — (0:40)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #7CB8BB;">@mock.patch</span>(<span style="color: #CC9393;">'guessing.i18n.lang'</span>)
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">test_is_quit_english</span>(mock_lang):
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">mock_lang.return_value</span> = <span style="color: #CC9393;">'en'</span>
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">assert</span> i18n.is_quit(<span style="color: #CC9393;">'  QUIT '</span>)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">assert</span> <span style="color: #F0DFAF; font-weight: bold;">not</span> i18n.is_quit(<span style="color: #CC9393;">'I want my Mummy!'</span>)
+</pre>
+</div>
+
+</section>
+<section id="slide-orgf662bfc">
+<h3 id="orgf662bfc">&#x2026; — (0:05)</h3>
+
+<div id="org4393684" class="figure">
+<p><img src="./img/call_graph_quit_check.png" alt="call_graph_quit_check.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 20: </span>OK, what next…</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgdcada77">
+<h2 id="orgdcada77">API Calls — (0:50)</h2>
+
+<div id="org8942f4b" class="figure">
+<p><img src="./img/call_graph_t.png" alt="call_graph_t.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 21: </span>calls exteranl API</p>
+</div>
+
+</section>
+<section id="slide-orgadba48d">
+<h3 id="orgadba48d">T — (1:00)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python" id="code_T"><span style="color: #F0DFAF; font-weight: bold;">from</span> google.cloud <span style="color: #F0DFAF; font-weight: bold;">import</span> translate
+<span style="color: #DFAF8F;">CLIENT</span> = translate.Client()
+
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">T</span>(text):
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">type: (str) -&gt; str</span>
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">lng</span> = lang()
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">if</span> lng <span style="color: #F0DFAF; font-weight: bold;">in</span> (<span style="color: #CC9393;">'C'</span>, <span style="color: #CC9393;">'en'</span>):
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">return</span> text
+
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">tr</span> = CLIENT.translate(text, format_=<span style="color: #CC9393;">'text'</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   source_language=<span style="color: #CC9393;">'en'</span>, target_language=lng)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">return</span> tr[0][<span style="color: #CC9393;">'translatedText'</span>]
+</pre>
+</div>
+</section>
+<section id="slide-orgd6a7e27">
+<h3 id="orgd6a7e27">Patch the cloud — (0:20)</h3>
+
+<div id="org69e2624" class="figure">
+<p><img src="./img/call_graph_t_mock_env_tr.png" alt="call_graph_t_mock_env_tr.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 22: </span>Patch the cloud</p>
+</div>
+
+</section>
+<section id="slide-orgf418700">
+<h3 id="orgf418700">remember that — (0:30)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #DFAF8F;">CLINET</span> = &#8230;
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">T</span>(text):
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#8230;</span>
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">tr</span> = CLIENT.translate(&#8230;)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">return</span> tr[0][<span style="color: #CC9393;">'translatedText'</span>]
+</pre>
+</div>
+
+</section>
+<section id="slide-orgcb80b60">
+<h3 id="orgcb80b60">full test_T — (0:45)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #7CB8BB;">@mock.patch</span>(<span style="color: #CC9393;">'guessing.i18n.CLIENT'</span>)
+<span style="color: #7CB8BB;">@mock.patch</span>(<span style="color: #CC9393;">'guessing.i18n.lang'</span>)
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">test_T_hebrew</span>(mock_lang, mock_CLIENT):
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">mock_lang.return_value</span> = <span style="color: #CC9393;">'he'</span>
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">mock_CLIENT.translate.return_value</span> = [
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   {<span style="color: #CC9393;">'translatedText'</span>: <span style="color: #CC9393;">'&#1513;&#1500;&#1493;&#1501;'</span>}]
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">assert</span> i18n.T(<span style="color: #CC9393;">'hello'</span>) == <span style="color: #CC9393;">'&#1513;&#1500;&#1493;&#1501;'</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-org644ccb9">
+<h3 id="org644ccb9">module done — (0:04)</h3>
+
+<div id="orgabefb7d" class="figure">
+<p><img src="./img/call_graph_t_check.png" alt="call_graph_t_check.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 23: </span>i18n – Check!</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org7303a8b">
+<h2 id="org7303a8b">print — (0:10)</h2>
+
+<div id="org6ec7d12" class="figure">
+<p><img src="./img/call_graph_outro.png" alt="call_graph_outro.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 24: </span>it prints</p>
+</div>
+
+</section>
+<section id="slide-orgd6e909f">
+<h3 id="orgd6e909f">Some hand waving — (0:10)</h3>
+
+<div id="org245d6ea" class="figure">
+<p><img src="./img/hand_waving_2.jpg" alt="hand_waving_2.jpg" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 25: </span>Blah blah blah</p>
+</div>
+
+</section>
+<section id="slide-org49c3996">
+<h3 id="org49c3996">OK… — (0:05)</h3>
+
+<div id="org9e65a70" class="figure">
+<p><img src="./img/call_graph_outro_check.png" alt="call_graph_outro_check.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 26: </span>Let’s say we did it</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org6bcd21c">
+<h2 id="org6bcd21c">Did it happen? — (0:15)</h2>
+
+<div id="org5bc18a5" class="figure">
+<p><img src="./img/call_graph_intro.png" alt="call_graph_intro.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 27: </span>calls random.seed()</p>
+</div>
+
+</section>
+<section id="slide-org715fa79">
+<h3 id="org715fa79">game.intro — (0:25)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">intro</span>():
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">type: () -&gt; None</span>
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #F0DFAF; font-weight: bold;">print</span>(T(<span style="color: #CC9393;">"I am bored, let's play a game."</span>))
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   random.seed()
+</pre>
+</div>
+
+</section>
+<section id="slide-orgd96b663">
+<h3 id="orgd96b663">Lulu is a snitch — (0:10)</h3>
+
+<div id="orgb101069" class="figure">
+<p><img src="./img/happy_dog_with_a_hat.jpg" alt="happy_dog_with_a_hat.jpg" width="75%" height="5%" />
+</p>
+<p><span class="figure-number">Figure 28: </span>Remember me?</p>
+</div>
+
+</section>
+<section id="slide-org8510d58">
+<h3 id="org8510d58">Tell — (0:55)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python" id="code_TELL1">&gt;&gt;&gt; lulu.play(<span style="color: #CC9393;">'ball'</span>)
+&gt;&gt;&gt; lulu.play(<span style="color: #CC9393;">'the'</span>, <span style="color: #CC9393;">'Lute'</span>)
+&gt;&gt;&gt; lulu.play.call_count
+2
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment" id="code_TELL2">&gt;&gt;&gt; lulu.run_around(how=<span style="color: #CC9393;">'in circles'</span>)
+&gt;&gt;&gt; lulu.run_around.assert_called_once_with(
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   how=<span style="color: #CC9393;">'in circles'</span>)
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre  class="fragment" id="code_TELL3">&gt;&gt;&gt; lulu.bark_in_the_night.assert_not_called()
+</pre>
+</div>
+
+</section>
+<section id="slide-org53a2f66">
+<h3 id="org53a2f66">test_intro — (1:00)</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #7CB8BB;">@mock.patch</span>(<span style="color: #CC9393;">'random.seed'</span>)
+<span style="color: #7CB8BB;">@mock.patch</span>(<span style="color: #CC9393;">'guessing.game.print'</span>)
+<span style="color: #7CB8BB;">@mock.patch</span>(<span style="color: #CC9393;">'guessing.game.T'</span>,
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   side_effect=<span style="color: #F0DFAF; font-weight: bold;">lambda</span> x: x)
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">test_intro</span>(mock_T, mock_print, mock_seed):
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   game.intro()
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   <span style="color: #DFAF8F;">msg</span> = <span style="color: #CC9393;">"I am bored, let's play a game."</span>
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   mock_T.assert_called_once_with(msg)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   mock_print.assert_called_once_with(msg)
+<span style="color: #DCDCCC; background-color: #4F4F4F;"> </span>   mock_seed.assert_called_once_with()
+</pre>
+</div>
+
+</section>
+<section id="slide-org58158fa">
+<h3 id="org58158fa">We are almost done… — (0:05)</h3>
+
+<div id="org35cd144" class="figure">
+<p><img src="./img/call_graph_intro_check.png" alt="call_graph_intro_check.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 29: </span>Yeh!</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org8530caf">
+<h2 id="org8530caf">Some hand waving — (0:10)</h2>
+
+<div id="org885b413" class="figure">
+<p><img src="./img/hand_waving.jpg" alt="hand_waving.jpg" width="35%" height="35%" />
+</p>
+<p><span class="figure-number">Figure 30: </span>Something, something, something, done!</p>
+</div>
+
+</section>
+<section id="slide-org9088a5c">
+<h3 id="org9088a5c">Done — (0:05)</h3>
+
+<div id="org0c7f1da" class="figure">
+<p><img src="./img/call_graph_done.png" alt="call_graph_done.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 31: </span>All done!</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orge7ed7bd">
+<h2 id="orge7ed7bd">Caution — (0:15)</h2>
+
+<div id="orgbe0864a" class="figure">
+<p><img src="./img/caution.jpg" alt="caution.jpg" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 32: </span>wet floor</p>
+</div>
+
+</section>
+<section id="slide-org643540e">
+<h3 id="org643540e">Wrong — (0:15)</h3>
+
+<div id="org20b0351" class="figure">
+<p><img src="./img/call_graph_wrong.png" alt="call_graph_wrong.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 33: </span>Err…</p>
+</div>
+
+</section>
+<section id="slide-org1afb682">
+<h3 id="org1afb682">Bad mock — (1:00)</h3>
+
+<div id="orgdff2d8e" class="figure">
+<p><img src="./img/call_graph_wrong_bad_mock.png" alt="call_graph_wrong_bad_mock.png" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 34: </span>Face palm</p>
+</div>
+
+</section>
+<section id="slide-org64b7d13">
+<h3 id="org64b7d13">Go only when the light is green — (0:15)</h3>
+
+<div id="orgb77caa4" class="figure">
+<p><img src="./img/green_light.jpg" alt="green_light.jpg" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 35: </span>Light must be green</p>
+</div>
+
+</section>
+<section id="slide-orge0ca275">
+<h3 id="orge0ca275">But also use your common sense — (0:15)</h3>
+
+<div id="org2ac1e41" class="figure">
+<p><img src="./img/green_light_drinks.jpg" alt="green_light_drinks.jpg" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 36: </span>But green doesn't say drive</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org1f2a390">
+<h2 id="org1f2a390">A Step on a long journey — (0:50)</h2>
+
+<div id="org2ea5844" class="figure">
+<p><img src="./img/way_ahead.jpg" alt="way_ahead.jpg" width="75%" height="75%" />
+</p>
+<p><span class="figure-number">Figure 37: </span>Still long to go</p>
+</div>
+
+<aside class="notes">
+<ul>
+<li>no tests</li>
+<li>with unit coverage</li>
+<li>define the boundaries you wish to mock</li>
+<li>define the way you want to construct your mock</li>
+
+</ul>
+
+</aside>
+
+</section>
+<section id="slide-org4358809">
+<h3 id="org4358809">Questions? — (5:00)</h3>
+<p>
+(if there is time)
+</p>
+
+<p>
+<a href="https://github.com/chenl/talks/">github.com/chenl/talks/</a>
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org38b5a7a">
+<h2 id="org38b5a7a">Documentation</h2>
+
+<div id="orgef1221e" class="figure">
+<p><img src="./img/documentation.png" alt="documentation.png" width="90%" height="90%" />
+</p>
+<p><span class="figure-number">Figure 38: </span>About 1/2 of the unittest.mock std doc</p>
+</div>
+
+<aside class="notes">
+<p>
+The mock API is very flexible, and all its' options are are listed in the standard documentation which is extensive.  I wanted to see if I can show all of the <code>unittest.mock</code> page in one slide, but I managed only about 1/2 of it.
+</p>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgba8141c">
+<h2 id="orgba8141c">Credits</h2>
+<div class="outline-text-2" id="text-orgba8141c">
+</div></section>
+<section id="slide-orgc655628">
+<h3 id="orgc655628">links</h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=zW0f4ZRYF5M">Mocking Strategies</a> (<a href="https://www.slideshare.net/excellaco/mocking-in-python-44973320">slides</a>) / Excella's Dan Davis
+at the Django District Meetup group on Feb 10, 2015</li>
+
+<li><a href="https://www.youtube.com/watch?v=Xu5EhKVZdV8">Stop Moking, Start Testing</a> / Augie Fackler, Nathaniel Manista
+Project Hosting at Google Code is a large, well-established system written mostly in Python. We'll share our battle-born convictions about creating tests for test-unfriendly code and the larger topic of testing.</li>
+
+</ul>
+</section>
+<section id="slide-org8e57047">
+<h3 id="org8e57047">images</h3>
+<ul>
+<li>important: <a href="https://pixabay.com/en/road-sign-attention-right-of-way-663368/">https://pixabay.com/en/road-sign-attention-right-of-way-663368/</a></li>
+<li>sad dog: <a href="https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/">https://pixabay.com/en/animal-dog-unhappy-sad-art-2274100/</a>
+<ul>
+<li><a href="https://pixabay.com/en/china-dog-sad-animal-wet-1070771/">https://pixabay.com/en/china-dog-sad-animal-wet-1070771/</a></li>
+
+</ul></li>
+<li>mocking: <a href="https://unsplash.com/photos/wOHH-NUTvVc">https://unsplash.com/photos/wOHH-NUTvVc</a></li>
+<li>atomic bomb: <a href="https://pixabay.com/en/atomic-bomb-mushroom-cloud-explosion-1011738/">https://pixabay.com/en/atomic-bomb-mushroom-cloud-explosion-1011738/</a></li>
+<li>enterprise: <a href="https://www.flickr.com/photos/thart2009/22658375526">https://www.flickr.com/photos/thart2009/22658375526</a></li>
+<li>superman: <a href="https://unsplash.com/@zoncoll?photo=ZtLASJerPb0">https://unsplash.com/@zoncoll?photo=ZtLASJerPb0</a></li>
+<li>knot: <a href="https://unsplash.com/photos/-yz22gsqAH0">https://unsplash.com/photos/-yz22gsqAH0</a> (cc-0)</li>
+
+</ul>
+</section>
+<section >
+<ul>
+<li>happy dog with hat: <a href="https://unsplash.com/photos/BXs8SjVelKs">https://unsplash.com/photos/BXs8SjVelKs</a></li>
+<li>hand waving: <a href="https://unsplash.com/photos/SZYreZsJ-fE">https://unsplash.com/photos/SZYreZsJ-fE</a></li>
+<li>hand waving 2: <a href="https://unsplash.com/photos/hzgs56Ze49s">https://unsplash.com/photos/hzgs56Ze49s</a></li>
+<li>hand waving 3: <a href="https://unsplash.com/photos/cAtzHUz7Z8g">https://unsplash.com/photos/cAtzHUz7Z8g</a></li>
+<li>hand waving 4: <a href="https://unsplash.com/photos/TA6t4NbHCv4">https://unsplash.com/photos/TA6t4NbHCv4</a></li>
+<li>coverage: <a href="https://unsplash.com/?photo=2Ts5HnA67k8">https://unsplash.com/?photo=2Ts5HnA67k8</a></li>
+<li>danger: <a href="https://unsplash.com/search/danger?photo=28v9cq7ytNU">https://unsplash.com/search/danger?photo=28v9cq7ytNU</a></li>
+<li>green light: <a href="https://pixabay.com/en/traffic-lights-green-light-1013506/">https://pixabay.com/en/traffic-lights-green-light-1013506/</a></li>
+
+</ul>
+</section>
+<section >
+<ul>
+<li>green light drinks: <a href="https://unsplash.com/photos/LbUzPqxPUAs">https://unsplash.com/photos/LbUzPqxPUAs</a></li>
+<li>exception: <a href="https://unsplash.com/collections/440851/work?photo=EXuKQaf3Ei8">https://unsplash.com/collections/440851/work?photo=EXuKQaf3Ei8</a></li>
+<li>brick wall: <a href="https://unsplash.com/?photo=daYpIvggFxA">https://unsplash.com/?photo=daYpIvggFxA</a></li>
+<li>legacy code: <a href="https://unsplash.com/?photo=FX__egbD0zE">https://unsplash.com/?photo=FX__egbD0zE</a></li>
+<li>flimsy: <a href="https://unsplash.com/?photo=5DJqsjAYlmk">https://unsplash.com/?photo=5DJqsjAYlmk</a></li>
+<li>duck typing: <a href="https://unsplash.com/?photo=5x7PmmHanG4">https://unsplash.com/?photo=5x7PmmHanG4</a></li>
+<li>mocking the cloud: <a href="https://unsplash.com/photos/0DosbK_etK8">https://unsplash.com/photos/0DosbK_etK8</a></li>
+<li>stop watch: <a href="https://unsplash.com/photos/p3Pj7jOYvnM">https://unsplash.com/photos/p3Pj7jOYvnM</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.20,
+minScale: 0.50,
+maxScale: 2.50,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
