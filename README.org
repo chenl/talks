@@ -3,9 +3,11 @@
 #+email: chenl@rotemlevy.name
 #+option: ^:nil
 
-A talks given by me:
+* Talks I gave
 
-| date             | event             | title                                     |
-|------------------+-------------------+-------------------------------------------|
-| <2017-01-02 Mon> | PyWeb-il meetup   | Why Rust                                  |
-| <2017-06-12 Mon> | PyCon Israel 2017 | Unit testing in the real world with mocks |
+
+| date             | event                 | title                                     |
+|------------------+-----------------------+-------------------------------------------|
+| <2017-01-02 Mon> | PyWeb-il meetup       | Why Rust                                  |
+| <2017-06-12 Mon> | PyCon Israel 2017     | Unit testing in the real world with mocks |
+| <2017-07-16 Sun> | Sayeret Lambda meetup | Why Rust                                  |

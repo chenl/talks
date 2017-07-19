@@ -5,11 +5,10 @@
 #+option: ^:nil
 
 * chen@rotemlevy.name
-Currently coding with Python @ SentinelOne ([[https://sentinelone.com/jobs/][we are hiring]])
-
 A nerd since 1968, a computer geek since 1978, GNU/* fan-boy since 1998
 
-Started writing BASIC on Commodore PET, poked and peek my way around the Commodore 64, wrote Logo, Pascal, C, C++, Bash, Emacs Lisp. Currently writing Python code @ SentinelOne (we are hiring)
+Started writing BASIC on Commodore PET, poked and peek my way around the Commodore 64, wrote Logo, Pascal, C, C++, Bash, Emacs Lisp. Currently writing
+Currently coding with Python @ SentinelOne ([[https://sentinelone.com/jobs/][we are hiring]])
 
 Tried to learn lisp(s) several times (and almost got it), tried Haskell (but did not get it), and now learning Rust, enough to see how cool it is, and perhaps share the good word about it.
 * What is Rust
