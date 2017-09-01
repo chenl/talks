@@ -1,0 +1,218 @@
+#+title: Why Use Gnu Emacs
+#+author: חן רותם לוי
+#+email: chen@rotemlevy.name
+#+date: <2017-09-07 Thu 17:00>
+#+OPTIONS: ^:nil num:nil toc:nil
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_EXTRA_CSS: ./custom.css
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.5
+#+REVEAL_MAX_SCALE: 2.5
+
+* Emacs is ugly
+
+#+ATTR_HTML: :width 65% :height 65%
+#+CAPTION:   Yuck!
+#+NAME:      fig_UGLY
+[[./img/ugly.png]]
+
+** It has UGLY Fonts
+
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Fonts?
+#+NAME:      fig_UGLY_FONTS
+[[./img/ugly_fonts]]
+
+** Oh no MY EYES!
+
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   xeyes
+#+NAME:      fig_?
+[[./img/ugly_fonts_eyes.png]]
+* Emacs is Weird
+
+#+CREDIT: http://sachachua.com/blog/2013/05/how-to-learn-emacs-a-hand-drawn-one-pager-for-beginner/s
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Huh…
+#+NAME:      fig_VISUAL_TERMS
+[[./img/How-to-Learn-Emacs-v2-visual-terms.png]]
+
+** Emacs Terminology is Weird
+
+- Enter → Return (RET)
+- Alt → Meta (M)
+- Cursor → Point
+
+- Open → Find/Visit
+- Save → Save (Emacs Got one right!)
+- Quit → save-buffers-kill-terminal
+
+- Selection → Mark/Region
+- Cut → Kill
+- Copy → Kill-Save
+- Paste → Yank
+
+- Buffer → Whatever is in your Window
+- Windows → Paine
+- Frame → Window
+
+** Key Binding (Circa 1974)
+
+- Open:   C-x C-f … RET
+- Save:   C-x C-s
+- Quit:   C-x C-c
+
+- Undo:   C-_
+- Cut:    C-w
+- Copy:   M-w
+- Paste:  C-y
+
+- Buffer: C-x b … RET
+- Window: C-o
+- Frame:  C-x 5 o
+
+** Emacs User
+
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Just for me
+#+NAME:      fig_EMACS_USER
+[[./img/emacs_user.jpg]]
+
+* Customization
+
+** Easy Customization
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Easy?
+#+NAME:      fig_EASY_CUSOMOIZATION
+[[./img/easy_customization]]
+
+** Hard Customization
+
+file:~/.emacs.d/personal/org.el
+
+#+BEGIN_SRC elisp
+(add-hook 'org-mode-hook
+   #'(lambda ()
+      ;; supporting modes
+      (require 'org-bullets)
+      (org-bullets-mode 1)
+      ;; key bindings
+      (local-set-key (kbd "C-c 1") #'org-time-stamp-inactive)
+         ; "C-c !" is a leader for fly-check
+      ;; org-reveal
+      (require 'ox-reveal)
+      (setq org-reveal-root "file:///home/chen/opt/reveal.js")))
+#+END_SRC
+
+* It was written by a crays person
+
+#+CREDIT: Wikipedia (cc0)
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   RMS
+#+NAME:      fig_RMS
+[[./img/rms.jpg]]
+
+** on some funky hardware
+
+#+CREDIT: http://xahlee.info/kbd/lisp_keyboards.html
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Control, Meta, Super, Hyper
+#+NAME:      fig_LISP_MACHINE
+[[./img/lisp_machin_keyboard.png]]
+
+* Learning curve
+
+#+CREDIT: msdn blog
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Learning
+#+NAME:      fig_LERNING_CURVE
+[[./img/learning_curve.jpg]]
+
+** TL;DR
+
+  use nano
+
+** RD;LT
+
+  Read Docs; Learn Tutorial
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   M-x help-with-tutorial
+#+NAME:      fig_TUTORIAL
+[[./img/1hevrew_tutorial.png]]
+
+** Power
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   You will have the POWER
+#+NAME:      fig_POWER
+[[./img/I_have_the_power.jpg]]
+
+
+* Old Emacs is Old
+
+Emacs 25.2 (2017-04-21)
+
+* First thing
+
+  grow yourself some extra tentacles or …
+
+  SWAP CAPSLOCK AND CONTROL
+
+  (even Windows can do it)
+
+** My keyboard
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   My Keyboard
+#+NAME:      fig_MY_KEYBOARD
+[[./img/swap_caps_ctrl.png]]
+
+* Don’t use the defaults
+
+Emacs is for Customization
+
+* Emacs Distros
+
+(starter kits)
+
+- [[https://github.com/syl20bnr/spacemacs][Spacemacs]]
+- [[https://github.com/bbatsov/prelude][Prelude by Bozhidar Batsov]]
+- [[https://github.com/rdallasgray/graphene][Graphene by Robert Dallas Gray]]
+- [[https://github.com/eschulte/emacs24-starter-kit][Starter-kit by Eric Schulte]]
+- [[https://github.com/purcell/emacs.d][Steve Purcell's emacs.d]]
+- [[https://github.com/overtone/emacs-live][Emacs Live]]
+- [[https://github.com/jkitchin/scimax][SciMax for reproducible research and publishing]]
+
+* Package manager
+
+... demo ...
+
+#+BEGIN_NOTES
+M-x package-list-packages
+f git
+#+END_NOTES
+
+* Org Mode
+
+
+... demo ...
+
+* Magit
+
+... demo ...
+https://github.com/githubtraining
+
+* images
+- Ugly: http://www.xref.sk/xrefactory/images/emacs/deadcode.png
+- Emacs user: http://wwwf.imperial.ac.uk/~rcn08/images/emacs_user.jpg
+- Spacemacs: https://raw.githubusercontent.com/syl20bnr/spacemacs/master/doc/img/spacemacs-python.png
+- lisp machine keyboard: http://xahlee.info/kbd/lisp_keyboards.html
+- vim keyboard: https://blog.fogcreek.com/dev-life-interview-with-chris-hartjes/
+- how to learn Emacs: http://sachachua.com/blog/wp-content/uploads/2013/05/How-to-Learn-Emacs-v2-Large.png
+- learning curve: https://blogs.msdn.microsoft.com/steverowe/2004/11/17/code-editor-learning-curves/
+- rms: https://commons.wikimedia.org/wiki/File:RMS_iGNUcius_techfest_iitb.JPG
