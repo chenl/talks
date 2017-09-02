@@ -22,7 +22,7 @@
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   Fonts?
 #+NAME:      fig_UGLY_FONTS
-[[./img/ugly_fonts]]
+[[./img/ugly_fonts.png]]
 
 ** Oh no MY EYES!
 
@@ -81,33 +81,6 @@
 #+NAME:      fig_EMACS_USER
 [[./img/emacs_user.jpg]]
 
-* Customization
-
-** Easy Customization
-
-#+ATTR_HTML: :width 75% :height 75%
-#+CAPTION:   Easy?
-#+NAME:      fig_EASY_CUSOMOIZATION
-[[./img/easy_customization]]
-
-** Hard Customization
-
-file:~/.emacs.d/personal/org.el
-
-#+BEGIN_SRC elisp
-(add-hook 'org-mode-hook
-   #'(lambda ()
-      ;; supporting modes
-      (require 'org-bullets)
-      (org-bullets-mode 1)
-      ;; key bindings
-      (local-set-key (kbd "C-c 1") #'org-time-stamp-inactive)
-         ; "C-c !" is a leader for fly-check
-      ;; org-reveal
-      (require 'ox-reveal)
-      (setq org-reveal-root "file:///home/chen/opt/reveal.js")))
-#+END_SRC
-
 * It was written by a crays person
 
 #+CREDIT: Wikipedia (cc0)
@@ -140,10 +113,10 @@ file:~/.emacs.d/personal/org.el
 
   Read Docs; Learn Tutorial
 
-#+ATTR_HTML: :width 75% :height 75%
+#+ATTR_HTML: :width 70% :height 70%
 #+CAPTION:   M-x help-with-tutorial
 #+NAME:      fig_TUTORIAL
-[[./img/1hevrew_tutorial.png]]
+[[./img/hevrew_tutorial.png]]
 
 ** Power
 #+CREDIT:
@@ -159,22 +132,81 @@ Emacs 25.2 (2017-04-21)
 
 * First thing
 
-  grow yourself some extra tentacles or …
-
-  SWAP CAPSLOCK AND CONTROL
-
-  (even Windows can do it)
-
-** My keyboard
-
-#+ATTR_HTML: :width 75% :height 75%
-#+CAPTION:   My Keyboard
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION:   Put CAPS in its place
 #+NAME:      fig_MY_KEYBOARD
 [[./img/swap_caps_ctrl.png]]
 
 * Don’t use the defaults
 
+#+CREDIT: http://musclecars-forsale.com/9103/1970-plymouth-gtx/
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Right…?
+#+NAME:      fig_CUSTOMIZATION
+[[./img/cumstomization.jpg]]
+
+** Hard Customization
+
+#+BEGIN_SRC elisp
+(add-hook 'org-mode-hook
+   #'(lambda ()
+      ;; supporting modes
+      (require 'org-bullets)
+      (org-bullets-mode 1)
+      ;; key bindings: "C-c !" is a leader for fly-check
+      (local-set-key (kbd "C-c 1")
+         #'org-time-stamp-inactive)
+      ;; org-reveal
+      (require 'ox-reveal)
+      (setq org-reveal-root (concat
+         "file://" (getenv "HOME") "/opt/reveal.js"))))
+#+END_SRC
+
+
 Emacs is for Customization
+
+** Easy Customization
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Easy?
+#+NAME:      fig_EASY_CUSOMOIZATION
+[[./img/easy_customization.png]]
+
+** Common User Access
+
+#+CREDIT: http://jackskyblue.pcriot.com/wp-content/uploads/2015/07/Back-to-the-future-logo.png
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   M-x cua-mode
+#+NAME:      fig_BACK_TO_THE_FUTURE
+[[./img/Back-to-the-future-logo.png]]
+
+** Ergo Emacs
+
+#+CREDIT: http://ergoemacs.org/emacs/ergonomic_emacs_keybinding_good.html
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Xah Lee
+#+NAME:      fig_ERGOEMACS
+[[./img/ergoemacs.jpg]]
+** Evil Mode
+
+#+CREDIT: Wikipedia
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION:   Emacs VI Layer
+#+NAME:      fig_EVIL
+[[./img/evil.png]]
+
+
+* Package manager
+
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   M-x list-packages
+#+NAME:      fig_PACKSGES
+[[./img/package-manager.png]]
+
+#+BEGIN_NOTES
+M-x package-list-packages
+f git
+#+END_NOTES
 
 * Emacs Distros
 
@@ -188,24 +220,27 @@ Emacs is for Customization
 - [[https://github.com/overtone/emacs-live][Emacs Live]]
 - [[https://github.com/jkitchin/scimax][SciMax for reproducible research and publishing]]
 
-* Package manager
+* Magit
 
-... demo ...
+#+CREDIT: Magit
+#+ATTR_HTML: :width 60% :height 60%
+#+CAPTION:   demo
+#+NAME:      fig_MAGIT
+[[./img/magit.png]]
 
-#+BEGIN_NOTES
-M-x package-list-packages
-f git
-#+END_NOTES
+
+https://github.com/githubtraining
 
 * Org Mode
 
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION:   Demo…
+#+NAME:      fig_ORG_MODE
+[[./img/org-mode-logo.png]]
 
-... demo ...
+* C-h ?
 
-* Magit
-
-... demo ...
-https://github.com/githubtraining
+https://githib.com/chenl/talks/
 
 * images
 - Ugly: http://www.xref.sk/xrefactory/images/emacs/deadcode.png
@@ -216,3 +251,4 @@ https://github.com/githubtraining
 - how to learn Emacs: http://sachachua.com/blog/wp-content/uploads/2013/05/How-to-Learn-Emacs-v2-Large.png
 - learning curve: https://blogs.msdn.microsoft.com/steverowe/2004/11/17/code-editor-learning-curves/
 - rms: https://commons.wikimedia.org/wiki/File:RMS_iGNUcius_techfest_iitb.JPG
+- evil: https://en.wiktionary.org/wiki/evil#/media/File:Villainc.svg
