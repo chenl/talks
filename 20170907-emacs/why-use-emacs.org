@@ -52,25 +52,27 @@
 - Cut → Kill
 - Copy → Kill-Save
 - Paste → Yank
+* Key Binding (Circa 1974)
 
-- Buffer → Whatever is in your Window
-- Windows → Paine
-- Frame → Window
+#+CREDIT: http://www.dieblinkenlights.com/imagens/copy_of_emacs_cheat_sheet.png
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Sort of make sense?
+#+NAME:      fig_MIND_MAP
+[[./img/mind_map.png]]
 
-** Key Binding (Circa 1974)
+** Copy and Paste
 
-- Open:   C-x C-f … RET
-- Save:   C-x C-s
-- Quit:   C-x C-c
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   kill / yank
+#+NAME:      fig_KILLING
+[[./img/mind_map_killing.png]]
 
-- Undo:   C-_
-- Cut:    C-w
-- Copy:   M-w
-- Paste:  C-y
+** Open and Save
 
-- Buffer: C-x b … RET
-- Window: C-o
-- Frame:  C-x 5 o
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   buffers
+#+NAME:      fig_BUFFERS
+[[./img/mind_map_buffer.png]]
 
 ** Emacs User
 
