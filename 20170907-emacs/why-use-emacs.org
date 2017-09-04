@@ -124,11 +124,6 @@ Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill 
 #+NAME:      fig_POWER
 [[./img/I_have_the_power.jpg]]
 
-
-* Old Emacs is Old
-
-Emacs 25.2 (2017-04-21)
-
 * First thing
 
 #+ATTR_HTML: :width 50% :height 50%
