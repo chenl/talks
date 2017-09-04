@@ -207,14 +207,54 @@ f git
 (starter kits)
 
 - [[https://github.com/syl20bnr/spacemacs][Spacemacs]]
+- [[https://github.com/eschulte/emacs24-starter-kit][Starter-kit by Eric Schulte]]
 - [[https://github.com/bbatsov/prelude][Prelude by Bozhidar Batsov]]
 - [[https://github.com/rdallasgray/graphene][Graphene by Robert Dallas Gray]]
-- [[https://github.com/eschulte/emacs24-starter-kit][Starter-kit by Eric Schulte]]
-- [[https://github.com/purcell/emacs.d][Steve Purcell's emacs.d]]
 - [[https://github.com/overtone/emacs-live][Emacs Live]]
-- [[https://github.com/jkitchin/scimax][SciMax for reproducible research and publishing]]
+- [[https://github.com/jkitchin/scimax][Scimax for reproducible research and publishing]]
 
-* Magit
+** spacemacs
+
+#+credit: https://raw.githubusercontent.com/syl20bnr/spacemacs/master/doc/img/spacemacs-python.png
+#+attr_html: :width 75% :height 75%
+#+caption:
+#+name:      fig_spacemacs
+[[./img/spacemacs.png]]
+
+** starter kit
+
+#+attr_html: :width 75% :height 75%
+#+caption:   out of the box
+#+name:      fig_starter
+[[./img/starter_kit.png]]
+
+** prelude
+
+#+attr_html: :width 75% :height 75%
+#+caption:   ooh, meta
+#+name:      fig_prelude
+[[./img/prelude.png]]
+
+** graphene
+
+#+attr_html: :width 75% :height 75%
+#+caption:   unfortunate os though
+#+name:      fig_graphene
+[[./img/graphene.png]]
+
+** emacs live
+
+#+CREDIT:  https://raw.githubusercontent.com/overtone/emacs-live/master/screenshots/live-coding-config-in-use-2.png
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   Sciency
+#+NAME:      fig_SCIMAX
+[[./img/scimax.png]]
+
+** Scimax
+#+attr_html: :width 75% :height 75%
+#+caption:   bling
+#+name:      fig_emacs_live
+[[./img/emacs-live.png]]
 
 #+CREDIT: Magit
 #+ATTR_HTML: :width 60% :height 60%
