@@ -32,26 +32,24 @@
 
 * Emacs is Weird
 
+#+CREDIT: https://i.pinimg.com/736x/d4/2f/5d/d42f5d52b252288ce16a46fe5e8b8f27--weird-old-photos-scary-photos.jpg
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION:   … and a bit scary
+#+NAME:      fig_WEIRD
+[[./img/weird-old-photo.jpg]]
+
+** Emacs Terminology is Weird
+
+Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill Ring • Kill • Major Mode • Mark • Meta Key • Minibuffer • Minor Mode • Narrow • Point • Region • Visit • Window • Yank
+
+** Still Weird
+
 #+CREDIT: http://sachachua.com/blog/2013/05/how-to-learn-emacs-a-hand-drawn-one-pager-for-beginner/s
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   Huh…
 #+NAME:      fig_VISUAL_TERMS
 [[./img/How-to-Learn-Emacs-v2-visual-terms.png]]
 
-** Emacs Terminology is Weird
-
-- Enter → Return (RET)
-- Alt → Meta (M)
-- Cursor → Point
-
-- Open → Find/Visit
-- Save → Save (Emacs Got one right!)
-- Quit → save-buffers-kill-terminal
-
-- Selection → Mark/Region
-- Cut → Kill
-- Copy → Kill-Save
-- Paste → Yank
 * Key Binding (Circa 1974)
 
 #+CREDIT: http://www.dieblinkenlights.com/imagens/copy_of_emacs_cheat_sheet.png
