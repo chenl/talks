@@ -31,9 +31,9 @@
 #+NAME:      fig_UGLY_FONTS
 [[./img/ugly_fonts.png]]
 
-** Old Emacs is Ugly
+* Emacs was Ugly
 
-#+ATTR_HTML: :width 100% :height 100%
+#+ATTR_HTML: :width 125% :height 125%
 #+CAPTION:   Emacs 25.2 (2017-04-21)
 #+NAME:      fig_MODERN_EMACS
 [[./img/modern_default_emacs.png]]
