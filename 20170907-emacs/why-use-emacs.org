@@ -77,7 +77,7 @@ Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill 
 * Key Binding (Circa 1974)
 
 #+CREDIT: http://www.dieblinkenlights.com/imagens/copy_of_emacs_cheat_sheet.png
-#+ATTR_HTML: :width 75% :height 75%
+#+ATTR_HTML: :width 70% :height 70%
 #+CAPTION:   Sort of make sense?
 #+NAME:      fig_MIND_MAP
 [[./img/mind_map.png]]
