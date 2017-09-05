@@ -258,8 +258,8 @@ f git
 ** spacemacs
 
 #+credit: https://raw.githubusercontent.com/syl20bnr/spacemacs/master/doc/img/spacemacs-python.png
-#+attr_html: :width 75% :height 75%
-#+caption:
+#+attr_html: :width 85% :height 85%
+#+caption:   almost an entire new editor
 #+name:      fig_spacemacs
 [[./img/spacemacs.png]]
 
