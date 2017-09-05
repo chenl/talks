@@ -203,6 +203,13 @@ Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill 
 
 ** Common User Access
 
+#+ATTR_HTML: :width 85% :height 85%
+#+CAPTION:   We are libing the future!
+#+NAME:      fig_CTRL_XCV
+[[./img/ctrl-x-c-v.png]]
+
+#+REVEAL: split
+
 #+CREDIT: http://jackskyblue.pcriot.com/wp-content/uploads/2015/07/Back-to-the-future-logo.png
 #+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   M-x cua-mode
