@@ -196,7 +196,7 @@ Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill 
 [[./img/lines-of-code.png]]
 ** Easy Customization
 
-#+ATTR_HTML: :width 75% :height 75%
+#+ATTR_HTML: :width 70% :height 70%
 #+CAPTION:   Easy?
 #+NAME:      fig_EASY_CUSOMOIZATION
 [[./img/easy_customization.png]]
