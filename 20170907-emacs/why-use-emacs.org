@@ -264,14 +264,14 @@ f git
 
 ** starter kit
 
-#+attr_html: :width 75% :height 75%
+#+attr_html: :width 85% :height 85%
 #+caption:   out of the box
 #+name:      fig_starter
 [[./img/starter_kit.png]]
 
 ** prelude
 
-#+attr_html: :width 75% :height 75%
+#+attr_html: :width 85% :height 85%
 #+caption:   ooh, meta
 #+name:      fig_prelude
 [[./img/prelude.png]]
