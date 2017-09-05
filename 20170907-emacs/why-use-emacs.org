@@ -226,11 +226,10 @@ Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill 
 ** Evil Mode
 
 #+CREDIT: Wikipedia
-#+ATTR_HTML: :width 50% :height 50%
+#+ATTR_HTML: :width 75% :height 75%
 #+CAPTION:   Emacs VI Layer
 #+NAME:      fig_EVIL
 [[./img/evil.png]]
-
 
 * Package manager
 
