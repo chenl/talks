@@ -298,14 +298,18 @@ f git
 [[./img/scimax.png]]
 
 
-#+CREDIT: Magit
 #+ATTR_HTML: :width 60% :height 60%
+** Magit
+
+#+CREDIT: Magit
+#+ATTR_HTML: :width 50% :height 50%
 #+CAPTION:   demo
 #+NAME:      fig_MAGIT
 [[./img/magit.png]]
 
-
+#+BEGIN_NOTES
 https://github.com/githubtraining
+#+END_NOTES
 
 * Org Mode
 
