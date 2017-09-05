@@ -158,8 +158,8 @@ Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill 
 
 * First thing
 
-#+ATTR_HTML: :width 50% :height 50%
-#+CAPTION:   Put CAPS in its place
+#+ATTR_HTML: :width 45% :height 45%
+#+CAPTION:   swap Caps Lock and Control
 #+NAME:      fig_MY_KEYBOARD
 [[./img/swap_caps_ctrl.png]]
 
