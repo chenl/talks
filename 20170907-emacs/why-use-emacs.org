@@ -57,7 +57,7 @@
 * Emacs is Weird
 
 #+CREDIT: https://i.pinimg.com/736x/d4/2f/5d/d42f5d52b252288ce16a46fe5e8b8f27--weird-old-photos-scary-photos.jpg
-#+ATTR_HTML: :width 50% :height 50%
+#+ATTR_HTML: :width 45% :height 45%
 #+CAPTION:   … and a bit scary
 #+NAME:      fig_WEIRD
 [[./img/weird-old-photo.jpg]]
