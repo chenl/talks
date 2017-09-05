@@ -120,6 +120,14 @@ Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill 
 #+NAME:      fig_LISP_MACHINE
 [[./img/lisp_machin_keyboard.png]]
 
+** BTW
+
+#+CREDIT:
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   some other funky hardware where available
+#+NAME:      fig_HJKL_KEYBARD
+[[./img/hjkl_keyboard.png]]
+
 * Learning curve
 
 #+CREDIT: msdn blog
