@@ -46,6 +46,14 @@
 #+NAME:      fig_EMACS_ICON
 [[./img/emacs-icon.png]]
 
+** Even its website is nice
+
+#+CREDIT: https://www.gnu.org/software/emacs/
+#+ATTR_HTML: :width 60% :height 60%
+#+CAPTION:   You should have seen the old mone
+#+NAME:      fig_WEBSITE
+[[./img/emacs-web-site.png]]
+
 * Emacs is Weird
 
 #+CREDIT: https://i.pinimg.com/736x/d4/2f/5d/d42f5d52b252288ce16a46fe5e8b8f27--weird-old-photos-scary-photos.jpg
