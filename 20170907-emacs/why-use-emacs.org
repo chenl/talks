@@ -316,7 +316,7 @@ f git
 https://github.com/githubtraining
 #+END_NOTES
 
-* Org Mode
+** Org Mode
 
 #+ATTR_HTML: :width 50% :height 50%
 #+CAPTION:   Demo…
