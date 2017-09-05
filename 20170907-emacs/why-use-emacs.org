@@ -284,6 +284,11 @@ f git
 [[./img/graphene.png]]
 
 ** emacs live
+#+attr_html: :width 75% :height 75%
+#+caption:   bling
+#+name:      fig_emacs_live
+[[./img/emacs-live.png]]
+
 
 #+CREDIT:  https://raw.githubusercontent.com/overtone/emacs-live/master/screenshots/live-coding-config-in-use-2.png
 #+ATTR_HTML: :width 75% :height 75%
@@ -292,10 +297,6 @@ f git
 [[./img/scimax.png]]
 
 ** Scimax
-#+attr_html: :width 75% :height 75%
-#+caption:   bling
-#+name:      fig_emacs_live
-[[./img/emacs-live.png]]
 
 #+CREDIT: Magit
 #+ATTR_HTML: :width 60% :height 60%
