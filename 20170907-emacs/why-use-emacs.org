@@ -141,9 +141,9 @@ Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill 
 
 * Don’t use the defaults
 
-#+CREDIT: http://musclecars-forsale.com/9103/1970-plymouth-gtx/
-#+ATTR_HTML: :width 75% :height 75%
-#+CAPTION:   Right…?
+#+CREDIT: https://static.pexels.com/photos/210881/pexels-photo-210881.jpeg (CC0)
+#+ATTR_HTML: :width 70% :height 70%
+#+CAPTION:   Emacs is customizable
 #+NAME:      fig_CUSTOMIZATION
 [[./img/cumstomization.jpg]]
 
