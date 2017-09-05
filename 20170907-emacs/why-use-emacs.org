@@ -297,8 +297,13 @@ f git
 #+NAME:      fig_SCIMAX
 [[./img/scimax.png]]
 
+* Keller Apps
 
 #+ATTR_HTML: :width 60% :height 60%
+#+CAPTION:   Modes
+#+NAME:      fig_KILLER_APPS
+[[./img/killer_app.png]]
+
 ** Magit
 
 #+CREDIT: Magit
