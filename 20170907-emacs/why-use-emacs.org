@@ -323,7 +323,8 @@ https://github.com/githubtraining
 #+NAME:      fig_ORG_MODE
 [[./img/org-mode-logo.png]]
 
-* C-h ?
+
+* C-h C-h
 
 https://githib.com/chenl/talks/
 
