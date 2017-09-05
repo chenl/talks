@@ -187,10 +187,13 @@ Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill 
       (setq org-reveal-root (concat
          "file://" (getenv "HOME") "/opt/reveal.js"))))
 #+END_SRC
+** Emacs is mostly Lisp
 
-
-Emacs is for Customization
-
+#+CREDIT: https://www.openhub.net/p/emacs/analyses/latest/languages_summary
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   1,627,026 LOC
+#+NAME:      fig_LOC
+[[./img/lines-of-code.png]]
 ** Easy Customization
 
 #+ATTR_HTML: :width 75% :height 75%
