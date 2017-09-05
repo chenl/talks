@@ -84,14 +84,14 @@ Buffer • Face • Find • Frame • Hook • Key Binding • Keymap • Kill 
 
 ** Copy and Paste
 
-#+ATTR_HTML: :width 75% :height 75%
+#+ATTR_HTML: :width 100% :height 100%
 #+CAPTION:   kill / yank
 #+NAME:      fig_KILLING
 [[./img/mind_map_killing.png]]
 
 ** Open and Save
 
-#+ATTR_HTML: :width 75% :height 75%
+#+ATTR_HTML: :width 100% :height 100%
 #+CAPTION:   buffers
 #+NAME:      fig_BUFFERS
 [[./img/mind_map_buffer.png]]
