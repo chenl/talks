@@ -289,14 +289,14 @@ f git
 #+name:      fig_emacs_live
 [[./img/emacs-live.png]]
 
+** sciemax
 
 #+CREDIT:  https://raw.githubusercontent.com/overtone/emacs-live/master/screenshots/live-coding-config-in-use-2.png
-#+ATTR_HTML: :width 75% :height 75%
+#+ATTR_HTML: :width 90% :height 90%
 #+CAPTION:   Sciency
 #+NAME:      fig_SCIMAX
 [[./img/scimax.png]]
 
-** Scimax
 
 #+CREDIT: Magit
 #+ATTR_HTML: :width 60% :height 60%
