@@ -9,7 +9,15 @@
 #+REVEAL_MIN_SCALE: 0.5
 #+REVEAL_MAX_SCALE: 2.5
 
-* Emacs is ugly
+* What is that Emacs thingy
+
+#+CREDIT: wikipedia
+#+ATTR_HTML: :width 65% :height 65%
+#+CAPTION:   Emacs Logo (unfortunately)
+#+NAME:      fig_EMACS_LOGO
+[[./img/emacs-logo.png]]
+
+** Emacs is ugly
 
 #+ATTR_HTML: :width 65% :height 65%
 #+CAPTION:   Yuck!
