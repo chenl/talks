@@ -38,6 +38,14 @@
 #+NAME:      fig_MODERN_EMACS
 [[./img/modern_default_emacs.png]]
 
+** And the logo might go away
+
+#+CREDIT: http://ftp.twaren.net/Unix/NonGNU/emacs/icons/
+#+ATTR_HTML: :width 50% :height 50%
+#+CAPTION:   Non GNU Icon
+#+NAME:      fig_EMACS_ICON
+[[./img/emacs-icon.png]]
+
 * Emacs is Weird
 
 #+CREDIT: https://i.pinimg.com/736x/d4/2f/5d/d42f5d52b252288ce16a46fe5e8b8f27--weird-old-photos-scary-photos.jpg
