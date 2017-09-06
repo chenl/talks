@@ -326,7 +326,7 @@ https://github.com/githubtraining
 
 * C-h C-h
 
-https://githib.com/chenl/talks/
+https://github.com/chenl/talks/
 
 * images
 - Ugly: http://www.xref.sk/xrefactory/images/emacs/deadcode.png
