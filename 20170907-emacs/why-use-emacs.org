@@ -341,6 +341,14 @@ https://github.com/githubtraining
 #+NAME:      fig_TABS_VS_SPACES_EMACS
 [[./img/tabs-vs-spaces-vim.png]]
 
+** Smart Tabs
+
+#+CREDIT: https://www.emacswiki.org/emacs/SmartTabs
+#+ATTR_HTML: :width 75% :height 75%
+#+CAPTION:   smart-tabs-mode
+#+Name:      fig_TABS_AND_SPACES
+[[./img/tabs-and-spaces.png]]
+
 * C-h C-h
 
 https://github.com/chenl/talks/
