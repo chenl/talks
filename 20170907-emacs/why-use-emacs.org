@@ -331,6 +331,16 @@ https://github.com/githubtraining
 #+NAME:      fig_TABS_VS_SPACES
 [[./img/tabs-vs-spaces.png]]
 
+** Lets have a closer look
+
+#+ATTR_HTML: :width 50% :height 50%
+#+NAME:      fig_TABS_VS_SPACES_EMACS
+[[./img/tabs-vs-spaces-emacs.png]]
+
+#+ATTR_HTML: :width 50% :height 50%
+#+NAME:      fig_TABS_VS_SPACES_EMACS
+[[./img/tabs-vs-spaces-vim.png]]
+
 * C-h C-h
 
 https://github.com/chenl/talks/
