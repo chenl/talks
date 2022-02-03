@@ -3,10 +3,9 @@
 import pytest
 
 try:
-    from io import StringIO
-except ImportError:
-    #from io import BytesIO as StringIO
     from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 try:
     from unittest import mock
@@ -88,9 +87,16 @@ def test_your_guess_quit(mock_stdout, mock_readline, mock_lang):
     )
 
 
+def test_PromptGGEE():
+    prompt = game.PromptGGEE(level=3, max_num=7, num=5)
+    assert '{0:0} {0:1} {0:2}'.format(prompt) == '3 7 5'
+    assert '{a} {b:1} {c}'.format(a='a', b=prompt, c='c') == 'a 7 c'
+    assert 'simple'.format(prompt) == 'simple'
+
+
 @pytest.mark.parametrize('guesses,expected_messages', [
     ([4, 6, 5], [  # full scenario
-        "Level 3: 0 to 7",
+        "Level {0:0}: 0 to {0:1}",
         "Can you guess what number I am thinking about?",
         "No, my number is bigger than that",
         "Can you guess what number I am thinking about?",
@@ -99,12 +105,12 @@ def test_your_guess_quit(mock_stdout, mock_readline, mock_lang):
         "Yes, this is the number I was thinking about! How did you know that?",
     ]),
     ([None], [     # empty scenario
-        "Level 3: 0 to 7",
+        "Level {0:0}: 0 to {0:1}",
         "Can you guess what number I am thinking about?",
-        "Just wanted you to know that I was thinking about 5",
+        "Just wanted you to know that I was thinking about {0:2}",
     ]),
     ([5], [        # lucky scenario
-        "Level 3: 0 to 7",
+        "Level {0:0}: 0 to {0:1}",
         "Can you guess what number I am thinking about?",
         "Yes, this is the number I was thinking about! How did you know that?",
     ]),
@@ -120,5 +126,9 @@ def test_play(mock_stdout, mock_T, guesses, expected_messages):
             mock.patch('guessing.game.your_guess', side_effect=guesses):
         game.play(level)
 
-    mock_T.call_args_list = map(mock.call, expected_messages)
-    assert mock_stdout.getvalue() == '\n'.join(expected_messages) + '\n'
+    assert mock_T.call_args_list == map(mock.call, expected_messages)
+
+    prompt = game.PromptGGEE(level=level, max_num=7, num=num)
+    printed_messages = [msg.format(prompt) + '\n'
+                        for msg in expected_messages]
+    assert mock_stdout.getvalue() == ''.join(printed_messages)
